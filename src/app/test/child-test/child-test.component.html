@@ -1,0 +1,7 @@
+<p>I am the child</p>
+<label>Enter your name:</label>
+<input type="text" #name>
+<button class="btn btn-primary" (click)="onAddName(name.value)">Add name</button>
+<div class="row">
+    <div class="col-xs-6">{{name}}</div>
+</div>
