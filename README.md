@@ -23,4 +23,5 @@ The project is currently under development, and new features and improvements ar
 
 ## Acknowledgments
 I would like to thank Maximilian Schwarzmüller for creating the "The Complete Guide to Angular 2" Udemy course , which has been a great resource for learning Angular development. This is a project that I am building to practice Angular development. It is still under construction and I am building it as I follow the specific course.
-You can find the course here https://www.udemy.com/course/the-complete-guide-to-angular-2/.
+You can find the course here <a href="https://www.udemy.com/course/the-complete-guide-to-angular-2/" target="_blank">The Complete Guide to Angular 2</a>
+.
