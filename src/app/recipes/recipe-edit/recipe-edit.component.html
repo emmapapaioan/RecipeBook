@@ -1,44 +1,40 @@
-
-<div class="row">
+<app-recipe-detail></app-recipe-detail>
+<h1>Edit Recipe</h1>
+<div class="row" style="margin-bottom: 20px;">
     <div class="col-xs-12">
         <form>
             <div class="row">
-                <div class="col-sm-5 form-group">
-                    <label for="name"></label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        class="form-control"
-                        #nameInput>
+                <div class="col-xs-12 ">
+                    <div class="btn-toolbar pb-4" role="toolbar" aria-label="...">
+                        <div class="btn btn-success" type="submit"  aria-label="...">Save</div>
+                        <div class="btn btn-danger" type="submit" aria-label="...">Cancel</div>
                 </div>
-
-                <div class="col-sm-2 form-group">
-                    <label for="description"></label>
-                    <input 
-                        type="text" 
-                        id="description" 
-                        class="form-control"
-                        #descriptionInput>
-                </div>
-
-                <div class="col-sm-2 form-group">
-                    <label for="imagePath"></label>
-                    <input 
-                        type="text" 
-                        id="imagePath" 
-                        class="form-control"
-                        #imagePathInput>
                 </div>
             </div>
-
-            <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                <div class="btn-group mr-2" role="group" aria-label="First group">
-                    <button 
-                        class="btn btn-success" 
-                        type="submit">
-                        Add Recipe</button>
+            
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <input 
+                            name="description"
+                            type="text" 
+                            id="description" 
+                            class="form-control" 
+                            #descriptionInput>
+                    </div>
                 </div>
-                
+                    <div class="col-xs-12">
+                        <div class="form-group">
+                            <label for="ingredients">Ingredients</label>
+                            <input 
+                                name="ingredients"
+                                type="text" 
+                                id="ingredients" 
+                                class="form-control" 
+                                #ingredientsInput>
+                        </div>
+                    </div>
             </div>
         </form>
     </div>

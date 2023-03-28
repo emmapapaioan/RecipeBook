@@ -11,7 +11,4 @@ export class AppComponent {
   loadedFeature = 'recipe';
   selectedNewRecipe = false;
 
-  onNavigate(feature: string) {
-    this.loadedFeature = feature;
-  }
 }

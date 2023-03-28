@@ -2,17 +2,15 @@
     <div class="col-xs-12">
         <button 
             class="btn btn-success"
-            *ngIf="!selectedNewRecipe"
             (click)="onSelectNewRecipe()">New Recipe</button>
     </div>
-    <app-recipe-edit *ngIf="selectedNewRecipe"></app-recipe-edit>
 </div>
 <hr>
 <div class="row">
     <div class="col-xs-12">
         <app-recipe-item 
-            *ngFor="let recipeItem of recipes" 
+            *ngFor="let recipeItem of recipes; let i = index" 
             [recipe]="recipeItem"
-            ></app-recipe-item>
+            [index]="i"></app-recipe-item>
     </div>
 </div>

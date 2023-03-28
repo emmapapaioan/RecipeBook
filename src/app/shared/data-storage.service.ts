@@ -30,7 +30,7 @@ export class DataStorageService {
   }
 
   fetchRecipes() {
-    this.http
+    return this.http
       .get<Recipe[]>(this.apiURL + this.recipesJSON)
       .subscribe({
         next: (response) => {

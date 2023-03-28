@@ -1,9 +1,13 @@
 <a 
-    class="list-group-item clearfix"
-    (click)="onSelected()">
-    <div class="pull-left">
-        <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-        <p class="list-group-item-text">{{ recipe.description }}</p>
+    [routerLink]="[index]"
+    routerLinkActive="active"
+    class="list-group-item clearfix">
+    <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+    <div class="pull-left" >
+        <p 
+            id="details" 
+            class="list-group-item-text"
+            style="width: 248px">{{ recipe.description }}</p>
     </div>
     <span class="pull-right">
         <img 

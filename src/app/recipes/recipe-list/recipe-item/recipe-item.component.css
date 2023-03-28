@@ -1,0 +1,13 @@
+a.active,
+a.active:hover,
+a.active:active,
+a.active:focus{
+    background-color: #c09999  ;
+    border-color: #c09999  ;
+    color: black;
+    cursor: auto;
+}
+
+#details {
+    color: black;
+}
