@@ -3,6 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { NgForm } from '@angular/forms';
+import { Ingredient } from 'src/app/shared/ingredient.model';
 
 
 @Component({
@@ -13,10 +14,9 @@ import { NgForm } from '@angular/forms';
 
 export class RecipeEditComponent implements OnInit, OnDestroy {
   @Output() selectedNewRecipe = true;
-  @ViewChild('nameInput', { static: false }) nameInputRef: ElementRef;
-  @ViewChild('descriptionInput', { static: false }) descriptionInput: ElementRef;
-  @ViewChild('imagePathInput', { static: false }) imagePathInput: ElementRef;
+  @ViewChild('form', { static: false }) form: NgForm;
   recipe: Recipe;
+  currentRecipe: Recipe;
   id: number;
 
   constructor(public recipeService: RecipeService,
@@ -34,6 +34,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     // Get the current recipe
     this.recipe = this.recipeService.getRecipe(this.id);
+    this.currentRecipe = JSON.parse(JSON.stringify(this.recipe));
   }
 
   ngOnDestroy() {
@@ -58,9 +59,22 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.recipeService.setRecipeEditMode(false);
   }
 
-  onSave(form: NgForm) {
-    const description = form.value.description;
-    const amount:number = form.value.amount;
+  onSave() {
+    if (this.form.valid) {
+      this.recipeService.updateRecipe(this.id, this.currentRecipe);
+      alert('Recipe "'+this.currentRecipe.name+'" was successfully updated.');
+      this.recipeService.setRecipeEditMode(false);
+      // const name = this.form.value.name;
+      // const imagePath = this.form.value.imagePath;
+      // const description = this.form.value.description;
+      
+      // const ingredients = this.recipe.ingredients.map((ingredient, index) => {
+      //   return {
+      //     name: this.form.value['ingredient' + index],
+      //     amount: this.form.value['amount' + index]
+      //   };
+      // });
+    }
 
     
   }

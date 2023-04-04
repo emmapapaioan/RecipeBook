@@ -32,12 +32,20 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.recipe = this.recipeService.getRecipe(this.id);
       }
     );
+
+    this.recipeService.recipeUpdated.subscribe((index: number) => {
+      if(index === this.id) {
+        this.recipe = this.recipeService.getRecipe(this.id);
+      }
+    })
   }
 
   ngOnDestroy(): void {
     if (this.editModeSubscription) {
       this.editModeSubscription.unsubscribe();
     }
+
+    this.recipeService.recipeUpdated.unsubscribe();
   }
 
   onAddToShoppingList() {

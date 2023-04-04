@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
@@ -72,6 +72,7 @@ export class RecipeService {
       ])
   ];
 
+  recipeUpdated = new EventEmitter<number>();
   recipesChanged = new Subject<Recipe[]>();
   recipeEditMode: boolean = false;
   recipeEditModeChanged = new Subject<boolean>();
@@ -99,6 +100,7 @@ export class RecipeService {
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
     this.recipesChanged.next(this.recipes.slice());
+    this.recipeUpdated.emit(index);
   }
 
   deleteRecipe(index: number) {
