@@ -1,7 +1,9 @@
-import { Component, ElementRef, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { NgForm } from '@angular/forms';
+
 
 @Component({
   selector: 'app-recipe-edit',
@@ -9,16 +11,15 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-edit.component.css']
 })
 
-
-export class RecipeEditComponent implements OnInit {
+export class RecipeEditComponent implements OnInit, OnDestroy {
   @Output() selectedNewRecipe = true;
   @ViewChild('nameInput', { static: false }) nameInputRef: ElementRef;
   @ViewChild('descriptionInput', { static: false }) descriptionInput: ElementRef;
   @ViewChild('imagePathInput', { static: false }) imagePathInput: ElementRef;
+  recipe: Recipe;
   id: number;
-  editMode: boolean = false;
 
-  constructor(private recipeServise: RecipeService,
+  constructor(public recipeService: RecipeService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -27,9 +28,22 @@ export class RecipeEditComponent implements OnInit {
       (params: Params) => {
         this.id = +params['id'];
         // Edit mode will be true only when there is an id defined
-        this.editMode = params['id'] != null;
+        this.recipeService.setRecipeEditMode(params['id'] != null);
       }
     );
+
+    // Get the current recipe
+    this.recipe = this.recipeService.getRecipe(this.id);
+  }
+
+  ngOnDestroy() {
+    this.recipeService.setRecipeEditMode(false);
+  }
+
+  adjustTextareaHeight(textarea: ElementRef): void {
+    const nativeElement = textarea.nativeElement;
+    nativeElement.style.height = 'auto';
+    nativeElement.style.height = nativeElement.scrollHeight + 'px';
   }
   // onAddNewRecipe() {
   //   const name = this.nameInputRef.nativeElement.value;
@@ -39,4 +53,16 @@ export class RecipeEditComponent implements OnInit {
   //   this.recipeServise.addRecipe(recipe);
   //   //this.selectedNewRecipe = !this.selectedNewRecipe;
   // }
+
+  onCancel() {
+    this.recipeService.setRecipeEditMode(false);
+  }
+
+  onSave(form: NgForm) {
+    const description = form.value.description;
+    const amount:number = form.value.amount;
+
+    
+  }
+
 }

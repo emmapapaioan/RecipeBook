@@ -1,21 +1,26 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+
 import { Ingredient } from 'src/app/shared/ingredient.model';
-import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
   styleUrls: ['./recipe-detail.component.css']
 })
-export class RecipeDetailComponent implements OnInit {
-  @Input() recipe: Recipe;
+export class RecipeDetailComponent implements OnInit, OnDestroy {
   @Output() addToShoppingListEvent = new EventEmitter<Ingredient[]>();
-  id: number;
+  recipe: Recipe = null;
+  id: number = -1;
+  drowpdownOpen: boolean = false;
 
-  constructor(private recipeService: RecipeService,
+  private editModeSubscription: Subscription;
+
+  constructor(public recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router) { }
 
@@ -29,19 +34,33 @@ export class RecipeDetailComponent implements OnInit {
     );
   }
 
+  ngOnDestroy(): void {
+    if (this.editModeSubscription) {
+      this.editModeSubscription.unsubscribe();
+    }
+  }
+
   onAddToShoppingList() {
+    this.recipeService.setRecipeEditMode(false);
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
     alert('The ingredients of the recipe "' + this.recipe.name + '" were successfully stored in the shopping list.');
   }
 
   onEditRecipe() {
     // Or just routerLink=":id/edit" at the html...
+    this.recipeService.setRecipeEditMode(true);
     this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
   }
 
   onDeleteRecipe() {
+    this.recipeService.setRecipeEditMode(false);
     this.recipeService.deleteRecipe(
       this.recipeService.getRecipes().indexOf(this.recipe)
     );
   }
+
+  onDropdownClick() {
+    this.drowpdownOpen = !this.drowpdownOpen;
+  }
+  
 }

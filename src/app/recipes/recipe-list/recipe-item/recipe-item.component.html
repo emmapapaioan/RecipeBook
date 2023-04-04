@@ -1,8 +1,32 @@
 <a 
-    [routerLink]="[index]"
-    routerLinkActive="active"
-    class="list-group-item clearfix">
-    <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+    [routerLink]="['/recipes',index]"
+    routerLinkActive="active">
+    <div class="card mb-3">
+        <img 
+            class="card-img-top" 
+            [src]="recipe.imagePath"  
+            alt="Card image cap">
+        <div class="card-body">
+            <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+            <p class="card-text">{{ recipe.description }}</p>
+        </div>
+      </div>
+</a>
+
+
+
+  
+
+  <!-- Maximilian's way -->
+<!-- <div class="card" style="width: 18rem;">
+    <img class="card-img-top" [src]="recipe.imagePath"  alt="Card image cap">
+    <div class="card-body">
+        <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+      <p class="card-text">{{ recipe.description }}</p>
+    </div>
+  </div>
+
+  <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
     <div class="pull-left" >
         <p 
             id="details" 
@@ -15,5 +39,4 @@
             alt=" {{ recipe.name }} img not available" 
             class="img-responsive"
             style="height: 150px; width: 150px;">
-    </span>
-</a>
+    </span> -->

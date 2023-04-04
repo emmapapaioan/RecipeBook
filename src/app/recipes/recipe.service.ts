@@ -73,6 +73,8 @@ export class RecipeService {
   ];
 
   recipesChanged = new Subject<Recipe[]>();
+  recipeEditMode: boolean = false;
+  recipeEditModeChanged = new Subject<boolean>();
 
   constructor(private shoppingListService : ShoppingListService) { }
 
@@ -111,5 +113,14 @@ export class RecipeService {
 
   addIngredientsToShoppingList(ingredients: Ingredient[]) {
     this.shoppingListService.addIngredients(ingredients);
+  }
+
+  getRecipeEditMode() {
+    return this.recipeEditMode;
+  }
+
+  setRecipeEditMode(value: boolean) {
+    this.recipeEditMode = value;
+    this.recipeEditModeChanged.next(value);
   }
 }

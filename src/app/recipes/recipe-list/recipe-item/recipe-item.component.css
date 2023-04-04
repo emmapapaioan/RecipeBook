@@ -1,13 +1,23 @@
-a.active,
-a.active:hover,
-a.active:active,
-a.active:focus{
-    background-color: #c09999  ;
-    border-color: #c09999  ;
+.card.mb-3 {
+    width: 28rem;
     color: black;
-    cursor: auto;
 }
 
-#details {
-    color: black;
+.card.mb-3:hover {
+    border: 1px solid;
+    border-color: rgb(112, 71, 71);
+    background-color: rgb(184, 141, 141);
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.card-img-top {
+    height: 25rem;
+}
+
+.card-text {
+    height: 6rem;
+    overflow: hidden;
 }
