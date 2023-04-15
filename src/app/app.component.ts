@@ -10,5 +10,5 @@ export class AppComponent {
   title = 'shopping-project';
   loadedFeature = 'recipe';
   selectedNewRecipe = false;
-
+  
 }

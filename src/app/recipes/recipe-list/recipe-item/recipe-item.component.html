@@ -1,23 +1,21 @@
-<a 
-    [routerLink]="['/recipes',index]"
+<div 
+  class="card mb-3"
+  *ngIf="recipe">
+  <a 
+    class="recipe-link" 
+    [routerLink]="['/recipes',index]" 
     routerLinkActive="active">
-    <div class="card mb-3">
-        <img 
-            class="card-img-top" 
-            [src]="recipe.imagePath"  
-            alt="Card image cap">
-        <div class="card-body">
-            <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-            <p class="card-text">{{ recipe.description }}</p>
-        </div>
-      </div>
-</a>
+    <img class="card-img-top" 
+      [src]="recipe.imagePath" 
+      alt="Card image cap">
+    <div class="card-body">
+      <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
+      <p class="card-text">{{ recipe.description }}</p>
+    </div>
+  </a>
+</div>
 
-
-
-  
-
-  <!-- Maximilian's way -->
+<!-- Maximilian's way -->
 <!-- <div class="card" style="width: 18rem;">
     <img class="card-img-top" [src]="recipe.imagePath"  alt="Card image cap">
     <div class="card-body">

@@ -9,8 +9,11 @@
 </div>
 <div class="row mt-4">
     <div class="col-md-12">
+        <p *ngIf="recipes.length === 0">The recipe list is empty</p>
         <app-recipe-item 
-            *ngFor="let recipeItem of recipes; let i = index" [recipe]="recipeItem" [index]="i">
+            *ngFor="let recipeItem of recipes; let i = index" 
+            [recipe]="recipeItem" 
+            [index]="i">
         </app-recipe-item>
     </div>
 </div>

@@ -1,7 +1,7 @@
 <app-recipe-detail></app-recipe-detail>
 
 <div *ngIf="recipeService.getRecipeEditMode()">
-    <form (ngSubmit)="onSave()" #form="ngForm" >
+    <form (ngSubmit)="onSave()" #form="ngForm">
 
         <div class="row mb-2">
             <div class="col-md-12">
@@ -11,8 +11,11 @@
 
         <div class="row mb-2">
             <div class="col-md-12">
-                <div class="btn-toolbar mb-2" role="toolbar" aria-label="Toolbar with button groups">
-                    <button
+                <div 
+                    class="btn-toolbar mb-2" 
+                    role="toolbar" 
+                    aria-label="Toolbar with button groups">
+                    <button 
                         class="btn btn-success mr-2" 
                         type="submit" 
                         aria-label="...">
@@ -34,8 +37,8 @@
                     name="name" 
                     type="text" 
                     id="name" 
-                    class="form-control"
-                    [(ngModel)]="currentRecipe.name"/>
+                    class="form-control" 
+                    [(ngModel)]="currentRecipe.name" />
             </div>
         </div>
 
@@ -61,25 +64,25 @@
                     type="text" 
                     id="imagePath" 
                     class="form-control"
-                    [(ngModel)]="currentRecipe.imagePath"/>
+                    [(ngModel)]="currentRecipe.imagePath" />
             </div>
         </div>
 
         <div *ngFor="let ingredient of currentRecipe.ingredients; let i = index">
-            <div class="row">
+            <div class="row ">
                 <div class="col-md-5">
                     <div class="form-group">
-                        <label for="ingredient{{i}}">Ingredient</label>
+                        <label for="ingredient[{{i}}]">Ingredient</label>
                         <input 
                             type="text" 
-                            id="ingredient{{i}}" 
-                            name="ingredient{{i}}" 
-                            class="form-control" 
+                            id="ingredient[{{i}}]" 
+                            name="ingredient[{{i}}]" 
+                            class="form-control"
                             [(ngModel)]="ingredient.name" 
                             required>
                     </div>
                 </div>
-            
+
                 <div class="col-md-3">
                     <div class="form-group">
                         <label for="amount{{i}}">Amount</label>
@@ -87,12 +90,44 @@
                             type="number" 
                             id="amount{{i}}" 
                             name="amount{{i}}" 
-                            class="form-control" 
+                            class="form-control"
                             [(ngModel)]="ingredient.amount" 
                             required 
                             pattern="^[1-9]+[0-9]*$">
                     </div>
                 </div>
+
+                <div class="row mb-2">
+                    <div class="col-md-12">
+                      <div 
+                        class="btn-toolbar mb-2" 
+                        role="toolbar" 
+                        aria-label="Toolbar with button groups">
+                        <div class="col-md-6">
+                            <label for="removeButton">Remove</label>
+                            <button
+                                type="button"
+                                (click)="removeIngredient(i)"
+                                name="removeButton"
+                                class="btn btn-danger d-block">-
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <label 
+                                *ngIf="i===currentRecipe.ingredients.length-1" 
+                                for="addButton">Add</label>
+                            <button
+                                *ngIf="i===currentRecipe.ingredients.length-1"
+                                type="button"
+                                (click)="addIngredient()"
+                                name="addButton"
+                                class="btn btn-success d-block">+
+                            </button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </form>

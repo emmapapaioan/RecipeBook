@@ -16,11 +16,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   @Output() addToShoppingListEvent = new EventEmitter<Ingredient[]>();
   recipe: Recipe = null;
   id: number = -1;
-  drowpdownOpen: boolean = false;
-
+  recipesEmpty: boolean = false;
   private editModeSubscription: Subscription;
 
-  constructor(public recipeService: RecipeService,
+  constructor(
+    public recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router) { }
 
@@ -32,7 +32,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.recipe = this.recipeService.getRecipe(this.id);
       }
     );
-
+    
     this.recipeService.recipeUpdated.subscribe((index: number) => {
       if(index === this.id) {
         this.recipe = this.recipeService.getRecipe(this.id);
@@ -51,7 +51,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   onAddToShoppingList() {
     this.recipeService.setRecipeEditMode(false);
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
-    alert('The ingredients of the recipe "' + this.recipe.name + '" were successfully stored in the shopping list.');
+    alert('The ingredients of the recipe "' 
+      + this.recipe.name 
+      + '" were successfully stored in the shopping list.');
   }
 
   onEditRecipe() {
@@ -67,8 +69,5 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  onDropdownClick() {
-    this.drowpdownOpen = !this.drowpdownOpen;
-  }
   
 }

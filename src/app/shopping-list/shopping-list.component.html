@@ -1,17 +1,21 @@
-<div class="col">
-    <div class="col-6 col-sm-4">
-        <app-shopping-edit></app-shopping-edit> 
+<div class="container">
+    <div class="row justify-content-start">
+        <div class="col-6">
+            <app-shopping-edit></app-shopping-edit>
+        </div>
     </div>
-</div>
 
-<div class="col-6 col-sm-4">
-    <h3>Shopping List</h3>
-    <div class="list-group">
-        <a 
-            class="list-group-item list-group-item-action list-group-item-light" 
-            style="cursor: pointer" 
-            *ngFor="let ingredient of ingredients; let i = index"
-            (click)="onEditIngredient(i)">
-            {{ingredient.name}} ({{ingredient.amount}})</a>
+    <div class="row justify-content-start">
+        <div class="col-6">
+            <h3>Shopping List</h3>
+            <div class="list-group">
+                <a 
+                    class="list-group-item list-group-item-action list-group-item-light" 
+                    style="cursor: pointer"
+                    *ngFor="let ingredient of ingredients; let i = index" 
+                    (click)="onEditIngredient(i)">
+                    {{ingredient.name}} ({{ingredient.amount}})</a>
+            </div>
+        </div>
     </div>
 </div>

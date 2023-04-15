@@ -2,6 +2,7 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 @Component({
   selector: 'app-recipe-list',
@@ -9,24 +10,31 @@ import { RecipeService } from '../recipe.service';
   styleUrls: ['./recipe-list.component.css']
 })
 
-export class RecipeListComponent implements OnInit, OnChanges{
+export class RecipeListComponent implements OnInit {
 
-  recipes: Recipe[];
+  recipes: Recipe[] = [];
 
-  constructor(private recipeService: RecipeService,
+  constructor(
+    private dataStorageService: DataStorageService,
+    private recipeService: RecipeService,
     private router: Router,
     private route: ActivatedRoute){}
   
   ngOnInit() {
-    this.recipes = this.recipeService.getRecipes();
+    this.dataStorageService.fetchRecipes().subscribe({
+      next: (response: Recipe[]) => {
+        this.recipeService.addRecipes(response);
+        this.recipes = this.recipeService.getRecipes();
+        console.log(response)
+      },
+      error: (error) => {
+        console.log(error.message);
+      }
+    });
 
     this.recipeService.recipeUpdated.subscribe((index: number) => {
       this.recipes[index] = this.recipeService.getRecipe(index);
     });
-  }
-
-  ngOnChanges() {
-    this.recipes = this.recipeService.getRecipes();
   }
 
   onSelectNewRecipe() {

@@ -4,6 +4,7 @@ import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { NgForm } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient.model';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 
 @Component({
@@ -18,12 +19,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   recipe: Recipe;
   currentRecipe: Recipe;
   id: number;
+  newIngredients: Ingredient[] = [];
 
   constructor(public recipeService: RecipeService,
+    private dataStorageService: DataStorageService,
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    // Retrieve the recipy id for which the edit will apply 
+    // Retrieve the recipe id for which the edit will apply 
     this.route.params.subscribe(
       (params: Params) => {
         this.id = +params['id'];
@@ -34,8 +37,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     // Get the current recipe
     this.recipe = this.recipeService.getRecipe(this.id);
-    this.currentRecipe = JSON.parse(JSON.stringify(this.recipe));
-  }
+    this.currentRecipe = {...this.recipe};
+   }
 
   ngOnDestroy() {
     this.recipeService.setRecipeEditMode(false);
@@ -61,13 +64,14 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   onSave() {
     if (this.form.valid) {
-      this.recipeService.updateRecipe(this.id, this.currentRecipe);
-      alert('Recipe "'+this.currentRecipe.name+'" was successfully updated.');
+      const newRecipe = {...this.currentRecipe};
+      this.recipeService.updateRecipe(this.id, newRecipe);
+      alert('Recipe "' + this.currentRecipe.name + '" was successfully updated.');
       this.recipeService.setRecipeEditMode(false);
       // const name = this.form.value.name;
       // const imagePath = this.form.value.imagePath;
       // const description = this.form.value.description;
-      
+
       // const ingredients = this.recipe.ingredients.map((ingredient, index) => {
       //   return {
       //     name: this.form.value['ingredient' + index],
@@ -75,8 +79,22 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       //   };
       // });
     }
+  }
 
-    
+  addIngredient() {
+    if (this.newIngredients.length === 0) {
+      let newIngredient = { name: '', amount: null };
+      this.currentRecipe.ingredients.push(newIngredient);
+    } else {
+      this.newIngredients.filter((ingredient: Ingredient) => {
+        ingredient.name !== '',
+          ingredient.amount !== null
+      });
+    }
+  }
+
+  removeIngredient(index: number) {
+    this.currentRecipe.ingredients.splice(index, 1);
   }
 
 }

@@ -9,9 +9,9 @@ import { map } from 'rxjs/operators';
 })
 
 export class DataStorageService {
-  apiURL: string = 'https://recipe-book-41dd4-default-rtdb.europe-west1.firebasedatabase.app/';
+  apiURL: string = 'https://recipe-book-41dd4-default-rtdb.europe-west1.firebasedatabase.app/secretKey=r3cip3B00k!/';
   recipesJSON: string = 'recipes.json'
-
+  
   constructor(private http: HttpClient, private recipeService: RecipeService) { }
 
   storeRecipes() {
@@ -30,15 +30,6 @@ export class DataStorageService {
   }
 
   fetchRecipes() {
-    return this.http
-      .get<Recipe[]>(this.apiURL + this.recipesJSON)
-      .subscribe({
-        next: (response) => {
-          this.recipeService.addRecipes(response);
-        },
-        error: (error) => {
-          console.log(error.message);
-        }
-      });
+    return this.http.get<Recipe[]>(this.apiURL + this.recipesJSON);
   }
 }
