@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
 import { Recipe } from './recipe.model';
-import { DataStorageService } from '../shared/data-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +11,13 @@ import { DataStorageService } from '../shared/data-storage.service';
 export class RecipeService {
   private recipes: Recipe[] = [];
 
+  hasRecipes: boolean = false;
   recipeUpdated = new EventEmitter<number>();
   recipesChanged = new Subject<Recipe[]>();
   recipeEditMode: boolean = false;
+  recipeAddMode: boolean = false;
   recipeEditModeChanged = new Subject<boolean>();
+  recipeAddModeChanged = new Subject<boolean>();
 
   constructor(
     private shoppingListService: ShoppingListService) { }
@@ -43,10 +45,14 @@ export class RecipeService {
     this.recipesChanged.next(this.recipes.slice());
   }
 
-  updateRecipe(index: number, newRecipe: Recipe) {
+  updateRecipe(index: number, newRecipe: Recipe, newIngredients?: Ingredient[]) {
+    if(newIngredients) {
+      newRecipe.ingredients.push(...newIngredients);
+    }
+    
     this.recipes[index] = newRecipe;
     this.recipesChanged.next(this.recipes.slice());
-    this.recipeUpdated.emit(index);
+    //this.recipeUpdated.emit(index);
   }
 
   deleteRecipe(index: number) {
@@ -70,5 +76,17 @@ export class RecipeService {
   setRecipeEditMode(value: boolean) {
     this.recipeEditMode = value;
     this.recipeEditModeChanged.next(value);
+    return this.recipeEditMode;
   }
+
+  getRecipeAddMode() {
+    return this.recipeAddMode;
+  }
+
+  setRecipeAddMode(value: boolean) {
+    this.recipeAddMode = value;
+    this.recipeAddModeChanged.next(value);
+    return this.recipeAddMode;
+  }
+  
 }

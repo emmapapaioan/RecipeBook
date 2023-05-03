@@ -1,19 +1,25 @@
 <div class="row">
     <div class="col-md-12">
-        <button 
-            class="btn btn-success" 
-            (click)="onSelectNewRecipe()">
+        <button class="btn btn-success"
+            data-toggle="modal" 
+            data-target="#exampleModal" 
+            data-whatever="@mdo" (click)="onSelectNewRecipe()">
             New Recipe
         </button>
     </div>
 </div>
 <div class="row mt-4">
     <div class="col-md-12">
-        <p *ngIf="recipes.length === 0">The recipe list is empty</p>
-        <app-recipe-item 
-            *ngFor="let recipeItem of recipes; let i = index" 
-            [recipe]="recipeItem" 
-            [index]="i">
-        </app-recipe-item>
+        <p *ngIf="recipes.length === 0">Loading recipes...</p>
+        <app-recipe-item *ngFor="let recipeItem of recipes; let i = index" [recipe]="recipeItem" [index]="i"></app-recipe-item>
+    </div>
+    <div 
+        *ngIf="isLoading || recipes.length === 0" 
+        class="spinner-border m-3 text-custom" 
+        role="status" 
+        style="width: 8rem; height: 8rem;">
+        <span class="sr-only">
+        Loading...
+        </span>
     </div>
 </div>

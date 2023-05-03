@@ -1,8 +1,9 @@
-<div>
+<div *ngIf="recipe">
     <div class="row mb-2">
         <div class="col-md-12">
             <p class="h1 mb-3">Recipe details</p>
             <img 
+                id="recipe-img"
                 src="{{ recipe.imagePath }}" 
                 alt="{{ recipe.name }} not found" 
                 class="img-fluid rounded-lg"
@@ -19,7 +20,7 @@
 
     <div class="row mb-2">
         <div class="col-md-12">
-            <div class="dropdown">
+            <div class="dropdown" >
                 <button 
                     class="btn btn-primary dropdown-toggle" 
                     type="button" 
@@ -32,7 +33,13 @@
                 
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" (click)="onAddToShoppingList()">Add to Shopping List</a>
-                    <a class="dropdown-item" (click)="onEditRecipe()">Edit Recipe</a>
+                    <a  
+                        class="dropdown-item" 
+                        (click)="onEditRecipe()"
+                        data-toggle="modal" 
+                        data-target="#exampleModal" 
+                        data-whatever="@mdo">Edit Recipe</a>
+                    <a class="dropdown-item" (click)="printRecipe()">Print Recipe</a>
                     <a class="dropdown-item" (click)="onDeleteRecipe()">Delete Recipe</a>
                 </div>
             </div>
@@ -40,9 +47,9 @@
     </div>
 </div>
 
-<div class="row mb-2">
-    <div class="col-md-10">
-        <table class="table table-striped" *ngIf="!recipeService.getRecipeEditMode()">
+<div class="row mb-2" *ngIf="recipe">
+    <div class="col-md-12">
+        <table class="table table-striped" id="ingredients">
             <thead>
                 <tr>
                     <th scope="col">Ingredient</th>

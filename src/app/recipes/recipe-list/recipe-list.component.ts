@@ -1,8 +1,9 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-recipe-list',
@@ -10,35 +11,52 @@ import { DataStorageService } from 'src/app/shared/data-storage.service';
   styleUrls: ['./recipe-list.component.css']
 })
 
-export class RecipeListComponent implements OnInit {
-
+export class RecipeListComponent implements OnInit, OnDestroy {
   recipes: Recipe[] = [];
+  isLoading: boolean = true;
+  addModeSubscription: Subscription;
 
   constructor(
     private dataStorageService: DataStorageService,
     private recipeService: RecipeService,
     private router: Router,
-    private route: ActivatedRoute){}
-  
-  ngOnInit() {
-    this.dataStorageService.fetchRecipes().subscribe({
-      next: (response: Recipe[]) => {
-        this.recipeService.addRecipes(response);
-        this.recipes = this.recipeService.getRecipes();
-        console.log(response)
-      },
-      error: (error) => {
-        console.log(error.message);
-      }
-    });
+    private route: ActivatedRoute) { }
 
-    this.recipeService.recipeUpdated.subscribe((index: number) => {
-      this.recipes[index] = this.recipeService.getRecipe(index);
-    });
+  ngOnInit() {
+    setTimeout(() => {
+      this.dataStorageService.fetchRecipes().subscribe({
+        next: (response: Recipe[]) => {
+          this.recipeService.addRecipes(response);
+          this.recipes = this.recipeService.getRecipes();
+          console.log(response);
+        },
+        error: (error) => {
+          console.log(error.message);
+        },
+        complete: () => {
+          this.isLoading = false;
+        }
+      })
+    }, 1000);
+
+    this.recipeService.recipesChanged
+      .subscribe(
+        (recipes: Recipe[]) => {
+          this.recipes = recipes;
+        }
+      );
   }
 
   onSelectNewRecipe() {
+    this.recipeService.setRecipeAddMode(true);
     // The below is equal to routerLink='new' on the html
-    this.router.navigate(['new'], {relativeTo: this.route});
+    this.router.navigate(['recipes', 'new']);
   }
+
+  ngOnDestroy() {
+    if (this.addModeSubscription) {
+      this.addModeSubscription.unsubscribe();
+    }
+  }
+
 }

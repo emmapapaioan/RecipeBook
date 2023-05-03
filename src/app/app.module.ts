@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -18,6 +19,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { TestComponent } from './test/test.component';
 import { ChildTestComponent } from './test/child-test/child-test.component';
 import { RecipeService } from './recipes/recipe.service';
+import { PdfGeneratorService } from './shared/pdf-generator.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 
 @NgModule({
@@ -41,11 +43,14 @@ import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.com
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [
     ShoppingListService,
-    RecipeService
+    RecipeService,
+    PdfGeneratorService,
+    NgbActiveModal
   ],
   bootstrap: [AppComponent]
 })
