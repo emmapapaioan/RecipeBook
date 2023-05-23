@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Params, Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
@@ -17,7 +17,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   @ViewChild('form', { static: false }) form: NgForm;
   @ViewChild('recipeEditModal', { static: false }) recipeEditModal: ElementRef;
   @ViewChild('descriptionInput', {static: false}) descriptionInput: ElementRef;
-
 
   recipe: Recipe;
   id: number;
@@ -145,10 +144,17 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    const newRecipe = new Recipe(
+      this.recipeForm.value['name'],
+      this.recipeForm.value['description'],
+      this.recipeForm.value['imagePath'],
+      this.getIngredients()
+    );
+
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, this.recipeForm.value, this.getIngredients());
+      this.recipeService.updateRecipe(this.id, newRecipe);
     } else {
-      this.recipeService.addRecipe(this.recipeForm.value);
+      this.recipeService.addRecipe(newRecipe);
     }
     
     this.handleModalClosing();

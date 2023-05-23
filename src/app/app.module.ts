@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { NgbModule, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -21,6 +21,11 @@ import { ChildTestComponent } from './test/child-test/child-test.component';
 import { RecipeService } from './recipes/recipe.service';
 import { PdfGeneratorService } from './shared/pdf-generator.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
+import { OcrReaderComponent } from './test/ocr-reader/ocr-reader.component';
+
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
+import { NgxDocViewerModule } from 'ngx-doc-viewer';
 
 @NgModule({
   declarations: [
@@ -36,7 +41,8 @@ import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.com
     RecipeEditComponent,
     TestComponent,
     ChildTestComponent,
-    RecipesStartComponent
+    RecipesStartComponent,
+    OcrReaderComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +50,10 @@ import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.com
     ReactiveFormsModule,
     HttpClientModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    NgxDocViewerModule,
+    PdfViewerModule,
+    PdfJsViewerModule
   ],
   providers: [
     ShoppingListService,
@@ -52,6 +61,7 @@ import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.com
     PdfGeneratorService,
     NgbActiveModal
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

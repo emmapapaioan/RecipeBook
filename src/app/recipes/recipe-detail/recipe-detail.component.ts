@@ -8,8 +8,8 @@ import { Subscription } from 'rxjs';
 
 import { OpenSans } from 'src/app/shared/open-sans-font';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import autotable from 'jspdf-autotable';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -23,6 +23,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe = null;
   id: number = -1;
   recipesEmpty: boolean = false;
+  private paramsSubscription: Subscription;
   private editModeSubscription: Subscription;
 
   constructor(
@@ -31,7 +32,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.route.params
+    
+    this.paramsSubscription = this.route.params
       .subscribe(
         (params: Params) => {
           this.id = + params['id'];
@@ -50,14 +52,21 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     if (this.editModeSubscription) {
       this.editModeSubscription.unsubscribe();
     }
+
+    if (this.paramsSubscription) {
+      this.paramsSubscription.unsubscribe();
+    }
   }
 
   onAddToShoppingList() {
     this.recipeService.setRecipeEditMode(false);
     this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
-    alert('The ingredients of the recipe "'
-      + this.recipe.name
-      + '" were successfully stored in the shopping list.');
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Success',
+      text: 'The ingredients of the recipe "' + this.recipe.name + '" were successfully stored in the shopping list.',
+    });
   }
 
   onEditRecipe() {
@@ -78,8 +87,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     const maxWidth = 180;
 
     // Enable automatic page creation
-
-
     // Add the Open Sans variable font
     doc.addFileToVFS(OpenSans.name, OpenSans.base64);
     doc.addFont(OpenSans.name, 'OpenSans', 'normal');
@@ -144,11 +151,28 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   onDeleteRecipe() {
-    this.recipeService.setRecipeEditMode(false);
-    this.recipeService.deleteRecipe(
-      this.recipeService.getRecipes().indexOf(this.recipe)
-    );
+    Swal.fire({
+      icon: 'warning',
+      title: 'Delete Recipe',
+      text: 'Recipe "' + this.recipe.name + '" is going to be deleted. Are you sure?',
+      confirmButtonText: 'Delete',
+      showCancelButton: true,
+      confirmButtonColor: '#d33'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.recipeService.setRecipeEditMode(false);
+        this.recipeService.deleteRecipe(
+          this.recipeService.getRecipes().indexOf(this.recipe)
+        );
+        this.router.navigate(['/recipes']);
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'The deletion of the recipe was successfull',
+          confirmButtonColor: '#28a745'
+        });
+      }
+    });
   }
-
-
 }

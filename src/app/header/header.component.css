@@ -7,17 +7,16 @@ img:hover {
 }
   
 .btn-outline-custom {
-    color: rgb(165, 123, 136);
-    background-color: transparent;
-    background-image: none;
-    border-color: rgb(165, 123, 136);
-}
-
-.btn-outline-custom:hover {
     color: #212529;
     background-color: rgb(165, 123, 136);
     border-color: rgb(165, 123, 136);
+}  
+
+.btn-outline-custom:hover {
+    background-color: rgb(135, 95, 108);
+    background-image: none;
 }
+
 
 .dropdown {
     max-width: fit-content;

@@ -37,7 +37,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       })
-    }, 1000);
+    }, 500);
 
     this.recipeService.recipesChanged
       .subscribe(
