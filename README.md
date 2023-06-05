@@ -1,7 +1,6 @@
-# ShoppingProject
+<h1>ShoppingProject <em><sub><sup>  *Under construction</sup></sub></em></h1>
 
 ShoppingProject is a web application developed using Angular framework. It allows users to store recipes to a remote database. Also users can view, edit and delete any recipes.
-
 
 ## Technologies
 The project is developed using Angular, a TypeScript-based open-source web application framework. It also uses other technologies such as HTML, CSS, Bootstrap, and TypeScript.
@@ -22,6 +21,7 @@ The application should be available at http://localhost:4200/.
 The project is currently under development, and new features and improvements are being added regularly.
 
 ## Acknowledgments
-I would like to thank Maximilian Schwarzmüller for creating the "The Complete Guide to Angular 2" Udemy course , which has been a great resource for learning Angular development. This is a project that I am building to practice Angular development. It is still under construction and I am building it as I follow the specific course.
-You can find the course here <a href="https://www.udemy.com/course/the-complete-guide-to-angular-2/" target="_blank">The Complete Guide to Angular 2</a>
-.
+This project is being built as I follow along with the Udemy course "The Complete Guide to Angular 2" by Maximilian Schwarzmüller. It serves as a practical application to enhance my skills in Angular development. The project is still under construction.
+
+You can find the course [here](https://www.udemy.com/course/the-complete-guide-to-angular-2/).
+
