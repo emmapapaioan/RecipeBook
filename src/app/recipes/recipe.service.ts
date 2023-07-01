@@ -16,11 +16,12 @@ export class RecipeService {
   recipesChanged = new Subject<Recipe[]>();
   recipeEditMode: boolean = false;
   recipeAddMode: boolean = false;
+  recipeDetailMode: boolean = false;
   recipeEditModeChanged = new Subject<boolean>();
   recipeAddModeChanged = new Subject<boolean>();
+  recipeDetailModeChanged = new Subject<boolean>();
 
-  constructor(
-    private shoppingListService: ShoppingListService) { }
+  constructor(private shoppingListService: ShoppingListService) { }
 
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes;
@@ -60,9 +61,9 @@ export class RecipeService {
     this.recipesChanged.next(this.recipes.slice());
   }
 
-  addIngredientsToShoppingList(ingredients: Ingredient[]) {
-    this.shoppingListService.addIngredients(ingredients);
-  }
+  // addIngredientsToShoppingList(ingredients: Ingredient[]) {
+  //   this.shoppingListService.addIngredients(ingredients);
+  // }
 
   getRecipeEditMode() {
     return this.recipeEditMode;
@@ -83,5 +84,14 @@ export class RecipeService {
     this.recipeAddModeChanged.next(value);
     return this.recipeAddMode;
   }
-  
+
+  getRecipeDetailMode() {
+    return this.recipeAddMode;
+  }
+
+  setRecipeDetailMode(value: boolean) {
+    this.recipeDetailMode = value;
+    this.recipeDetailModeChanged.next(value);
+    return this.recipeAddMode;
+  }
 }

@@ -43,7 +43,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
     const name = form.value.name;
     const amount:number = form.value.amount;
 
-    if(name !== '' && amount && amount>0){
+    if(name && amount){
       const ingredient = new Ingredient(name, amount);
       this.shoppingListService.addIngredient(ingredient);
     }
@@ -55,8 +55,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   onDeleteItem(form: NgForm) {
     const name = form.value.name;
     const amount:number = form.value.amount;
-    const ingredient = new Ingredient(name, amount);
-    this.shoppingListService.deleteIngredient(ingredient);
+    this.shoppingListService.deleteIngredient({name, amount});
 
     this.clearValues();
     this.editMode = false;
@@ -65,8 +64,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   onUpdateIngredient(form: NgForm) {
     const name = form.value.name;
     const amount = form.value.amount;
-    const ingredient = new Ingredient(name, amount);
-    this.shoppingListService.updateIngredient(ingredient);
+    this.shoppingListService.updateIngredient({name, amount});
 
     this.clearValues();
     this.editMode = false;

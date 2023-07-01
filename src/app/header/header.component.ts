@@ -12,7 +12,10 @@ import { DataStorageService } from '../shared/data-storage.service';
 export class HeaderComponent implements OnInit {
   collapsed: boolean = true;
   recipes: Recipe[];
-  constructor(private dataStorageService: DataStorageService, private recipeService: RecipeService) { }
+  
+  constructor(
+    private dataStorageService: DataStorageService, 
+    private recipeService: RecipeService) { }
 
   ngOnInit(): void { }
 

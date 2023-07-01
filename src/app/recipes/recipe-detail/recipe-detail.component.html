@@ -2,12 +2,8 @@
     <div class="row mb-2">
         <div class="col-md-12">
             <p class="h1 mb-3">Recipe details</p>
-            <img 
-                id="recipe-img"
-                src="{{ recipe.imagePath }}" 
-                alt="{{ recipe.name }} not found" 
-                class="img-fluid rounded-lg"
-                style="min-height: 500px">
+            <img id="recipe-img" src="{{ recipe.imagePath }}" alt="{{ recipe.name }} not found"
+                class="img-fluid rounded-lg" style="min-height: 500px">
         </div>
     </div>
 
@@ -20,27 +16,22 @@
 
     <div class="row mb-2">
         <div class="col-md-12">
-            <div class="dropdown" >
-                <button 
-                    class="btn btn-primary dropdown-toggle" 
-                    type="button" 
-                    id="dropdownMenuButton" 
-                    data-toggle="dropdown" 
-                    aria-haspopup="true" 
-                    aria-expanded="false">
+            <div ngbDropdown class="d-inline-block">
+                <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>
                     Manage recipe
                 </button>
-                
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" (click)="onAddToShoppingList()">Add to Shopping List</a>
-                    <a  
-                        class="dropdown-item" 
-                        (click)="onEditRecipe()"
-                        data-toggle="modal" 
+
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <button ngbDropdownItem (click)="onAddToShoppingList()">Add to Shopping List</button>
+                    <button 
+                        ngbDropdownItem 
+                        (click)="onEditRecipe()" 
+                        data-toggle="modal"
                         data-target="#exampleModal" 
-                        data-whatever="@mdo">Edit Recipe</a>
-                    <a class="dropdown-item" (click)="printRecipe()">Print Recipe</a>
-                    <a class="dropdown-item" (click)="onDeleteRecipe()">Delete Recipe</a>
+                        data-whatever="@mdo"
+                        >Edit Recipe</button>
+                    <button ngbDropdownItem class="dropdown-item" (click)="printRecipe()">Print Recipe</button>
+                    <button ngbDropdownItem class="dropdown-item" (click)="onDeleteRecipe()">Delete Recipe</button>
                 </div>
             </div>
         </div>

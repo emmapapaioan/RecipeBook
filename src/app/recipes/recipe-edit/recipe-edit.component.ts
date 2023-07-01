@@ -5,6 +5,7 @@ import { RecipeService } from '../recipe.service';
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DataStorageService } from 'src/app/shared/data-storage.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -16,11 +17,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   @Output() selectedNewRecipe = true;
   @ViewChild('form', { static: false }) form: NgForm;
   @ViewChild('recipeEditModal', { static: false }) recipeEditModal: ElementRef;
-  @ViewChild('descriptionInput', {static: false}) descriptionInput: ElementRef;
+  @ViewChild('descriptionInput', { static: false }) descriptionInput: ElementRef;
 
   recipe: Recipe;
   id: number;
   editMode: boolean = false;
+  addMode: boolean = false;
   recipeForm: FormGroup;
   newIngredients: Ingredient[] = [];
 
@@ -28,17 +30,25 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     public recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
     // Retrieve the recipe id for which the edit will apply 
+
     this.route.params.subscribe(
       (params: Params) => {
         this.id = + params['id'];
-        // Get the current recipe
-        this.recipe = this.recipeService.getRecipe(this.id);
-        // Edit mode will be true only when there is an id defined
-        this.editMode = this.recipeService.setRecipeEditMode(params['id'] != null);
+
+        if (!isNaN(this.id)) {
+          // Get the current recipe
+          this.recipe = this.recipeService.getRecipe(this.id);
+          // Edit mode will be true only when there is an id defined
+          this.editMode = this.recipeService.setRecipeEditMode(params['id'] != null);
+        } else {
+          this.addMode = this.recipeService.setRecipeAddMode(true);
+        }
+
         this.initForm();
       }
     );
@@ -47,7 +57,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     if (this.recipeService.getRecipeEditMode) {
       this.recipeService.setRecipeEditMode(false);
-    }else{
+    } else {
       this.recipeService.setRecipeAddMode(false);
     }
   }
@@ -98,15 +108,19 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   handleModalClosing() {
-    if (this.recipeService.getRecipeEditMode) {
+    if (this.editMode) {
       this.recipeService.setRecipeEditMode(false);
       this.router.navigate(['/recipes', this.id]);
     } else {
       this.recipeService.setRecipeAddMode(false);
-      this.router.navigate(['/recipes']);
+      if (!isNaN(this.id)) {
+        this.router.navigate(['/recipes', this.id]);
+      } else {
+        this.router.navigate(['/recipes']);
+      }
     }
   }
-  
+
   get controls() {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
@@ -117,10 +131,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       const amount = control.get('amount').value;
       return new Ingredient(name, amount);
     });
-    
+
     return ingredients;
   }
-  
+
   adjustTextareaHeight(): void {
     const nativeElement = this.descriptionInput.nativeElement;
     nativeElement.style.height = 'auto';
@@ -148,15 +162,19 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.recipeForm.value['name'],
       this.recipeForm.value['description'],
       this.recipeForm.value['imagePath'],
-      this.getIngredients()
+      this.getIngredients(),
+      this.recipeService.getRecipesLength() + 1
     );
 
     if (this.editMode) {
       this.recipeService.updateRecipe(this.id, newRecipe);
+      this.dataStorageService.updateRecipe(this.recipe.id, newRecipe);
     } else {
       this.recipeService.addRecipe(newRecipe);
+      this.dataStorageService.storeRecipe(newRecipe);
+
     }
-    
+
     this.handleModalClosing();
   }
 

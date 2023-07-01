@@ -5,7 +5,14 @@
         </div>
     </div>
 
-    <div class="row justify-content-start">
+    <!-- <div class="row justify-content-start">
+        <div class="col-6">
+          Show loader here -->
+          <!-- <div class="loader">Loading...</div>
+        </div>
+      </div> -->
+
+    <div class="row justify-content-start" *ngIf="ingredients.length>0">
         <div class="col-6">
             <h3>Shopping List</h3>
             <div class="list-group">
@@ -18,4 +25,12 @@
             </div>
         </div>
     </div>
+
+    <!-- <div class="btn-group mr-2 mt-4" role="group" aria-label="First group">
+        <button 
+            class="btn btn-success" 
+            type="button"
+            (click)="save()">
+            Save</button>
+    </div> -->
 </div>

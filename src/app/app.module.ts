@@ -23,9 +23,10 @@ import { PdfGeneratorService } from './shared/pdf-generator.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 import { OcrReaderComponent } from './test/ocr-reader/ocr-reader.component';
 
-import { PdfViewerModule } from 'ng2-pdf-viewer';
-import { PdfJsViewerModule } from 'ng2-pdfjs-viewer';
-import { NgxDocViewerModule } from 'ngx-doc-viewer';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   declarations: [
@@ -51,9 +52,10 @@ import { NgxDocViewerModule } from 'ngx-doc-viewer';
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
-    NgxDocViewerModule,
-    PdfViewerModule,
-    PdfJsViewerModule
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     ShoppingListService,

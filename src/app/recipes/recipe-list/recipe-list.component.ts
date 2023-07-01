@@ -23,12 +23,10 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    setTimeout(() => {
       this.dataStorageService.fetchRecipes().subscribe({
         next: (response: Recipe[]) => {
           this.recipeService.addRecipes(response);
           this.recipes = this.recipeService.getRecipes();
-          console.log(response);
         },
         error: (error) => {
           console.log(error.message);
@@ -37,7 +35,6 @@ export class RecipeListComponent implements OnInit, OnDestroy {
           this.isLoading = false;
         }
       })
-    }, 500);
 
     this.recipeService.recipesChanged
       .subscribe(

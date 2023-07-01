@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'ocr-image', component: OcrReaderComponent},
   { path: 'recipes', component: RecipesComponent, children: [
     { path: '', component: RecipesStartComponent},
-    { path: 'new', component: RecipeEditComponent}, // Order of routes matters here. New must be above :id.
+    { path: 'new', component: RecipeEditComponent}, // Order of routes, matters here. New must be above :id.
     { path: ':id', component: RecipeDetailComponent},
   { path: ':id/edit', component: RecipeEditComponent}
   ]},
