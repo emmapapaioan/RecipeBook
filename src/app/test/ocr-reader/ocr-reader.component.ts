@@ -16,11 +16,23 @@ export class OcrReaderComponent implements OnInit {
   isLoading: boolean = false;
 
   ngOnInit() {
-
+    this.loadImage('http://tesseract.projectnaptha.com/img/eng_bw.png');
+    this.extractText();
   }
-  
+
   async performOCR(imageUrl: string) {
+    if (!imageUrl) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Insert an image url.',
+        confirmButtonColor: '#28a745'
+      });
+      return;
+    }
+
     this.isLoading = true;
+
     try {
       const result = await Tesseract.recognize(imageUrl, 'eng', { logger: (m) => console.log(m) }); //For every new language, write '+ell' for example
       this.extractedText = result.data.text;
@@ -30,6 +42,7 @@ export class OcrReaderComponent implements OnInit {
         icon: 'error',
         title: 'Error',
         text: 'Error performing OCR: ' + error.message,
+        confirmButtonColor: '#28a745'
       });
     }
     finally {
