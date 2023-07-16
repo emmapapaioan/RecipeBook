@@ -28,7 +28,6 @@ export class RecipeService {
   }
 
   getRecipes() {
-    // Adding the slice method, we are just taking a copy of the actual array
     return this.recipes.slice();
   }
 
@@ -48,10 +47,16 @@ export class RecipeService {
   updateRecipe(index: number, newRecipe: Recipe) {
     this.recipes[index] = newRecipe;
     this.recipesChanged.next(this.recipes.slice());
-    //this.recipeUpdated.emit(index);
+    this.recipeUpdated.emit(index);
   }
 
-  deleteRecipe(index: number) {
+  deleteRecipe(index?: number, recipe?: Recipe) {
+    if (recipe) {
+      this.recipes = this.recipes.filter(recipe => recipe !== recipe);
+      this.recipesChanged.next(this.recipes.slice());
+      return;
+    }
+    
     this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice());
   }
