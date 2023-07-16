@@ -54,11 +54,11 @@ export class OcrReaderComponent implements OnInit {
       });
       return;
     }
-    this.http.get<any>(`http://localhost:3000/ocr?imageUrl=${imageUrl}`).subscribe(
-      (res) => {
+    this.http.get<any>(`http://localhost:3000/ocr?imageUrl=${imageUrl}`).subscribe({
+      next: (res) => {
         this.extractedText = res.text;
       },
-      (error) => {
+      error: (error) => {
         Swal.fire({
           icon: 'error',
           title: 'Error',
@@ -66,11 +66,12 @@ export class OcrReaderComponent implements OnInit {
           confirmButtonColor: '#28a745'
         });
       },
-      () => {
+      complete: () => {
         this.isLoading = false;
       }
-    );
+    });
   }
+  
 
   async performOCR(imageUrl: string) {
     if (!imageUrl) {
