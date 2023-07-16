@@ -43,4 +43,4 @@ testem.log
 Thumbs.db
 
 # Components
-src\app\test\child-test
+src/app/test/child-test
