@@ -1,3 +1,8 @@
 .text-custom {
     color: rgb(165, 123, 136);
 }
+
+.newRecpBtn {
+    height: min-content;
+    align-items: center;
+}

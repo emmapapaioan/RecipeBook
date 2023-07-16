@@ -6,4 +6,13 @@ input.ng-invalid.ng-touched,
 textarea.ng-invalid.ng-touched {
     border-color: red;
 }
-  
+
+.modal-header,
+.modal-content,
+.modal-footer {
+    border: none;
+}
+
+.modal-header {
+    background-color: #800000;
+}

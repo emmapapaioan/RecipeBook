@@ -7,19 +7,18 @@ import { RecipesComponent } from './recipes/recipes.component';
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { TestComponent } from './test/test.component';
 import { OcrReaderComponent } from './test/ocr-reader/ocr-reader.component';
+import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/recipes', pathMatch: 'full'},
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: 'home', component: HomeComponent},
   { path: 'ocr-image', component: OcrReaderComponent},
-  { path: 'recipes', component: RecipesComponent, children: [
-    { path: '', component: RecipesStartComponent},
-    { path: 'new', component: RecipeEditComponent}, // Order of routes, matters here. New must be above :id.
-    { path: ':id', component: RecipeDetailComponent},
-  { path: ':id/edit', component: RecipeEditComponent}
-  ]},
-  { path: 'shopping-list', component: ShoppingListComponent},
-  { path: 'playground', component: TestComponent},
-  
+  { path: 'about', component: AboutComponent},
+  { path: 'recipes/:id', component: RecipeDetailComponent},
+  { path: 'recipes', component: RecipeListComponent },
+  { path: 'shopping-list', component: ShoppingListComponent}
 ];
 
 @NgModule({

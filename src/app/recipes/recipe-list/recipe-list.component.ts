@@ -1,9 +1,11 @@
-import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../recipe.service';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { Subscription } from 'rxjs';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 
 @Component({
   selector: 'app-recipe-list',
@@ -19,13 +21,12 @@ export class RecipeListComponent implements OnInit, OnDestroy {
   constructor(
     private dataStorageService: DataStorageService,
     private recipeService: RecipeService,
-    private router: Router,
-    private route: ActivatedRoute) { }
+    private modalService: NgbModal) { }
 
   ngOnInit() {
       this.dataStorageService.fetchRecipes().subscribe({
         next: (response: Recipe[]) => {
-          this.recipeService.addRecipes(response);
+          this.recipeService.setRecipes(response);
           this.recipes = this.recipeService.getRecipes();
         },
         error: (error) => {
@@ -46,8 +47,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
 
   onSelectNewRecipe() {
     this.recipeService.setRecipeAddMode(true);
-    // The below is equal to routerLink='new' on the html
-    this.router.navigate(['recipes', 'new']);
+    this.modalService.open(RecipeEditComponent, {backdrop: 'static', size: 'lg'});
   }
 
   ngOnDestroy() {

@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class ShoppingListComponent implements OnInit {
   
   ingredients: Ingredient[];
+  selectedIngredientIndex: number;
   constructor(private shoppingListService: ShoppingListService) {}
 
   ngOnInit(): void {
@@ -35,6 +36,7 @@ export class ShoppingListComponent implements OnInit {
   }
 
   onEditIngredient(index: number) {
+    this.selectedIngredientIndex = index;
     this.shoppingListService.startEditing.next(index);
   }
 }

@@ -1,4 +1,12 @@
-
+.main-content {
+    background-image: url('src\assets\images\1306023.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: calc(100vh - 150px);
+}
   
+.selected-ingredient {
+    background-color: #d3d3d3;
+}
 
   

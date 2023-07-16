@@ -1,74 +1,50 @@
-<div *ngIf="recipe">
-    <div class="row mb-2">
-        <div class="col-md-12">
-            <p class="h1 mb-3">Recipe details</p>
-            <img id="recipe-img" src="{{ recipe.imagePath }}" alt="{{ recipe.name }} not found"
-                class="img-fluid rounded-lg" style="min-height: 500px">
+<div *ngIf="recipe" class="container py-5">
+    <div class="row d-flex justify-content-around">
+        <div class="d-flex flex-column col-6">
+            <div>
+                <p class="h1 mb-3">Recipe details</p>
+                <img id="recipe-img" src="{{ recipe.imagePath }}" alt="{{ recipe.name }} not found"
+                    class="img-fluid rounded-lg">
+            </div>
+            <div>
+                <h3>{{ recipe.name }}</h3>
+                <p>{{ recipe.description }}</p>
+            </div>
         </div>
-    </div>
-
-    <div class="row mb-2">
-        <div class="col-md-12">
-            <h3>{{ recipe.name }}</h3>
-            <p>{{ recipe.description}}</p>
-        </div>
-    </div>
-
-    <div class="row mb-2">
-        <div class="col-md-12">
-            <div ngbDropdown class="d-inline-block">
-                <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>
-                    Manage recipe
-                </button>
-
-                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                    <button ngbDropdownItem (click)="onAddToShoppingList()">Add to Shopping List</button>
-                    <button 
-                        ngbDropdownItem 
-                        (click)="onEditRecipe()" 
-                        data-toggle="modal"
-                        data-target="#exampleModal" 
-                        data-whatever="@mdo"
-                        >Edit Recipe</button>
-                    <button ngbDropdownItem class="dropdown-item" (click)="printRecipe()">Print Recipe</button>
-                    <button ngbDropdownItem class="dropdown-item" (click)="onDeleteRecipe()">Delete Recipe</button>
+        <div class="d-flex flex-column col-1"></div>
+        <div class="d-flex flex-column col-5">
+            <div *ngIf="recipe">
+                <div class="table-responsive-sm">
+                    <table class="table table-striped" id="ingredients">
+                        <thead>
+                            <tr>
+                                <th scope="col">Ingredient</th>
+                                <th scope="col">Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let ingredient of recipe.ingredients">
+                                <td>{{ ingredient.name }}</td>
+                                <td>{{ ingredient.amount }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ngbDropdown>
+                    <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>
+                        Manage recipe
+                    </button>
+    
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <button ngbDropdownItem (click)="onAddToShoppingList()">Add to Shopping List</button>
+                        <button ngbDropdownItem (click)="onEditRecipe()" data-target="#exampleModal"
+                            data-whatever="@mdo">Edit
+                            Recipe</button>
+                        <button ngbDropdownItem class="dropdown-item" (click)="printRecipe()">Print Recipe</button>
+                        <button ngbDropdownItem class="dropdown-item" (click)="onDeleteRecipe()">Delete Recipe</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="row mb-2" *ngIf="recipe">
-    <div class="col-md-12">
-        <table class="table table-striped" id="ingredients">
-            <thead>
-                <tr>
-                    <th scope="col">Ingredient</th>
-                    <th scope="col">Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let ingredient of recipe.ingredients">
-                    <td>{{ ingredient.name }}</td>
-                    <td>{{ ingredient.amount }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Maximilian's way-->
-<!-- <div class="row mb-2">
-    <div class="col-xs-12 mb-2">
-        {{ recipe.description }}
-    </div>
-    <div class="col-xs-12">
-        <ul class="list-group">
-            <li 
-                class="list-group-item"
-                *ngFor="let ingredient of recipe.ingredients">
-                {{ ingredient.name }} - {{ ingredient.amount }}
-            </li>
-        </ul>
-    </div>
-</div>-->

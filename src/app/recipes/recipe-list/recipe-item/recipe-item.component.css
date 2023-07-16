@@ -1,5 +1,7 @@
 .card {
-    width: 28rem;
+    max-width: 100%;
+    min-width: 15rem;
+    min-height: 100%;
 }
 
 a {
@@ -7,12 +9,12 @@ a {
 }
 
 .card:hover {
-    background-color: rgb(255, 225, 225);
+    background-color: #ccc;
 }
 
 .active {
-    border-color: rgb(112, 71, 71);
-    background-color: rgb(184, 141, 141);
+    border-color: #333;
+    background-color: #ccc;
 }
   
 a:hover {
@@ -20,7 +22,7 @@ a:hover {
 }
 
 .card-img-top {
-    height: 25rem;
+    height: 20rem;
 }
 
 .card-text {

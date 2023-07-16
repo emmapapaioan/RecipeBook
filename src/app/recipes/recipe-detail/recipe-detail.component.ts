@@ -12,6 +12,8 @@ import autotable from 'jspdf-autotable';
 import Swal from 'sweetalert2';
 import { DataStorageService } from 'src/app/shared/data-storage.service';
 import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 
 
 @Component({
@@ -33,7 +35,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dataStorageService: DataStorageService,
-    private shoppingListService: ShoppingListService) { }
+    private shoppingListService: ShoppingListService,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.recipeService.setRecipeDetailMode(true);
@@ -70,9 +73,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   onEditRecipe() {
-    // Or just routerLink=":id/edit" at the html...
     this.recipeService.setRecipeEditMode(true);
-    this.router.navigate(['/recipes', this.id, 'edit']);
+    const modalRef = this.modalService.open(RecipeEditComponent, {backdrop: 'static', size: 'lg'});
+    modalRef.componentInstance.id = this.id;
   }
 
   printRecipe() {

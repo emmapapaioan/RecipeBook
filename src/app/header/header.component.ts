@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Recipe } from '../recipes/recipe.model';
-import { RecipeService } from '../recipes/recipe.service';
 import { DataStorageService } from '../shared/data-storage.service';
 
 @Component({
@@ -12,10 +11,10 @@ import { DataStorageService } from '../shared/data-storage.service';
 export class HeaderComponent implements OnInit {
   collapsed: boolean = true;
   recipes: Recipe[];
+  public isScrolled = false;
   
   constructor(
-    private dataStorageService: DataStorageService, 
-    private recipeService: RecipeService) { }
+    private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void { }
 
@@ -25,6 +24,11 @@ export class HeaderComponent implements OnInit {
 
   onFetchData() {
     this.dataStorageService.fetchRecipes();
+  }
+
+  @HostListener('window:scroll')
+  scrollEvent() {
+    window.pageYOffset >=80 ? (this.isScrolled = true) : (this.isScrolled = false);
   }
 
 }

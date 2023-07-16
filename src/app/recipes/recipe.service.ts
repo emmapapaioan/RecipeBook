@@ -21,7 +21,7 @@ export class RecipeService {
   recipeAddModeChanged = new Subject<boolean>();
   recipeDetailModeChanged = new Subject<boolean>();
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor() { }
 
   setRecipes(recipes: Recipe[]) {
     this.recipes = recipes;

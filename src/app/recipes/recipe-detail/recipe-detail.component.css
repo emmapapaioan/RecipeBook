@@ -1,19 +1,20 @@
 a:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
+/* Apply border radius to table */
 .table {
-    width: 550px;
+  border: 1px solid #061b30;
+  border-radius: 0.5rem;
+  overflow: hidden;
 }
 
-/* Add border to table */
-.table {
-    border: 1px solid #061b30;
-  }
-  
-  /* Apply border radius to table */
-  .table {
-    border-radius: 0.5rem;
-    overflow: hidden;
-  }
-  
+#recipe-img {
+  object-fit: cover;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 70%;
+}

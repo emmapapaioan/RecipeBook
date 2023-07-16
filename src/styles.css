@@ -4,5 +4,25 @@
 a:hover{
     cursor: pointer;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body {
+    height: 100%;
+}
+
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
+}
+
+.modal-backdrop {
+    display: none;
+}
+
+
+.elegant-color {
+    background-color: #2E2E2E;
+}
+
+.elegant-color-dark {
+    background-color: #212121;
+}

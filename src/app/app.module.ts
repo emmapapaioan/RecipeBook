@@ -22,11 +22,16 @@ import { RecipeService } from './recipes/recipe.service';
 import { PdfGeneratorService } from './shared/pdf-generator.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 import { OcrReaderComponent } from './test/ocr-reader/ocr-reader.component';
+import { AboutComponent } from './about/about.component';
+import { FooterComponent } from './footer/footer.component';
+import { ContactComponent } from './contact/contact.component';
+import { HomeComponent } from './home/home.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,11 @@ import { MatCardModule } from '@angular/material/card';
     TestComponent,
     ChildTestComponent,
     RecipesStartComponent,
-    OcrReaderComponent
+    OcrReaderComponent,
+    AboutComponent,
+    FooterComponent,
+    ContactComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -55,13 +64,13 @@ import { MatCardModule } from '@angular/material/card';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
-    MatCardModule
+    MatCardModule,
   ],
   providers: [
     ShoppingListService,
     RecipeService,
     PdfGeneratorService,
-    NgbActiveModal
+    { provide: APP_BASE_HREF, useValue: '/' }
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

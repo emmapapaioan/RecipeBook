@@ -1,40 +1,13 @@
-<div 
-  class="card mb-3"
-  *ngIf="recipe">
-  <a 
-    class="recipe-link" 
-    [routerLink]="['/recipes',index]" 
-    routerLinkActive="active">
-    <img class="card-img-top" 
-      [src]="recipe.imagePath" 
-      alt="Card image cap">
-    <div class="card-body">
-      <h5 class="card-title">{{ recipe.name }}</h5>
-      <p class="card-text">{{ recipe.description }}</p>
-    </div>
-  </a>
-</div>
-
-<!-- Maximilian's way -->
-<!-- <div class="card" style="width: 18rem;">
-    <img class="card-img-top" [src]="recipe.imagePath"  alt="Card image cap">
-    <div class="card-body">
-        <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-      <p class="card-text">{{ recipe.description }}</p>
-    </div>
+<div class="card" *ngIf="recipe">
+  <a class="recipe-link" [routerLink]="['/recipes',index]" routerLinkActive="active">
+      <div class="portfolio-hover">
+          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+      </div>
+      <img class="card-img-top" [src]="recipe.imagePath" alt="..." />
+    
+  <div class="card-body">
+    <h5 class="card-title">{{ recipe.name }}</h5>
+    <p class="card-text">{{ recipe.description }}</p>
   </div>
-
-  <h4 class="list-group-item-heading">{{ recipe.name }}</h4>
-    <div class="pull-left" >
-        <p 
-            id="details" 
-            class="list-group-item-text"
-            style="width: 248px">{{ recipe.description }}</p>
-    </div>
-    <span class="pull-right">
-        <img 
-            [src]="recipe.imagePath" 
-            alt=" {{ recipe.name }} img not available" 
-            class="img-responsive"
-            style="height: 150px; width: 150px;">
-    </span> -->
+</a>
+</div>

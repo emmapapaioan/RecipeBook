@@ -79,12 +79,14 @@ export class ShoppingListService {
   
 
   deleteIngredient(ingredient: Ingredient) {
+    let deleteFlag = false;
     let ingredients = this.ingredients.value;
     const itemFound = ingredients.find(item =>
       item.name.toLowerCase() === ingredient.name.toLowerCase());
 
     if (itemFound) {
       if (itemFound.amount - ingredient.amount >= 0) {
+        deleteFlag = itemFound.amount - ingredient.amount === 0 ? true : false;
         itemFound.amount -= ingredient.amount;
       } else {
         Swal.fire({
@@ -106,9 +108,14 @@ export class ShoppingListService {
     if (itemFound && itemFound.amount === 0) {
       ingredients = ingredients.filter(item =>
         item.name.toLowerCase() !== ingredient.name.toLowerCase())
+        this.ingredients.next(ingredients.slice());
     }
 
-    this.deleteIngredientDB(ingredient.id);
+    if (deleteFlag) {
+      this.deleteIngredientDB(itemFound.id); 
+    } else {
+      this.updateIngredientDB(itemFound.id, itemFound);
+    }
 
     this.sortIngredients(ingredients);
     this.ingredients.next(ingredients.slice());
