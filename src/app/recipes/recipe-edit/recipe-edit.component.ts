@@ -28,13 +28,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   constructor(
     public recipeService: RecipeService,
-    private route: ActivatedRoute,
     private router: Router,
     public activeModal: NgbActiveModal,
     private dataStorageService: DataStorageService) { }
 
   ngOnInit() {
-    if (this.id) {
+    if (typeof this.id !== 'undefined') {
       this.recipe = this.recipeService.getRecipe(this.id);
       this.editMode = this.recipeService.setRecipeEditMode(this.id != null);
     } else {
@@ -102,11 +101,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.router.navigate(['/recipes', this.id]);
     } else {
       this.recipeService.setRecipeAddMode(false);
-      // if (this.id) {
-      //   this.router.navigate(['/recipes', this.id]);
-      // } else {
-      //   this.router.navigate(['/recipes']);
-      // }
     }
 
     this.activeModal.close();
@@ -140,8 +134,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.pattern(/^[1-9]+[0-9]*$/)
         ])
-      })
-    )
+      }));
   }
 
   removeIngredient(index: number) {

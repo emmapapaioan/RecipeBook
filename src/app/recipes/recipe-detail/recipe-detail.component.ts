@@ -166,9 +166,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     }).then((result) => {
       if (result.isConfirmed) {
         this.recipeService.setRecipeEditMode(false);
-        this.recipeService.deleteRecipe(
-          this.recipeService.getRecipes().indexOf(this.recipe)
-        );
+        this.recipeService.deleteRecipe(undefined, this.recipe);
         this.dataStorageService.deleteRecipe(this.recipe)
           .subscribe({
             next: () => {
@@ -178,6 +176,13 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
                 text: 'Recipe ' + this.recipe.name + ' was successfully deleted.',
                 confirmButtonColor: '#28a745'
               });
+              this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+                this.recipe = this.recipeService.getRecipe(this.id);
+                if (!this.recipe) {
+                  this.router.navigate(['/recipes']);
+                }
+              });
+              this.router.navigate(['/recipes']);
             },
             error: (error) => {
               Swal.fire({
@@ -187,7 +192,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
               });
             }
           })
-        this.router.navigate(['/recipes']);
       }
     });
   }
