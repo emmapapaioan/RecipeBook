@@ -42,5 +42,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# Components
-src/app/test/child-test

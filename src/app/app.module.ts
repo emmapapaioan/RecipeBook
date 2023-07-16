@@ -16,12 +16,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { TestComponent } from './test/test.component';
-import { ChildTestComponent } from './test/child-test/child-test.component';
 import { RecipeService } from './recipes/recipe.service';
 import { PdfGeneratorService } from './shared/pdf-generator.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
-import { OcrReaderComponent } from './test/ocr-reader/ocr-reader.component';
+import { OcrReaderComponent } from './ocr-reader/ocr-reader.component';
 import { AboutComponent } from './about/about.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContactComponent } from './contact/contact.component';
@@ -45,8 +43,6 @@ import { APP_BASE_HREF } from '@angular/common';
     ShoppingEditComponent,
     DropdownDirective,
     RecipeEditComponent,
-    TestComponent,
-    ChildTestComponent,
     RecipesStartComponent,
     OcrReaderComponent,
     AboutComponent,
