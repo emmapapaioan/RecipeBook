@@ -1,9 +1,9 @@
 <div *ngIf="recipe" class="container py-5">
     <div class="row d-flex justify-content-around">
         <div class="d-flex flex-column col-6">
-            <div>
+            <div #imageContainer>
                 <p class="h1 mb-3">Recipe details</p>
-                <img id="recipe-img" src="{{ recipe.imagePath }}" alt="{{ recipe.name }} not found"
+                <img #recipeImage  id="recipe-img" src="{{recipe.imagePath}}" alt="{{ recipe.name }} not found"
                     class="img-fluid rounded-lg">
             </div>
             <div>

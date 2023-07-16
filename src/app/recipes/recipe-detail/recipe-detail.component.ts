@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Ingredient } from 'src/app/shared/ingredient.model';
@@ -15,7 +15,6 @@ import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 
-
 @Component({
   selector: 'app-recipe-detail',
   templateUrl: './recipe-detail.component.html',
@@ -23,7 +22,7 @@ import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   @Output() addToShoppingListEvent = new EventEmitter<Ingredient[]>();
-
+  @ViewChild('recipeImage') recipeImage: ElementRef;
   recipe: Recipe = null;
   id: number = -1;
   recipesEmpty: boolean = false;
@@ -74,7 +73,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   onEditRecipe() {
     this.recipeService.setRecipeEditMode(true);
-    const modalRef = this.modalService.open(RecipeEditComponent, {backdrop: 'static', size: 'lg'});
+    const modalRef = this.modalService.open(RecipeEditComponent, { backdrop: 'static', size: 'lg' });
     modalRef.componentInstance.id = this.id;
   }
 
@@ -131,7 +130,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     } catch (error) {
       const imgData = 'assets/images/no-photo-available2.png';
       doc.addImage(imgData, 'PNG', leftMargin, currentY, imageWidth, imageHeight);
+      console.log(error.message)
     }
+
     currentY += imageHeight + marginTop;
 
     // Take table ingredients from the html directly
@@ -169,27 +170,26 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
           this.recipeService.getRecipes().indexOf(this.recipe)
         );
         this.dataStorageService.deleteRecipe(this.recipe)
-        .subscribe({
-          next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Success',
-              text: 'Recipe ' + this.recipe.name + ' was successfully deleted.',
-              confirmButtonColor: '#28a745'
-            });
-          },
-          error: (error) => {
-            Swal.fire({
-              icon: 'error',
-              title: 'Error',
-              text: `Deletion of recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`
-            });
-          }
-        })
+          .subscribe({
+            next: () => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Recipe ' + this.recipe.name + ' was successfully deleted.',
+                confirmButtonColor: '#28a745'
+              });
+            },
+            error: (error) => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: `Deletion of recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`
+              });
+            }
+          })
         this.router.navigate(['/recipes']);
       }
     });
-
   }
 }
 
