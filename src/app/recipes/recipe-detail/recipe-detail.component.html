@@ -1,5 +1,6 @@
+<div class="details-container">
 <div *ngIf="recipe" class="container py-5">
-    <div class="row d-flex justify-content-around">
+    <div class="row d-flex justify-content-around align-items-center">
         <div class="d-flex flex-column col-6">
             <div #imageContainer>
                 <p class="h1 mb-3">Recipe details</p>
@@ -15,7 +16,7 @@
         <div class="d-flex flex-column col-5">
             <div *ngIf="recipe">
                 <div class="table-responsive-sm">
-                    <table class="table table-striped" id="ingredients">
+                    <table class="table table-striped table-dark" id="ingredients">
                         <thead>
                             <tr>
                                 <th scope="col">Ingredient</th>
@@ -48,3 +49,4 @@
         </div>
     </div>
 </div>
+</div> 

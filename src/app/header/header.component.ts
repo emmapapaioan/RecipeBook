@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { Recipe } from '../recipes/recipe.model';
-import { DataStorageService } from '../shared/data-storage.service';
+import { DataStorageService } from '../services/data-storage.service';
 
 @Component({
   selector: 'app-header',
@@ -17,14 +17,6 @@ export class HeaderComponent implements OnInit {
     private dataStorageService: DataStorageService) { }
 
   ngOnInit(): void { }
-
-  onSaveData() {
-    this.dataStorageService.storeRecipes();
-  }
-
-  onFetchData() {
-    this.dataStorageService.fetchRecipes();
-  }
 
   @HostListener('window:scroll')
   scrollEvent() {

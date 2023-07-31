@@ -3,17 +3,18 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
+import { RecipeService } from '../../services/recipe.service';
 import { Subscription } from 'rxjs';
 
 import { OpenSans } from 'src/app/shared/open-sans-font';
 import jsPDF from 'jspdf';
 import autotable from 'jspdf-autotable';
 import Swal from 'sweetalert2';
-import { DataStorageService } from 'src/app/shared/data-storage.service';
-import { ShoppingListService } from 'src/app/shopping-list/shopping-list.service';
+import { DataStorageService } from '../../services/data-storage.service';
+import { ShoppingListService } from '../../services/shopping-list.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -24,7 +25,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   @Output() addToShoppingListEvent = new EventEmitter<Ingredient[]>();
   @ViewChild('recipeImage') recipeImage: ElementRef;
   recipe: Recipe = null;
-  id: number = -1;
+  id: string;
   recipesEmpty: boolean = false;
   private paramsSubscription: Subscription;
   private editModeSubscription: Subscription;
@@ -34,21 +35,20 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dataStorageService: DataStorageService,
-    private shoppingListService: ShoppingListService,
-    private modalService: NgbModal) { }
+    private modalService: NgbModal,
+    private alertService: AlertService,
+    private shoppingListService: ShoppingListService
+  ) { }
 
   ngOnInit(): void {
     this.recipeService.setRecipeDetailMode(true);
-    this.paramsSubscription = this.route.params
-      .subscribe(
-        (params: Params) => {
-          this.id = + params['id'];
-          this.recipe = this.recipeService.getRecipe(this.id);
-        }
-      );
+    this.paramsSubscription = this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.recipe = this.recipeService.getRecipe(this.id);
+    });
 
-    this.recipeService.recipeUpdated.subscribe((index: number) => {
-      if (index === this.id) {
+    this.recipeService.recipeUpdated.subscribe((id: string) => {
+      if (id === this.id) {
         this.recipe = this.recipeService.getRecipe(this.id);
       }
     });
@@ -68,8 +68,13 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
   onAddToShoppingList() {
     this.recipeService.setRecipeEditMode(false);
-    this.shoppingListService.addIngredients(this.recipe.ingredients);
+    this.shoppingListService.addToShoppingList(this.recipe.ingredients).subscribe({
+      next: () => this.alertService.infoMessage(true, 'Shopping List was successfully updated!'),
+      error: () => this.alertService.infoMessage(false, 'Failed updating the Shopping List. Please try again.')
+    });
   }
+  
+  
 
   onEditRecipe() {
     this.recipeService.setRecipeEditMode(true);
@@ -154,46 +159,39 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     doc.save(`${this.recipe.name}.pdf`);
   }
 
-  onDeleteRecipe() {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Delete Recipe',
-      text: 'Recipe "' + this.recipe.name + '" is going to be deleted. Are you sure?',
-      confirmButtonText: 'Delete',
-      showCancelButton: true,
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#dc3545',
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.recipeService.setRecipeEditMode(false);
-        this.recipeService.deleteRecipe(undefined, this.recipe);
-        this.dataStorageService.deleteRecipe(this.recipe)
-          .subscribe({
-            next: () => {
-              Swal.fire({
-                icon: 'success',
-                title: 'Success',
-                text: 'Recipe ' + this.recipe.name + ' was successfully deleted.',
-                confirmButtonColor: '#28a745'
-              });
-              this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
-                this.recipe = this.recipeService.getRecipe(this.id);
-                if (!this.recipe) {
-                  this.router.navigate(['/recipes']);
-                }
-              });
+  async onDeleteRecipe() {
+    const result = await this.alertService.approveMessage(
+      'warning',
+      'Delete Recipe',
+      `Recipe "${this.recipe.name}" is going to be deleted. Are you sure?`,
+      'Delete'
+    );
+    if (result.isConfirmed) {
+      this.recipeService.setRecipeEditMode(false);
+      this.dataStorageService.deleteRecipe(this.recipe).subscribe({
+        next: () => {
+          this.alertService.infoMessage(true, 'Recipe ' + this.recipe.name + ' was successfully deleted.');
+          this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+            this.recipe = this.recipeService.getRecipe(this.id);
+            if (!this.recipe) {
               this.router.navigate(['/recipes']);
-            },
-            error: (error) => {
-              Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: `Deletion of recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`
-              });
             }
-          })
-      }
-    });
+          });
+          this.router.navigate(['/recipes']);
+        },
+        error: (error) => {
+          this.alertService.infoMessage(false, `Deletion of recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`);
+        }
+      });
+    }
+  }
+
+  handleExistingIngredient() {
+
+  }
+
+  handleNonExistingIngredient() {
+
   }
 }
 

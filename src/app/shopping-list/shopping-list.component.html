@@ -5,18 +5,23 @@
                 <app-shopping-edit></app-shopping-edit>
             </div>
         </div>
-        <div class="row justify-content-start" *ngIf="ingredients.length>0">
+        <div class="row justify-content-start" *ngIf="ingredients">
             <div class="col-6">
                 <h3>Shopping List</h3>
                 <div class="list-group">
                     <a 
+                        *ngFor="let ingredient of ingredients"
                         class="list-group-item list-group-item-action list-group-item-light" 
-                        [class.selected-ingredient]="selectedIngredientIndex === i" 
                         style="cursor: pointer"
-                        *ngFor="let ingredient of ingredients; let i = index" 
-                        (click)="onEditIngredient(i)">
+                        [class.selected-ingredient]="selectedIngredientId === ingredient.id"
+                        (click)="onEditIngredient(ingredient.id)">
                         {{ingredient.name}} ({{ingredient.amount}})</a>
                 </div>
+            </div>
+        </div>
+        <div class="row justify-content-start" *ngIf="!ingredients">
+            <div class="col-12">
+                <h4>Shopping List is empty. Let's add some ingredients!</h4>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ import { Component, HostBinding, OnInit } from '@angular/core';
 import * as Tesseract from 'tesseract.js';
 import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
+import { AlertService } from '../services/alert.service';
 
 @Component({
   selector: 'app-ocr-reader',
@@ -14,7 +15,7 @@ export class OcrReaderComponent implements OnInit {
   extractedText: string = '';
   isServerUp: boolean;
 
-  constructor( private http: HttpClient ) { }
+  constructor(private http: HttpClient, private alertService: AlertService ) { }
 
   ngOnInit() {
     this.loadImage('https://images.squarespace-cdn.com/content/v1/5a870022e45a7c0c0c9ea20e/1587642606272-7FLQ93BAH89DAWEDSEXT/Screen+Shot+2020-04-23+at+7.49.46+AM.png?format=750w');
@@ -34,7 +35,6 @@ export class OcrReaderComponent implements OnInit {
         this.performOCRServerSide(this.imageUrl);
       },
       error: (error) => {
-        console.error('Error checking server status:', error.message);
         this.performOCR(this.imageUrl);
       }
     });
@@ -46,12 +46,7 @@ export class OcrReaderComponent implements OnInit {
 
   async performOCRServerSide(imageUrl: string) {
     if (!imageUrl) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Insert an image url.',
-        confirmButtonColor: '#28a745'
-      });
+      this.alertService.infoMessage(false, 'Insert an image url.');
       return;
     }
     this.http.get<any>(`http://localhost:3000/ocr?imageUrl=${imageUrl}`).subscribe({
@@ -59,12 +54,7 @@ export class OcrReaderComponent implements OnInit {
         this.extractedText = res.text;
       },
       error: (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Error performing OCR: ' + error.message,
-          confirmButtonColor: '#28a745'
-        });
+        this.alertService.infoMessage(false, 'Error performing OCR: ' + error.message);
       },
       complete: () => {
         this.isLoading = false;
@@ -75,25 +65,14 @@ export class OcrReaderComponent implements OnInit {
 
   async performOCR(imageUrl: string) {
     if (!imageUrl) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Insert an image url.',
-        confirmButtonColor: '#28a745'
-      });
+      this.alertService.infoMessage(false, 'Insert an image url.');
       return;
     }
     try {
       const result = await Tesseract.recognize(imageUrl, 'eng', { logger: (m) => console.log(m) }); //For every new language, write '+ell' for example
       this.extractedText = result.data.text;
     } catch (error) {
-      console.error("Error performing OCR:", error);
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Error performing OCR: ' + error.message,
-        confirmButtonColor: '#28a745'
-      });
+      this.alertService.infoMessage(false, 'Error performing OCR: ' + error.message);
     }
     finally {
       this.isLoading = false;

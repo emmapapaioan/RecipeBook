@@ -1,11 +1,12 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Params, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
+import { RecipeService } from '../../services/recipe.service';
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { DataStorageService } from 'src/app/shared/data-storage.service';
+import { DataStorageService } from '../../services/data-storage.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -18,7 +19,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   @ViewChild('form', { static: false }) form: NgForm;
   @ViewChild('recipeEditModal', { static: false }) recipeEditModal: ElementRef;
   @ViewChild('descriptionInput', { static: false }) descriptionInput: ElementRef;
-  @Input() id: number;
+  @Input() id: string;
 
   recipe: Recipe;
   editMode: boolean = false;
@@ -110,11 +111,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
-  getIngredients(): { name: string, amount: number }[] {
+  getIngredients(): Ingredient[] {
     const ingredients = this.controls.map(control => {
-      const name = control.get('name').value;
-      const amount = control.get('amount').value;
-      return new Ingredient(name, amount);
+      return {name: control.get('name').value, amount: control.get('amount').value};
     });
 
     return ingredients;
@@ -142,19 +141,18 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const newRecipe = new Recipe(
-      this.recipeForm.value['name'],
-      this.recipeForm.value['description'],
-      this.recipeForm.value['imagePath'],
-      this.getIngredients(),
-      this.recipeService.getRecipesLength() + 1
-    );
+    const newRecipe: Recipe = {
+      name: this.recipeForm.value['name'],
+      description: this.recipeForm.value['description'],
+      imagePath: this.recipeForm.value['imagePath'],
+      ingredients: this.getIngredients(),
+      id: uuidv4()
+    };
 
     if (this.editMode) {
-      this.recipeService.updateRecipe(this.id, newRecipe);
       this.dataStorageService.updateRecipe(this.recipe.id, newRecipe);
     } else {
-      this.recipeService.addRecipe(newRecipe);
+      newRecipe.ingredients.forEach(ingredient => ingredient.id = uuidv4());
       this.dataStorageService.storeRecipe(newRecipe);
     }
 

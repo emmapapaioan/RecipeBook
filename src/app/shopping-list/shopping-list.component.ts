@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subject, Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from './shopping-list.service';
-import Swal from 'sweetalert2';
+import { ShoppingListService } from '../services/shopping-list.service';
+import { AlertService } from '../services/alert.service';
+import { DataStorageService } from '../services/data-storage.service';
 
 @Component({
   selector: 'app-shopping-list',
@@ -11,32 +11,33 @@ import Swal from 'sweetalert2';
 })
 
 export class ShoppingListComponent implements OnInit {
-  
   ingredients: Ingredient[];
-  selectedIngredientIndex: number;
-  constructor(private shoppingListService: ShoppingListService) {}
+  selectedIngredientId: string;
+
+  constructor(
+    private shoppingListService: ShoppingListService, 
+    private dataStorageService: DataStorageService,
+    private alertService: AlertService
+  ) {}
 
   ngOnInit(): void {
-    this.shoppingListService.getIngredients().subscribe({
-      next: (ingredients) => {
-        this.ingredients = ingredients;
+    this.fetchIngredients();
+  }
+
+  onEditIngredient(id: string) {
+    this.selectedIngredientId = id;
+    this.shoppingListService.startEditing.next(id);
+  }
+
+  fetchIngredients() {
+    this.dataStorageService.fetchShoppingList().subscribe({
+      next: (res: Ingredient[]) => {
+        this.shoppingListService.setIngredients(res);
+        this.ingredients = this.shoppingListService.getIngredients();
       },
       error: (error) => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Failed fetching data from the database. Error details: ' + error.message
-        });
+        this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reaload the page. ' + error.message);
       }
     });
-  }
-
-  addIngredients(ingredient: Ingredient): void {
-    this.shoppingListService.addIngredient(ingredient);
-  }
-
-  onEditIngredient(index: number) {
-    this.selectedIngredientIndex = index;
-    this.shoppingListService.startEditing.next(index);
   }
 }

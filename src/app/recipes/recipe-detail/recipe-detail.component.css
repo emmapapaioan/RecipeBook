@@ -18,3 +18,8 @@ a:hover {
   margin-right: auto;
   max-width: 70%;
 }
+
+.details-container {
+  background-size: 100%;
+  background-image: url('src/assets/images/details.jpg');
+}

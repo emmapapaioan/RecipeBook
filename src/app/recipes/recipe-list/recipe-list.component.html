@@ -2,9 +2,9 @@
     <div class="container">
         <div class="text-center py-5">
             <div class="d-flex justify-content-center">
-                <h2 class="section-heading mx-auto">Recipe Book</h2>
+                <h2 class="section-heading mx-auto text-white">Recipe Book</h2>
             </div>
-            <h3 class="section-subheading text-muted">Hello there, Chef! Welcome to your Recipe Book - your personal
+            <h3 class="section-subheading text-white">Hello there, Chef! Welcome to your Recipe Book - your personal
                 culinary playground. Whether you're craving an old favorite or looking to try something new, you've come
                 to the right place. Let's start cooking up some magic!
                 <span class="float-right mr-3">
@@ -17,17 +17,15 @@
             </h3>
         </div>
 
-        <div class="d-flex flex-row flex-wrap justify-content-between">
-            <p *ngIf="recipes.length === 0">Loading recipes...</p>
-            <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let recipeItem of recipes; let i = index">
-                <app-recipe-item [recipe]="recipeItem" [index]="i"></app-recipe-item>
-            </div>
-            <div *ngIf="isLoading || recipes.length === 0" class="spinner-border m-3 text-custom" role="status"
-                style="width: 8rem; height: 8rem;">
-                <span class="sr-only">
-                    Loading...
-                </span>
+        <div class="d-flex flex-row flex-wrap justify-content-between" *ngIf="recipes">
+            <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let recipeItem of recipes">
+                <app-recipe-item [recipe]="recipeItem" [id]="recipeItem.id"></app-recipe-item>
             </div>
         </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <div *ngIf="isLoading" class="spinner-border text-custom" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>        
     </div>
 </div>
