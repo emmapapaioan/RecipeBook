@@ -12,7 +12,6 @@
                     <a 
                         *ngFor="let ingredient of ingredients"
                         class="list-group-item list-group-item-action list-group-item-light" 
-                        style="cursor: pointer"
                         [class.selected-ingredient]="selectedIngredientId === ingredient.id"
                         (click)="onEditIngredient(ingredient.id)">
                         {{ingredient.name}} ({{ingredient.amount}})</a>

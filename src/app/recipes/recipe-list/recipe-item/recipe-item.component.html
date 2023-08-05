@@ -1,13 +1,13 @@
 <div class="card" *ngIf="recipe">
   <a class="recipe-link" [routerLink]="['/recipes', id]" routerLinkActive="active">
-      <div class="portfolio-hover">
-          <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-      </div>
-      <img class="card-img-top" [src]="recipe.imagePath" alt="..." />
+    <div class="portfolio-hover">
+        <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+    </div>
+    <img class="card-img-top" [src]="recipe.imagePath" alt="..." />
     
-  <div class="card-body">
-    <h5 class="card-title">{{ recipe.name }}</h5>
-    <p class="card-text">{{ recipe.description }}</p>
-  </div>
-</a>
+    <div class="card-body">
+      <h5 class="card-title">{{ recipe.name }}</h5>
+      <p class="card-text">{{ recipe.description }}</p>
+    </div>
+  </a>
 </div>
