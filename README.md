@@ -1,8 +1,8 @@
-# ShoppingProject
+# RecipeBook
 
 https://github.com/emmapapaioan/ShoppingProject/assets/108992250/813f201e-81da-47ac-9969-87dbc515b80e
 
-ShoppingProject is a web application developed using Angular framework. It allows users to store, view, edit, print, or delete recipes from a remote database. The project also provides OCR (Optical Character Recognition) functionality where users can upload an image with text (a recipe image, for example) and retrieve the text from the image.
+RecipeBook is a web application developed using Angular framework. It allows users to store, view, edit, print, or delete recipes from a remote database. The project also provides OCR (Optical Character Recognition) functionality where users can upload an image with text (a recipe image, for example) and retrieve the text from the image.
 
 ## Technologies
 
