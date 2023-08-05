@@ -1,5 +1,5 @@
 #description {
-    min-height: 100px;
+    min-height: 10vh;
 }
 
 input.ng-invalid.ng-touched,
@@ -14,5 +14,5 @@ textarea.ng-invalid.ng-touched {
 }
 
 .modal-header {
-    background-color: #800000;
+    background-color: #707070;
 }
