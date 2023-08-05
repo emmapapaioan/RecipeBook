@@ -94,7 +94,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   handleIngredientAdd(ingredient: Ingredient) {
     this.dataStorageService.addIngredient(ingredient).subscribe({
       next: () => {
-        this.alertService.infoMessage(true, `Ingredient ${ingredient.name} was successfully added.`);
+        this.fetchAndBroadcastIngredients();
       },
       error: (error) => {
         this.alertService.infoMessage(false, `Failed to add Ingredient ${ingredient.name}. Error: ${error.message}`);
@@ -104,8 +104,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
 
   handleIngredientUpdate(ingredient: Ingredient) {
     this.dataStorageService.updateIngredient(ingredient).subscribe({
-      next: () => {
-        this.alertService.infoMessage(true, `Ingredient ${ingredient.name} was successfully updated.`);
+      next: () => { 
+        this.fetchAndBroadcastIngredients(); 
       },
       error: (error) => {
         this.alertService.infoMessage(false, `Failed to update ingredient ${ingredient.name}. Error: ${error.message}`);
@@ -115,11 +115,22 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
 
   handleIngredientDelete(ingredient: Ingredient) {
     this.dataStorageService.deleteIngredient(ingredient).subscribe({
-      next: () => {
-        this.alertService.infoMessage(true, `Ingredient was successfully deleted.`);
+      next: () => { 
+        this.fetchAndBroadcastIngredients(); 
+      },
+      error: (error) => { 
+        this.alertService.infoMessage(false, `Failed to delete ingredient. Error: ${error.message}`); 
+      }
+    });
+  }
+
+  fetchAndBroadcastIngredients() {
+    this.dataStorageService.fetchShoppingList().subscribe({
+      next: (res: Ingredient[]) => {
+        this.shoppingListService.setIngredients(res);
       },
       error: (error) => {
-        this.alertService.infoMessage(false, `Failed to delete ingredient. Error: ${error.message}`);
+        this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reload the page. ' + error.message);
       }
     });
   }

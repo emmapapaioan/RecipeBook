@@ -22,6 +22,7 @@ export class ShoppingListComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchIngredients();
+    this.subToIngredientsChanged();
   }
 
   onEditIngredient(id: string) {
@@ -38,6 +39,12 @@ export class ShoppingListComponent implements OnInit {
       error: (error) => {
         this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reaload the page. ' + error.message);
       }
+    });
+  }
+
+  subToIngredientsChanged() {
+    this.shoppingListService.ingredientsChanged.subscribe((ingredients) => {
+      this.ingredients = ingredients;
     });
   }
 }
