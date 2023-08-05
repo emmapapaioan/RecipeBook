@@ -170,28 +170,24 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       this.recipeService.setRecipeEditMode(false);
       this.dataStorageService.deleteRecipe(this.recipe).subscribe({
         next: () => {
-          this.alertService.infoMessage(true, 'Recipe ' + this.recipe.name + ' was successfully deleted.');
-          this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
-            this.recipe = this.recipeService.getRecipe(this.id);
-            if (!this.recipe) {
-              this.router.navigate(['/recipes']);
-            }
-          });
-          this.router.navigate(['/recipes']);
+          this.handleDeleteRecipe();
         },
         error: (error) => {
-          this.alertService.infoMessage(false, `Deletion of recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`);
+          this.alertService.infoMessage(false, `Failed to delete recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`);
         }
       });
     }
   }
 
-  handleExistingIngredient() {
-
-  }
-
-  handleNonExistingIngredient() {
-
+  handleDeleteRecipe() {
+    this.alertService.infoMessage(true, 'Recipe ' + this.recipe.name + ' was successfully deleted.');
+    this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+      this.recipe = this.recipeService.getRecipe(this.id);
+      if (!this.recipe) {
+        this.router.navigate(['/recipes']);
+      }
+    });
+    this.router.navigate(['/recipes']);
   }
 }
 
