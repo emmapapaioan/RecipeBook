@@ -17,7 +17,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './services/shopping-list.service';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from './services/recipe.service';
-import { PdfGeneratorService } from './services/pdf-generator.service'
+import { PdfService } from './services/pdf.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 import { OcrReaderComponent } from './ocr-reader/ocr-reader.component';
 import { AboutComponent } from './about/about.component';
@@ -65,7 +65,7 @@ import { APP_BASE_HREF } from '@angular/common';
   providers: [
     ShoppingListService,
     RecipeService,
-    PdfGeneratorService,
+    PdfService,
     { provide: APP_BASE_HREF, useValue: '/' }
   ],
   bootstrap: [AppComponent],
