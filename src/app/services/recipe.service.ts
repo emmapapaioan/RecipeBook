@@ -10,7 +10,6 @@ export class RecipeService {
   private recipes: Recipe[] = [];
 
   hasRecipes: boolean = false;
-  recipeUpdated = new EventEmitter<number>();
   recipesChanged = new Subject<Recipe[]>();
   recipeEditMode: boolean = false;
   recipeAddMode: boolean = false;
