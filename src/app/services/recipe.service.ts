@@ -1,4 +1,4 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Recipe } from '../recipes/recipe.model';
 
@@ -29,9 +29,14 @@ export class RecipeService {
     return this.recipes.slice();
   }
 
-  getRecipe(id: string) {
-    return this.recipes.find(recipe => recipe.id === id);
+  getRecipe(id: string): Recipe {
+    const recipe = this.recipes.find((recipe) => recipe.id === id);
+    if (recipe) {
+      recipe.ingredients.sort((a, b) => a.name.localeCompare(b.name));
+    }
+    return recipe;
   }
+  
 
   getRecipesLength() {
     return this.recipes.length;
