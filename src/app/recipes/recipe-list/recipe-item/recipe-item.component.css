@@ -22,7 +22,8 @@ a:hover {
 }
 
 .card-img-top {
-    height: 20rem;
+    height: 17rem;
+    object-fit: cover;
 }
 
 .card-text {
