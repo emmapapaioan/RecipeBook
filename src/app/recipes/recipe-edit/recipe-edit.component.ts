@@ -173,7 +173,9 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.dataStorageService.updateRecipe(id, recipe).subscribe({
       next: () => {
         this.alertService.infoMessage(true, `Recipe ${recipe.name} was successfully updated.`);
-        this.dataStorageService.fetchRecipes().subscribe(recipes => { this.recipeService.setRecipes(recipes); });
+        this.dataStorageService.fetchRecipes().subscribe(recipes => { 
+          this.recipeService.setRecipes(recipes); 
+        });
       },
       error: (error) => {
         this.alertService.infoMessage(false, `Recipe ${recipe.name} was not updated. Error: ${error.message}`);
