@@ -11,7 +11,7 @@ export class ShoppingListService {
   apiURL: string = 'https://recipe-book-41dd4-default-rtdb.europe-west1.firebasedatabase.app/secretKey=r3cip3B00k!/';
   shoppingListJSON: string = 'shoppingList.json';
   startEditing = new Subject<string>();
-  ingredientsChanged = new Subject<Ingredient[]>;
+  ingredientsChanged = new Subject<Ingredient[]>();
   ingredients: Ingredient[] = [];
   
   constructor(private dataStorageService: DataStorageService) {}
@@ -51,7 +51,6 @@ export class ShoppingListService {
         observables.push(this.dataStorageService.addIngredient(ingredient));
       }
     });
-
     return forkJoin(observables);
   }
 }
