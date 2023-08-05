@@ -7,6 +7,7 @@ import { Ingredient } from 'src/app/shared/ingredient.model';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataStorageService } from '../../services/data-storage.service';
 import { v4 as uuidv4 } from 'uuid';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -31,7 +32,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     public recipeService: RecipeService,
     private router: Router,
     public activeModal: NgbActiveModal,
-    private dataStorageService: DataStorageService) { }
+    private dataStorageService: DataStorageService,
+    private alertService: AlertService) { }
 
   ngOnInit() {
     if (typeof this.id !== 'undefined') {
@@ -113,7 +115,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   getIngredients(): Ingredient[] {
     const ingredients = this.controls.map(control => {
-      return {name: control.get('name').value, amount: control.get('amount').value};
+      return { name: control.get('name').value, amount: control.get('amount').value };
     });
 
     return ingredients;
@@ -150,10 +152,10 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     };
 
     if (this.editMode) {
-      this.dataStorageService.updateRecipe(this.recipe.id, newRecipe);
+      this.updateRecipe(this.recipe.id, newRecipe);
     } else {
       newRecipe.ingredients.forEach(ingredient => ingredient.id = uuidv4());
-      this.dataStorageService.storeRecipe(newRecipe);
+      this.storeRecipe(newRecipe);
     }
 
     this.handleModalClosing();
@@ -165,6 +167,32 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   onModalClose() {
     this.handleModalClosing();
+  }
+
+  updateRecipe(id: string, recipe: Recipe) {
+    this.dataStorageService.updateRecipe(id, recipe).subscribe({
+      next: () => {
+        this.alertService.infoMessage(true, `Recipe ${recipe.name} was successfully updated.`);
+        this.dataStorageService.fetchRecipes().subscribe(recipes => { this.recipeService.setRecipes(recipes); });
+      },
+      error: (error) => {
+        this.alertService.infoMessage(false, `Recipe ${recipe.name} was not updated. Error: ${error.message}`);
+      }
+    });
+  }
+
+  storeRecipe(recipe: Recipe) {
+    this.dataStorageService.storeRecipe(recipe).subscribe({
+      next: () => {
+        this.alertService.infoMessage(true, 'Recipe ' + recipe.name + ' was successfully stored in the database.');
+        this.dataStorageService.fetchRecipes().subscribe(recipes => { 
+          this.recipeService.setRecipes(recipes); 
+        });
+      },
+      error: (error) => {
+        this.alertService.infoMessage(false, 'Error storing the recipe to the database. Error details: ' + error.message);
+      }
+    });
   }
 }
 
