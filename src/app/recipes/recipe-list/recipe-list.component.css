@@ -9,5 +9,7 @@
 
 .page-section {
     background-image: url('src\assets\images\pexels-tirachard-kumtanom-450055.jpg');
-    background-size: 100%;
+    background-size: cover;
+    background-position: center;
+    min-height: calc(100vh - 150px);
 }
