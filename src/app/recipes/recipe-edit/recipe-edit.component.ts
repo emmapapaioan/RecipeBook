@@ -1,13 +1,14 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../../services/recipe.service';
 import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient.model';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { DataStorageService } from '../../services/data-storage.service';
 import { v4 as uuidv4 } from 'uuid';
 import { AlertService } from 'src/app/services/alert.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -18,9 +19,7 @@ import { AlertService } from 'src/app/services/alert.service';
 export class RecipeEditComponent implements OnInit, OnDestroy {
   @Output() selectedNewRecipe = true;
   @ViewChild('form', { static: false }) form: NgForm;
-  @ViewChild('recipeEditModal', { static: false }) recipeEditModal: ElementRef;
   @ViewChild('descriptionInput', { static: false }) descriptionInput: ElementRef;
-  @Input() id: string;
 
   recipe: Recipe;
   editMode: boolean = false;
@@ -31,9 +30,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   constructor(
     public recipeService: RecipeService,
     private router: Router,
-    public activeModal: NgbActiveModal,
     private dataStorageService: DataStorageService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    public dialog: MatDialog,
+    @Inject(MAT_DIALOG_DATA) public id: string
+  ) { }
 
   ngOnInit() {
     if (typeof this.id !== 'undefined') {
@@ -106,7 +107,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
       this.recipeService.setRecipeAddMode(false);
     }
 
-    this.activeModal.close();
+    this.dialog.closeAll();
   }
 
   get controls() {

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 
 import { DataStorageService } from '../../services/data-storage.service';
 import { ShoppingListService } from '../../services/shopping-list.service';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { PdfService } from 'src/app/services/pdf.service';
@@ -28,13 +28,15 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipesEmpty: boolean = false;
   private paramsSubscription: Subscription;
   private editModeSubscription: Subscription;
-
+  displayedColumns: string[] = ['name', 'quantity'];
+  matDialogConfig: MatDialogConfig = {};
+  
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
     private dataStorageService: DataStorageService,
-    private modalService: NgbModal,
+    public dialog: MatDialog,
     private alertService: AlertService,
     private shoppingListService: ShoppingListService,
     private pdfService: PdfService
@@ -77,8 +79,12 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   
   onEditRecipe() {
     this.recipeService.setRecipeEditMode(true);
-    const modalRef = this.modalService.open(RecipeEditComponent, { backdrop: 'static', size: 'lg' });
-    modalRef.componentInstance.id = this.id;
+    this.matDialogConfig = {
+      data: this.id,
+      height: 'auto',
+      width: '55%'
+    };
+    const dialogRef = this.dialog.open(RecipeEditComponent, this.matDialogConfig);
   }
 
   printRecipe() {
@@ -93,7 +99,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       fontStyle : fontStyle.normal, 
       titlesFontStyle : fontStyle.bold
     };
-      
     this.pdfService.generateRecipePdf(this.recipe, pdfOptions);
   }
 
@@ -108,7 +113,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       this.recipeService.setRecipeEditMode(false);
       this.dataStorageService.deleteRecipe(this.recipe).subscribe({
         next: () => {
-          this.handleDeleteRecipe();
+          this.handleSuccessfullRecipeDelete();
         },
         error: (error) => {
           this.alertService.infoMessage(false, `Failed to delete recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`);
@@ -117,7 +122,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  handleDeleteRecipe() {
+  handleSuccessfullRecipeDelete() {
     this.alertService.infoMessage(true, 'Recipe ' + this.recipe.name + ' was successfully deleted.');
     this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
       this.recipe = this.recipeService.getRecipe(this.id);

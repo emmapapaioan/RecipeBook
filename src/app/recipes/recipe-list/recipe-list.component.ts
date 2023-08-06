@@ -1,10 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { Recipe } from '../recipe.model';
 import { RecipeService } from '../../services/recipe.service';
 import { DataStorageService } from '../../services/data-storage.service';
-import { Subscription } from 'rxjs';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { AlertService } from 'src/app/services/alert.service';
 
@@ -17,12 +15,14 @@ import { AlertService } from 'src/app/services/alert.service';
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
   isLoading: boolean = true;
+  matDialogConfig: MatDialogConfig = {};
 
   constructor(
     private dataStorageService: DataStorageService,
     private recipeService: RecipeService,
-    private modalService: NgbModal,
-    private alertService: AlertService) { }
+    public dialog: MatDialog,
+    private alertService: AlertService
+  ) { }
 
   ngOnInit() {
     this.fetchRecipes();
@@ -31,7 +31,11 @@ export class RecipeListComponent implements OnInit {
 
   onSelectNewRecipe() {
     this.recipeService.setRecipeAddMode(true);
-    this.modalService.open(RecipeEditComponent, {backdrop: 'static', size: 'lg'});
+    this.matDialogConfig = {
+      height: '80%',
+      width: '55%'
+    };
+    const dialogRef = this.dialog.open(RecipeEditComponent, this.matDialogConfig);
   }
 
   fetchRecipes() {
@@ -54,5 +58,4 @@ export class RecipeListComponent implements OnInit {
       (recipes: Recipe[]) => { this.recipes = recipes; }
     );
   }
-
 }

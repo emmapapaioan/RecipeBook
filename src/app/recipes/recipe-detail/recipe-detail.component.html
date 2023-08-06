@@ -14,34 +14,30 @@
         </div>
         <div class="d-flex flex-column col-5 mt-5">
             <div *ngIf="recipe">
-                <div class="table-responsive-sm mt-3">
-                    <table class="table table-striped table-dark" id="ingredients">
-                        <thead>
-                            <tr>
-                                <th scope="col">Ingredient</th>
-                                <th scope="col">Quantity</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let ingredient of recipe.ingredients">
-                                <td>{{ ingredient.name }}</td>
-                                <td>{{ ingredient.amount }}</td>
-                            </tr>
-                        </tbody>
+                <div class="table-responsive-sm mt-3 mb-3">
+                    <table mat-table [dataSource]="recipe.ingredients" class="mat-elevation-z8 table-dark">
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Ingredient </th>
+                            <td mat-cell *matCellDef="let ingredient"> {{ingredient.name}} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="quantity">
+                            <th mat-header-cell *matHeaderCellDef> Quantity </th>
+                            <td mat-cell *matCellDef="let ingredient"> {{ingredient.amount}} </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     </table>
                 </div>
-                <div ngbDropdown>
-                    <button class="btn btn-primary" id="dropdownBasic1" ngbDropdownToggle>
+                <div>
+                    <button class="btn btn-primary" [matMenuTriggerFor]="myMenu">
                         Manage recipe
                     </button>
-                    <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
-                        <button ngbDropdownItem (click)="onAddToShoppingList()">Add to Shopping List</button>
-                        <button ngbDropdownItem (click)="onEditRecipe()" data-target="#exampleModal"
-                            data-whatever="@mdo">Edit
-                            Recipe</button>
-                        <button ngbDropdownItem class="dropdown-item" (click)="printRecipe()">Print Recipe</button>
-                        <button ngbDropdownItem class="dropdown-item" (click)="onDeleteRecipe()">Delete Recipe</button>
-                    </div>
+                    <mat-menu #myMenu="matMenu">
+                        <button mat-menu-item (click)="onAddToShoppingList()">Add to Shopping List</button>
+                        <button mat-menu-item (click)="onEditRecipe()">Edit Recipe</button>
+                        <button mat-menu-item (click)="printRecipe()">Print Recipe</button>
+                        <button mat-menu-item (click)="onDeleteRecipe()">Delete Recipe</button>
+                    </mat-menu>
                 </div>
             </div>
         </div>
