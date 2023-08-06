@@ -1,4 +1,4 @@
-import { fontName, fontStyle } from "./fonts.model";
+import { FontName, FontStyle } from "./fonts.model";
 
 export interface PdfOptions {
   leftMargin: number;
@@ -7,7 +7,8 @@ export interface PdfOptions {
   marginTop: number;
   maxWidth: number;
   fontSize: number;
-  fontName: fontName;
-  fontStyle: fontStyle;
-  titlesFontStyle: fontStyle;
+  fontName: FontName;
+  fontStyle: FontStyle;
+  titlesFontStyle: FontStyle;
+  imageHtml: string;
 } 

@@ -12,7 +12,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { PdfService } from 'src/app/services/pdf.service';
-import { fontName, fontStyle } from 'src/app/shared/fonts.model';
+import { HelveticaFont } from 'src/app/shared/fonts.model';
 import { PdfOptions } from 'src/app/shared/pdfOptions.model';
 
 @Component({
@@ -30,7 +30,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   private editModeSubscription: Subscription;
   displayedColumns: string[] = ['name', 'quantity'];
   matDialogConfig: MatDialogConfig = {};
-  
+  isPrinting: boolean = false;
+
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
@@ -88,6 +89,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   printRecipe() {
+    this.isPrinting = true;
     const pdfOptions: PdfOptions = {
       leftMargin : 15, 
       imageWidth : 100, 
@@ -95,11 +97,14 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       marginTop : 10, 
       maxWidth : 180, 
       fontSize : 14, 
-      fontName : fontName.helvetica, 
-      fontStyle : fontStyle.normal, 
-      titlesFontStyle : fontStyle.bold
+      fontName : HelveticaFont.fontName, 
+      fontStyle : HelveticaFont.fontStyles[0], 
+      titlesFontStyle : HelveticaFont.fontStyles[1],
+      imageHtml: '#ingredients'
     };
-    this.pdfService.generateRecipePdf(this.recipe, pdfOptions);
+    this.pdfService.generateRecipePdf(this.recipe, pdfOptions).then(() => {
+        this.isPrinting = false;
+    });
   }
 
   async onDeleteRecipe() {

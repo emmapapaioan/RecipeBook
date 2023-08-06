@@ -8,12 +8,12 @@ import { PdfOptions } from '../shared/pdfOptions.model';
   providedIn: 'root'
 })
 export class PdfService {
-
   constructor() { }
 
   async generateRecipePdf(recipe: Recipe, options: PdfOptions) {
     const doc = new jsPDF();
-    doc.setFont(options.fontName, options.fontStyle, options.fontSize);
+    doc.setFont(options.fontName, options.fontStyle);
+    doc.setFontSize(options.fontSize);
     let currentY = 10;
 
     // Recipe name
@@ -57,7 +57,7 @@ export class PdfService {
 
     // Recipe's ingredients table
     autotable(doc, {
-      html: '#ingredients',
+      html: options.imageHtml,
       startY: currentY,
       margin: { left: options.leftMargin },
       headStyles: {
@@ -73,5 +73,6 @@ export class PdfService {
     });
 
     doc.save(`${recipe.name}.pdf`);
+    return Promise.resolve();
   }
 }

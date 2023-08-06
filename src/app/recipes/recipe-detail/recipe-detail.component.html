@@ -15,7 +15,7 @@
         <div class="d-flex flex-column col-5 mt-5">
             <div *ngIf="recipe">
                 <div class="table-responsive-sm mt-3 mb-3">
-                    <table mat-table [dataSource]="recipe.ingredients" class="mat-elevation-z8 table-dark">
+                    <table mat-table [dataSource]="recipe.ingredients" class="mat-elevation-z8 table-dark" id="ingredients">
                         <ng-container matColumnDef="name">
                             <th mat-header-cell *matHeaderCellDef> Ingredient </th>
                             <td mat-cell *matCellDef="let ingredient"> {{ingredient.name}} </td>
@@ -29,8 +29,17 @@
                     </table>
                 </div>
                 <div>
-                    <button class="btn btn-primary" [matMenuTriggerFor]="myMenu">
+                    <button 
+                        class="btn btn-primary d-flex justify-content-end align-items-center" 
+                        [matMenuTriggerFor]="myMenu">
                         Manage recipe
+                        <mat-spinner
+                            *ngIf="isPrinting" 
+                            color="accent" 
+                            aria-label="Printing" 
+                            diameter="20" 
+                            class="ml-1">
+                        </mat-spinner>
                     </button>
                     <mat-menu #myMenu="matMenu">
                         <button mat-menu-item (click)="onAddToShoppingList()">Add to Shopping List</button>

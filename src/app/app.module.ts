@@ -32,6 +32,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
@@ -66,7 +67,8 @@ import { APP_BASE_HREF } from '@angular/common';
     MatCardModule,
     MatDialogModule,
     MatMenuModule,
-    MatTableModule
+    MatTableModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     ShoppingListService,
