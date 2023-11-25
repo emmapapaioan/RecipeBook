@@ -34,6 +34,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { APP_BASE_HREF } from '@angular/common';
+import { SafeUrlPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -52,7 +53,8 @@ import { APP_BASE_HREF } from '@angular/common';
     AboutComponent,
     FooterComponent,
     ContactComponent,
-    HomeComponent
+    HomeComponent,
+    SafeUrlPipe
   ],
   imports: [
     BrowserModule,

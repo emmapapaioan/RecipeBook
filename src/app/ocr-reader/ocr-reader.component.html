@@ -9,7 +9,7 @@
             <span><button class="btn btn-primary" (click)="loadImage(imageUrlInput.value)">Load Image</button></span>
           </div>
           <div class="card-body d-flex justify-content-center">
-            <img class="img-fluid " src="{{imageUrl}}" alt="Insert url of an image">
+            <img class="img-fluid " [src]="imageUrl | safeUrl" alt="Insert url of an image">
           </div>
         </div>
       </div>
