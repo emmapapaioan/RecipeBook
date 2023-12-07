@@ -1,9 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import * as Tesseract from 'tesseract.js';
-import Swal from 'sweetalert2';
 import { HttpClient } from '@angular/common/http';
 import { AlertService } from '../services/alert.service';
-import { SafeUrlPipe } from '../pipes/safe-url.pipe';
 
 @Component({
   selector: 'app-ocr-reader',
@@ -15,8 +13,8 @@ export class OcrReaderComponent implements OnInit {
   imageUrl: string = '';
   extractedText: string = '';
   isServerUp: boolean;
-
-  constructor(private http: HttpClient, private alertService: AlertService, safeUrl: SafeUrlPipe ) { }
+  
+  constructor(private http: HttpClient, private alertService: AlertService) { }
 
   ngOnInit() {
     this.loadImage('https://images.squarespace-cdn.com/content/v1/5a870022e45a7c0c0c9ea20e/1587642606272-7FLQ93BAH89DAWEDSEXT/Screen+Shot+2020-04-23+at+7.49.46+AM.png?format=750w');
