@@ -35,6 +35,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { APP_BASE_HREF } from '@angular/common';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
     FooterComponent,
     ContactComponent,
     HomeComponent,
-    SafeUrlPipe
+    SafeUrlPipe,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -81,5 +83,6 @@ import { SafeUrlPipe } from './pipes/safe-url.pipe';
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   entryComponents: [RecipeEditComponent],
+  exports: [SafeUrlPipe]
 })
 export class AppModule { }
