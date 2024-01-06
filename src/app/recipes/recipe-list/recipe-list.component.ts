@@ -4,6 +4,8 @@ import { RecipeService } from '../../services/recipe.service';
 import { DataStorageService } from '../../services/data-storage.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
+import { Subscription } from 'rxjs';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
@@ -14,19 +16,23 @@ import { AlertService } from 'src/app/services/alert.service';
 
 export class RecipeListComponent implements OnInit {
   recipes: Recipe[] = [];
-  isLoading: boolean = true;
+  isLoading: boolean = false;
   matDialogConfig: MatDialogConfig = {};
+  private userSub: Subscription;
+  isAuthenticated: boolean = false;
 
   constructor(
-    private dataStorageService: DataStorageService,
     private recipeService: RecipeService,
     public dialog: MatDialog,
+    private authService: AuthorizationService,
+    private dataStorageService: DataStorageService,
     private alertService: AlertService
   ) { }
 
   ngOnInit() {
-    this.fetchRecipes();
     this.subToRecipesChange();
+    this.subToUserAuth();
+    this.isAuthenticated && this.fetchRecipes();
   }
 
   onSelectNewRecipe() {
@@ -39,15 +45,15 @@ export class RecipeListComponent implements OnInit {
   }
 
   fetchRecipes() {
+    this.isLoading = true;
     this.dataStorageService.fetchRecipes().subscribe({
       next: (res: Recipe[]) => {
         this.recipeService.setRecipes(res);
         this.recipes = this.recipeService.getRecipes();
+        this.isLoading = false;
       },
       error: (error) => {
-        this.alertService.infoMessage(false, 'Failed to load recipes. Please reaload the page. ' + error.message);
-      },
-      complete: () => {
+        this.alertService.infoMessage(false, 'Failed to load recipes. Please reload the page. ' + error.message);
         this.isLoading = false;
       }
     });
@@ -57,5 +63,16 @@ export class RecipeListComponent implements OnInit {
     this.recipeService.recipesChanged.subscribe(
       (recipes: Recipe[]) => { this.recipes = recipes; }
     );
+    this.recipes = this.recipeService.getRecipes();
+  }
+
+  subToUserAuth() {
+    this.userSub = this.authService.user.subscribe(user => {
+      this.isAuthenticated = !!user;
+    });
+  }
+
+  ngOnDestroy() {
+    this.userSub && this.userSub.unsubscribe();
   }
 }

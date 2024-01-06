@@ -9,15 +9,24 @@
                 to the right place. Let's start cooking up some magic!
                 <span class="float-right mr-3">
                     <button 
+                        *ngIf="isAuthenticated"
                         class="btn btn-success newRecpBtn" 
                         (click)="onSelectNewRecipe()">
                         New Recipe
                     </button>
                 </span>
             </h3>
+            <div class="d-flex justify-content-center">
+                <div *ngIf="!isAuthenticated" class="mt-3 col-8">
+                    <app-example-recipes></app-example-recipes>
+                </div>
+            </div>
+            <div *ngIf="!isAuthenticated" class="mt-3 text-white">
+                Still not a member? <a routerLink="/auth" class="text-white font-weight-bold"><em>Sign up</em></a> to manage your own recipes!
+            </div>
         </div>
 
-        <div class="d-flex flex-row flex-wrap justify-content-between" *ngIf="recipes">
+        <div class="d-flex flex-row flex-wrap justify-content-between" *ngIf="recipes && isAuthenticated">
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let recipeItem of recipes">
                 <app-recipe-item [recipe]="recipeItem" [id]="recipeItem.id"></app-recipe-item>
             </div>

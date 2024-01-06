@@ -20,3 +20,8 @@
 ::ng-deep .mat-mdc-menu-panel.mat-mdc-menu-panel {
   background-color: #343a40 !important;
 }
+
+.anchor-tag {
+  color: black;
+  font-weight: 500;
+}

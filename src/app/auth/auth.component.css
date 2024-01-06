@@ -1,0 +1,20 @@
+input.form-control {
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+.anchor-tag:hover {
+    text-shadow: 1px 1px 2px #c7c7c7;
+    cursor: pointer;
+}
+
+.anchor-tag {
+    font-weight: 500;
+}
+
+.masthead {
+    background-image: url('src\assets\images\1306023.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}

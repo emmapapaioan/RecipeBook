@@ -12,3 +12,8 @@
 a:hover {
     cursor: pointer;
 }  
+
+.anchor-tag {
+    font-weight: 500;
+    color: white;
+}

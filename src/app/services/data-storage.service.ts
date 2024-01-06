@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Recipe } from '../recipes/recipe.model';
-import { BehaviorSubject, forkJoin, map } from 'rxjs';
-import { AlertService } from './alert.service';
+import { BehaviorSubject, exhaustMap, map, take, tap } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
+import { User } from '../shared/user.model';
+import { AuthorizationService } from './authorization.service';
 import { RecipeService } from './recipe.service';
 
 @Injectable({
@@ -15,6 +16,7 @@ export class DataStorageService {
   recipesJSON: string = 'recipes.json';
   shoppingListJSON: string = 'shoppingList.json';
   private ingredients: BehaviorSubject<Ingredient[]> = new BehaviorSubject<Ingredient[]>([]);
+  user = new BehaviorSubject<User>(null);
   
   constructor(private http: HttpClient) {}
 
@@ -25,13 +27,13 @@ export class DataStorageService {
 
   fetchRecipes() {
     return this.http.get(this.apiURL + this.recipesJSON).pipe(map(response => {
-        const recipesArray: Recipe[] = [];
-        for (let key in response) {
-          if (response.hasOwnProperty(key)) {
-            recipesArray.push({ ...response[key], id: key });
-          }
+      const recipesArray: Recipe[] = [];
+      for (let key in response) {
+        if (response.hasOwnProperty(key)) {
+          recipesArray.push({ ...response[key], id: key });
         }
-        return recipesArray;
+      }
+      return recipesArray;
     }));
   }
 

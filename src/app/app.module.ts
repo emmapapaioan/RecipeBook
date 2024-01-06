@@ -1,6 +1,6 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,7 +35,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { APP_BASE_HREF } from '@angular/common';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
-import { LoginComponent } from './login/login.component';
+import { AuthComponent } from './auth/auth.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { AuthInterceptorService } from './services/auth.interceptor.service';
+import { ExampleShoppingListComponent } from './shopping-list/example-shopping-list/example-shopping-list.component';
+import { ExampleRecipesComponent } from './recipes/example-recipes/example-recipes.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +60,10 @@ import { LoginComponent } from './login/login.component';
     ContactComponent,
     HomeComponent,
     SafeUrlPipe,
-    LoginComponent
+    AuthComponent,
+    SpinnerComponent,
+    ExampleShoppingListComponent,
+    ExampleRecipesComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +85,7 @@ import { LoginComponent } from './login/login.component';
     ShoppingListService,
     RecipeService,
     PdfService,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' }
   ],
   bootstrap: [AppComponent],

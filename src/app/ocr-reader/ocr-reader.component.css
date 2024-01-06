@@ -11,27 +11,3 @@
   background-size: cover;
   background-position: center;
 }
-
-.spinner-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.spinner-image {
-  width: 40%;
-  animation: pulse 2s ease-in-out infinite;
-}

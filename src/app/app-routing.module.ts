@@ -6,6 +6,7 @@ import { OcrReaderComponent } from './ocr-reader/ocr-reader.component';
 import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -14,7 +15,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent},
   { path: 'recipes/:id', component: RecipeDetailComponent},
   { path: 'recipes', component: RecipeListComponent },
-  { path: 'shopping-list', component: ShoppingListComponent}
+  { path: 'shopping-list', component: ShoppingListComponent},
+  { path: 'auth', component: AuthComponent}
 ];
 
 @NgModule({

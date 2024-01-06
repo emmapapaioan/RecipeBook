@@ -28,3 +28,7 @@ img:hover {
 .navbar-light .navbar-nav .nav-link {
     color: white;
 }
+
+.logout-nav-link {
+    cursor: pointer;
+}

@@ -14,6 +14,7 @@ import { AlertService } from 'src/app/services/alert.service';
 import { PdfService } from 'src/app/services/pdf.service';
 import { HelveticaFont } from 'src/app/shared/fonts.model';
 import { PdfOptions } from 'src/app/shared/pdfOptions.model';
+import { AuthorizationService } from 'src/app/services/authorization.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -26,11 +27,13 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   recipe: Recipe;
   id: string;
   recipesEmpty: boolean = false;
-  private paramsSubscription: Subscription;
-  private editModeSubscription: Subscription;
+  private paramsSub: Subscription;
+  private recipesChangedSub: Subscription;
   displayedColumns: string[] = ['name', 'quantity'];
   matDialogConfig: MatDialogConfig = {};
   isPrinting: boolean = false;
+  private userSub: Subscription;
+  isAuthenticated: boolean = false;
 
   constructor(
     private recipeService: RecipeService,
@@ -40,12 +43,13 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private alertService: AlertService,
     private shoppingListService: ShoppingListService,
-    private pdfService: PdfService
+    private pdfService: PdfService,
+    private authService: AuthorizationService
   ) { }
 
   ngOnInit(): void {
     this.recipeService.setRecipeDetailMode(true);
-    this.paramsSubscription = this.route.params.subscribe((params: Params) => {
+    this.paramsSub = this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
       this.recipe = this.recipeService.getRecipe(this.id);
       if (!this.recipe) {
@@ -53,21 +57,20 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+    this.recipesChangedSub = this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
       this.recipe = this.recipeService.getRecipe(this.id);
+    });
+
+    this.userSub = this.authService.user.subscribe(user => {
+      this.isAuthenticated = !!user;
     });
   }
 
   ngOnDestroy(): void {
-    if (this.editModeSubscription) {
-      this.editModeSubscription.unsubscribe();
-    }
-
-    if (this.paramsSubscription) {
-      this.paramsSubscription.unsubscribe();
-    }
-
+    this.recipesChangedSub && this.recipesChangedSub.unsubscribe();
+    this.paramsSub && this.paramsSub.unsubscribe();
     this.recipeService.setRecipeDetailMode(false);
+    this.userSub && this.userSub.unsubscribe();
   }
 
   onAddToShoppingList() {
@@ -145,7 +148,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.recipe = this.recipeService.getRecipe(this.id);
       },
       error: (error) => {
-        this.alertService.infoMessage(false, 'Failed to load recipe. Please reaload the page. ' + error.message);
+        this.alertService.infoMessage(false, 'Failed to load recipe. Please reload the page. ' + error.message);
       }
     });
   }

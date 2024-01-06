@@ -22,6 +22,12 @@
                 <li class="nav-item" routerLinkActive="active">
                     <a class="nav-link" routerLink="/about">About</a>
                 </li>
+                <li *ngIf="!isAuthenticated" class="nav-item" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/auth">Sign Up</a>
+                </li>
+                <li *ngIf="isAuthenticated" class="nav-item logout-nav-link" routerLinkActive="active">
+                    <a class="nav-link" (click)="onLogout()">Logout</a>
+                </li>
             </ul>
         </div>
     </div>

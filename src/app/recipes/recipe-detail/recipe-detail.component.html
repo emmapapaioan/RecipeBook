@@ -30,6 +30,7 @@
                 </div>
                 <div>
                     <button 
+                        *ngIf="isAuthenticated"
                         class="btn btn-primary d-flex justify-content-end align-items-center" 
                         [matMenuTriggerFor]="myMenu">
                         Manage recipe
@@ -47,6 +48,9 @@
                         <button mat-menu-item (click)="printRecipe()">Print Recipe</button>
                         <button mat-menu-item (click)="onDeleteRecipe()">Delete Recipe</button>
                     </mat-menu>
+                </div>
+                <div *ngIf="!isAuthenticated" class="mt-3">
+                    Still not  a member? <a routerLink="/auth" class="anchor-tag"><em>Sign up</em></a> to manage your own recipes!
                 </div>
             </div>
         </div>

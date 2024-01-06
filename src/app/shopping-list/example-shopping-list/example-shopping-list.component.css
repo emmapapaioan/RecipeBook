@@ -1,0 +1,4 @@
+.example-shopping-list * {
+    pointer-events: none;
+    cursor: default;
+}
