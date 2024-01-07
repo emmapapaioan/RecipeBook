@@ -12,6 +12,11 @@ export class AuthInterceptorService implements HttpInterceptor {
         return this.authService.user.pipe(
             take(1),
             exhaustMap((user: User) => {
+                // Check if the request is to Firebase Storage
+                if (req.url.includes('firebasestorage.googleapis.com')) {
+                    // If yes, bypass the interceptor and proceed with the request
+                    return next.handle(req);
+                }
                 if (!user) {
                     return next.handle(req);
                 }

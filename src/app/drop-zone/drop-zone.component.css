@@ -1,10 +1,24 @@
 .drop-zone {
-    border: 2px dashed #ccc;
+    border: 2px dashed #7c7b7b;
+    border-radius: 4px;
     padding: 20px;
     text-align: center;
     transition: border-color 0.3s;
 }
 
 .drop-zone-hover {
-    border-color: #106ba3;
+    background-color: #4a4a4a;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.file-entry {
+    border: 2px solid #7c7b7b;
+    border-radius: 4px;
+}
+
+.file-name {
+    color: rgba(255, 255, 255, 0.6);
 }

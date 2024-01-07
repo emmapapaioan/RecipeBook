@@ -1,8 +1,16 @@
-<div appDragAndDrop 
-    [class.drop-zone-hover]="hovering"
+<div *ngIf="!file" appDragAndDrop 
+     [class.drop-zone-hover]="hovering"
      (fileDropped)="onFileDropped($event)" 
      (fileHovered)="onFileHovered($event)" 
-     class="drop-zone text-center">
-  Drag files here to upload
+     class="drop-zone d-flex flex-column justify-content-center align-items-center">
+    <mat-icon>cloud_upload</mat-icon>
+    <span><a (click)="fileInput.click()" class="font-weight-bold ">Click to upload</a> or drag and drop your image here.</span>
 </div>
 
+<div *ngIf="file" class="file-entry d-flex justify-content-between align-items-center">
+  <div class="file-name ml-3">{{file.name}}</div>
+  <button mat-icon-button (click)="removeFile()"><mat-icon color="warn">remove_circle</mat-icon></button>
+</div>
+
+<!-- Hidden file input -->
+<input type="file" #fileInput style="display: none" (change)="onFileSelected($event)" accept="image/*" />

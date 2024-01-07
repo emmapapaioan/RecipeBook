@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AlertService } from 'src/app/_services/alert.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FirebaseStorageService } from 'src/app/_services/firebase-storage.service';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -25,6 +26,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   addMode: boolean = false;
   recipeForm: FormGroup;
   newIngredients: Ingredient[] = [];
+  file: File;
 
   constructor(
     public recipeService: RecipeService,
@@ -32,7 +34,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     private dataStorageService: DataStorageService,
     private alertService: AlertService,
     public dialog: MatDialog,
-    @Inject(MAT_DIALOG_DATA) public id: string
+    @Inject(MAT_DIALOG_DATA) public id: string,
+    private firebaseStorageService: FirebaseStorageService
   ) { }
 
   ngOnInit() {
@@ -55,13 +58,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   private initForm() {
     let recipeName = '';
-    let recipeImagePath = '';
     let recipeDescription = '';
     let recipeIngredients = new FormArray([]);
 
     if (this.editMode) {
       recipeName = this.recipe.name;
-      recipeImagePath = this.recipe.imagePath;
       recipeDescription = this.recipe.description;
       recipeIngredients = new FormArray([]);
 
@@ -92,7 +93,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
     this.recipeForm = new FormGroup({
       'name': new FormControl(recipeName, Validators.required),
-      'imagePath': new FormControl(recipeImagePath, Validators.required),
       'description': new FormControl(recipeDescription, Validators.required),
       'ingredients': recipeIngredients
     });
@@ -143,14 +143,39 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    let url;
+    if (this.editMode) {
+      url = this.recipe.imagePath;
+      const newRecipe = this.createNewRecipe(url);
+      this.handleNewRecipe(newRecipe);
+    } else {
+      this.onStoreImageAndGetUrl();
+    }
+  }
+
+  createNewRecipe(url: string) {
     const newRecipe: Recipe = {
       name: this.recipeForm.value['name'],
       description: this.recipeForm.value['description'],
-      imagePath: this.recipeForm.value['imagePath'],
+      imagePath: url,
       ingredients: this.getIngredients(),
       id: uuidv4()
     };
+    return newRecipe;
+  }
 
+  onStoreImageAndGetUrl() {
+    this.firebaseStorageService.uploadImageAndGetUrl(this.file)
+      .then(url => {
+        const newRecipe = this.createNewRecipe(url);
+        this.handleNewRecipe(newRecipe);
+      })
+      .catch(error => {
+        console.error("Error uploading file:", error);
+      });
+  }
+
+  handleNewRecipe(newRecipe: Recipe) {
     if (this.editMode) {
       this.updateRecipe(this.recipe.id, newRecipe);
     } else {
@@ -173,8 +198,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.dataStorageService.updateRecipe(id, recipe).subscribe({
       next: () => {
         this.alertService.infoMessage(true, `Recipe ${recipe.name} was successfully updated.`);
-        this.dataStorageService.fetchRecipes().subscribe(recipes => { 
-        this.recipeService.setRecipes(recipes); 
+        this.dataStorageService.fetchRecipes().subscribe(recipes => {
+          this.recipeService.setRecipes(recipes);
         });
       },
       error: (error) => {
@@ -187,14 +212,19 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.dataStorageService.storeRecipe(recipe).subscribe({
       next: () => {
         this.alertService.infoMessage(true, 'Recipe ' + recipe.name + ' was successfully stored in the database.');
-        this.dataStorageService.fetchRecipes().subscribe(recipes => { 
-          this.recipeService.setRecipes(recipes); 
+        this.dataStorageService.fetchRecipes().subscribe(recipes => {
+          this.recipeService.setRecipes(recipes);
         });
       },
       error: (error) => {
         this.alertService.infoMessage(false, 'Error storing the recipe to the database. Error details: ' + error.message);
       }
     });
+  }
+
+  onFileDropped(file: File) {
+    this.file = file;
+
   }
 }
 
