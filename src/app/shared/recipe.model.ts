@@ -1,4 +1,4 @@
-import { Ingredient } from "../shared/ingredient.model";
+import { Ingredient } from "./ingredient.model";
 
 export interface Recipe {
     name: string;

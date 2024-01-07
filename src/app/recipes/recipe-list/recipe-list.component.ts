@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../../services/recipe.service';
-import { DataStorageService } from '../../services/data-storage.service';
+import { Recipe } from '../../shared/recipe.model';
+import { RecipeService } from '../../_services/recipe.service';
+import { DataStorageService } from '../../_services/data-storage.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { Subscription } from 'rxjs';
-import { AuthorizationService } from 'src/app/services/authorization.service';
-import { AlertService } from 'src/app/services/alert.service';
+import { AuthorizationService } from 'src/app/_services/authorization.service';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'app-recipe-list',

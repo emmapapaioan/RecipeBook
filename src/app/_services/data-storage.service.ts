@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Recipe } from '../recipes/recipe.model';
+import { Recipe } from '../shared/recipe.model';
 import { BehaviorSubject, exhaustMap, map, take, tap } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { User } from '../shared/user.model';

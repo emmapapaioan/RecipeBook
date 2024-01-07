@@ -2,28 +2,14 @@
     min-height: 10vh;
 }
 
-input.ng-invalid.ng-touched,
-textarea.ng-invalid.ng-touched {
-    border-color: red;
+.mdc-dialog__title { 
+    padding-left: 0;
 }
 
-.modal-header,
-.modal-content,
-.modal-footer {
-    border: none;
+.add-btn {
+    color: #28a745;
 }
 
 .modal-header {
-    background-color: #2a2f35;
-    .close {
-        color: rgba(255, 255, 255, 0.87);
-    }
-}
-
-::ng-deep .mat-mdc-dialog-container .mdc-dialog__content {
-    background-color: #343a40 !important;
-}
-
-.mdc-dialog__title { 
-    padding-left: 0;
+    cursor: move;
 }

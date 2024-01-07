@@ -2,10 +2,10 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Ingredient } from 'src/app/shared/ingredient.model';
-import { ShoppingListService } from '../../services/shopping-list.service';
-import { DataStorageService } from 'src/app/services/data-storage.service';
+import { ShoppingListService } from '../../_services/shopping-list.service';
+import { DataStorageService } from 'src/app/_services/data-storage.service';
 import { v4 as uuidv4 } from 'uuid';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
   selector: 'app-shopping-edit',

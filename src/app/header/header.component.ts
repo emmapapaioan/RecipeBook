@@ -1,7 +1,7 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Recipe } from '../recipes/recipe.model';
+import { Recipe } from '../shared/recipe.model';
 import { Subscription } from 'rxjs';
-import { AuthorizationService } from '../services/authorization.service';
+import { AuthorizationService } from '../_services/authorization.service';
 
 @Component({
   selector: 'app-header',

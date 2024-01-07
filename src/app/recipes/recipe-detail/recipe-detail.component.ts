@@ -2,19 +2,19 @@ import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChi
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { Ingredient } from 'src/app/shared/ingredient.model';
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../../services/recipe.service';
+import { Recipe } from '../../shared/recipe.model';
+import { RecipeService } from '../../_services/recipe.service';
 import { Subscription } from 'rxjs';
 
-import { DataStorageService } from '../../services/data-storage.service';
-import { ShoppingListService } from '../../services/shopping-list.service';
+import { DataStorageService } from '../../_services/data-storage.service';
+import { ShoppingListService } from '../../_services/shopping-list.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
-import { AlertService } from 'src/app/services/alert.service';
-import { PdfService } from 'src/app/services/pdf.service';
+import { AlertService } from 'src/app/_services/alert.service';
+import { PdfService } from 'src/app/_services/pdf.service';
 import { HelveticaFont } from 'src/app/shared/fonts.model';
 import { PdfOptions } from 'src/app/shared/pdfOptions.model';
-import { AuthorizationService } from 'src/app/services/authorization.service';
+import { AuthorizationService } from 'src/app/_services/authorization.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -30,7 +30,6 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   private paramsSub: Subscription;
   private recipesChangedSub: Subscription;
   displayedColumns: string[] = ['name', 'quantity'];
-  matDialogConfig: MatDialogConfig = {};
   isPrinting: boolean = false;
   private userSub: Subscription;
   isAuthenticated: boolean = false;
@@ -83,12 +82,10 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   
   onEditRecipe() {
     this.recipeService.setRecipeEditMode(true);
-    this.matDialogConfig = {
-      data: this.id,
-      height: 'auto',
-      width: '55%'
+    const matDialogConfig: MatDialogConfig = {
+      data: this.id
     };
-    const dialogRef = this.dialog.open(RecipeEditComponent, this.matDialogConfig);
+    const dialogRef = this.dialog.open(RecipeEditComponent, matDialogConfig);
   }
 
   printRecipe() {

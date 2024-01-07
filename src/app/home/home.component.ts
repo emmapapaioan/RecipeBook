@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthorizationService } from '../services/authorization.service';
+import { AuthorizationService } from '../_services/authorization.service';
 
 @Component({
   selector: 'app-home',

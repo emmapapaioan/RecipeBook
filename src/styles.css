@@ -1,4 +1,4 @@
-@import '~@angular/material/prebuilt-themes/pink-bluegrey.css'; */
+@import '@angular/material/prebuilt-themes/pink-bluegrey.css';
 
 a:hover{
     cursor: pointer;
@@ -23,4 +23,8 @@ body {
 
 .elegant-color-dark {
     background-color: #212121;
+}
+
+.cdk-overlay-pane {
+    height: auto !important;
 }

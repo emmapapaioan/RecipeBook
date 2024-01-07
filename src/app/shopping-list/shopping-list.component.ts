@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
-import { ShoppingListService } from '../services/shopping-list.service';
-import { AlertService } from '../services/alert.service';
-import { DataStorageService } from '../services/data-storage.service';
+import { ShoppingListService } from '../_services/shopping-list.service';
+import { AlertService } from '../_services/alert.service';
+import { DataStorageService } from '../_services/data-storage.service';
 import { Subscription } from 'rxjs';
-import { AuthorizationService } from '../services/authorization.service';
+import { AuthorizationService } from '../_services/authorization.service';
 
 @Component({
   selector: 'app-shopping-list',

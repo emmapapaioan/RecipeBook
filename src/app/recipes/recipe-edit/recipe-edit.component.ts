@@ -1,12 +1,12 @@
-import { Component, ElementRef, Inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Recipe } from '../recipe.model';
-import { RecipeService } from '../../services/recipe.service';
-import { FormArray, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Recipe } from '../../shared/recipe.model';
+import { RecipeService } from '../../_services/recipe.service';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Ingredient } from 'src/app/shared/ingredient.model';
-import { DataStorageService } from '../../services/data-storage.service';
+import { DataStorageService } from '../../_services/data-storage.service';
 import { v4 as uuidv4 } from 'uuid';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService } from 'src/app/_services/alert.service';
 import { MatDialog } from '@angular/material/dialog';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
@@ -18,7 +18,6 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export class RecipeEditComponent implements OnInit, OnDestroy {
   @Output() selectedNewRecipe = true;
-  @ViewChild('form', { static: false }) form: NgForm;
   @ViewChild('descriptionInput', { static: false }) descriptionInput: ElementRef;
 
   recipe: Recipe;
@@ -110,12 +109,12 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     this.dialog.closeAll();
   }
 
-  get controls() {
+  get ingredients() {
     return (<FormArray>this.recipeForm.get('ingredients')).controls;
   }
 
   getIngredients(): Ingredient[] {
-    const ingredients = this.controls.map(control => {
+    const ingredients = this.ingredients.map(control => {
       return { name: control.get('name').value, amount: control.get('amount').value };
     });
 
@@ -129,7 +128,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onAddIngredient() {
-    this.controls.push(
+    this.ingredients.push(
       new FormGroup({
         'name': new FormControl(null, Validators.required),
         'amount': new FormControl(null, [
@@ -140,7 +139,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   removeIngredient(index: number) {
-    this.controls.splice(index, 1);
+    this.ingredients.splice(index, 1);
   }
 
   onSubmit() {

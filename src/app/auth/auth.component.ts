@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthorizationService } from '../services/authorization.service';
+import { AuthorizationService } from '../_services/authorization.service';
 import { Observable } from 'rxjs';
 import { AuthResponseData } from '../shared/authData.model';
 import { Router } from '@angular/router';

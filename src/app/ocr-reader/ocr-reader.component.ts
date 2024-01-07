@@ -1,7 +1,7 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import * as Tesseract from 'tesseract.js';
 import { HttpClient } from '@angular/common/http';
-import { AlertService } from '../services/alert.service';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'app-ocr-reader',
