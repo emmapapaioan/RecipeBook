@@ -13,10 +13,10 @@ import { RecipeItemComponent } from './recipes/recipe-list/recipe-item/recipe-it
 import { ShoppingListComponent } from './shopping-list/shopping-list.component';
 import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-edit.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ShoppingListService } from './services/shopping-list.service';
+import { ShoppingListService } from './_services/shopping-list.service';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
-import { RecipeService } from './services/recipe.service';
-import { PdfService } from './services/pdf.service'
+import { RecipeService } from './_services/recipe.service';
+import { PdfService } from './_services/pdf.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 import { OcrReaderComponent } from './ocr-reader/ocr-reader.component';
 import { AboutComponent } from './about/about.component';
@@ -31,13 +31,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 import { APP_BASE_HREF } from '@angular/common';
 import { SafeUrlPipe } from './pipes/safe-url.pipe';
 import { AuthComponent } from './auth/auth.component';
 import { SpinnerComponent } from './spinner/spinner.component';
-import { AuthInterceptorService } from './services/auth.interceptor.service';
+import { AuthInterceptorService } from './_services/auth.interceptor.service';
 import { ExampleShoppingListComponent } from './shopping-list/example-shopping-list/example-shopping-list.component';
 import { ExampleRecipesComponent } from './recipes/example-recipes/example-recipes.component';
+import { DragAndDropDirective } from './_directives/drag-and-drop.directive';
+import { DropZoneComponent } from './drop-zone/drop-zone.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -60,7 +66,9 @@ import { ExampleRecipesComponent } from './recipes/example-recipes/example-recip
     AuthComponent,
     SpinnerComponent,
     ExampleShoppingListComponent,
-    ExampleRecipesComponent
+    ExampleRecipesComponent,
+    DragAndDropDirective,
+    DropZoneComponent
   ],
   imports: [
     BrowserModule,
@@ -76,7 +84,11 @@ import { ExampleRecipesComponent } from './recipes/example-recipes/example-recip
     MatDialogModule,
     MatMenuModule,
     MatTableModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    DragDropModule
   ],
   providers: [
     ShoppingListService,
