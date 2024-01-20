@@ -25,6 +25,23 @@ body {
     background-color: #212121;
 }
 
+.bg-dark {
+    background-color: #2E2E2E!important;
+}
+
 .cdk-overlay-pane {
-    height: auto !important;
+    height: auto!important;
+}
+
+.mat-mdc-form-field-textarea-control {
+   overflow: hidden!important; 
+} 
+
+.custom-image-class {
+    margin-bottom: 0!important; 
+}
+
+.swal2-popup {
+    color: #fff!important;
+    background-color: #2E2E2E!important;
 }
