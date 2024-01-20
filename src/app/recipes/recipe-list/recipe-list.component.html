@@ -9,7 +9,7 @@
                 to the right place. Let's start cooking up some magic!
                 <span class="float-right mr-3">
                     <button 
-                        *ngIf="isAuthenticated"
+                        *ngIf="isAuthenticated && recipes.length"
                         class="btn btn-success newRecpBtn" 
                         (click)="onSelectNewRecipe()">
                         New Recipe
@@ -26,10 +26,19 @@
             </div>
         </div>
 
-        <div class="d-flex flex-row flex-wrap justify-content-between" *ngIf="recipes && isAuthenticated">
+        <div class="d-flex flex-row flex-wrap justify-content-center" *ngIf="recipes && isAuthenticated">
             <div class="col-lg-4 col-md-6 col-sm-12 mb-4" *ngFor="let recipeItem of recipes">
                 <app-recipe-item [recipe]="recipeItem" [id]="recipeItem.id"></app-recipe-item>
             </div>
+        </div>
+        <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="!recipes.length && isAuthenticated">
+            <h6 class="text-white bg-dark p-2">It seems you don't have any recipes saved yet. Start adding your favorite ones now!</h6>
+            <button 
+                *ngIf="isAuthenticated && !recipes.length"
+                class="btn btn-success newRecpBtn mt-4" 
+                (click)="onSelectNewRecipe()">
+                New Recipe
+            </button>
         </div>
         <div class="d-flex justify-content-center align-items-center">
             <div *ngIf="isLoading" class="spinner-border text-custom" role="status">

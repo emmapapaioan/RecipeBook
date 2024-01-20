@@ -83,7 +83,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   onEditRecipe() {
     this.recipeService.setRecipeEditMode(true);
     const matDialogConfig: MatDialogConfig = {
-      data: this.id
+      data: this.id,
+      width: '60%'
     };
     const dialogRef = this.dialog.open(RecipeEditComponent, matDialogConfig);
   }

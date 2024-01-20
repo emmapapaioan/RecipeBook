@@ -21,9 +21,9 @@
         <div *ngIf="isLoading" class="text-center">
             <app-spinner [type]="'ellipsis'"></app-spinner>
         </div>
-        <div class="row justify-content-start" *ngIf="!ingredients && !isLoading && isAuthenticated">
+        <div class="row justify-content-start" *ngIf="!ingredients.length && !isLoading && isAuthenticated">
             <div class="col-12">
-                <h4>Shopping List is empty. Let's add some ingredients!</h4>
+                <h6>It seems that Shopping List is empty. Let's add some ingredients!</h6>
             </div>
         </div>
         <div class="d-flex flex-column align-items-center" *ngIf="!isAuthenticated && !isLoading">

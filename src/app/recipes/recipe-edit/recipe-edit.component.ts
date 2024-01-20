@@ -39,7 +39,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    if (typeof this.id !== 'undefined') {
+    if (this.id) {
       this.recipe = this.recipeService.getRecipe(this.id);
       this.editMode = this.recipeService.setRecipeEditMode(this.id != null);
     } else {
@@ -73,7 +73,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
               'name': new FormControl(ingredient.name, Validators.required),
               'amount': new FormControl(ingredient.amount, [
                 Validators.required,
-                Validators.pattern(/^[1-9]+[0-9]*$/)
+                Validators.pattern(/^(\d+(\.\d+)?|\d+(\.\d+)?\/\d+(\.\d+)?)$/)
               ])
             })
           );
@@ -85,7 +85,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           'name': new FormControl(null, Validators.required),
           'amount': new FormControl(null, [
             Validators.required,
-            Validators.pattern(/^[1-9]+[0-9]*$/)
+            Validators.pattern(/^(\d+(\.\d+)?|\d+(\.\d+)?\/\d+(\.\d+)?)$/)
           ])
         })
       );
@@ -133,7 +133,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         'name': new FormControl(null, Validators.required),
         'amount': new FormControl(null, [
           Validators.required,
-          Validators.pattern(/^[1-9]+[0-9]*$/)
+          Validators.pattern(/^(\d+(\.\d+)?|\d+(\.\d+)?\/\d+(\.\d+)?)$/)
         ])
       }));
   }
@@ -224,7 +224,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   onFileDropped(file: File) {
     this.file = file;
+  }
 
+  get isSubmitBtnDisabled() {
+    return this.addMode && (!this.recipeForm.valid || !this.file) ||
+           this.editMode && !this.recipeForm.valid;
   }
 }
 

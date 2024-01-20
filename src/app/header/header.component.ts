@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { Recipe } from '../shared/recipe.model';
 import { Subscription } from 'rxjs';
 import { AuthorizationService } from '../_services/authorization.service';
+import { AlertService } from '../_services/alert.service';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
   private userSub: Subscription;
   isAuthenticated: boolean = false;
   
-  constructor(private authService: AuthorizationService) { }
+  constructor(private authService: AuthorizationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
     this.userSub = this.authService.user.subscribe(user => {
@@ -25,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.authService.logout();
+    this.alertService.onLogoutMessage();
   }
 
   ngOnDestroy() {

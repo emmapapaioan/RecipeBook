@@ -9,8 +9,6 @@ import { AlertService } from './alert.service';
 })
 
 export class ShoppingListService {
-  apiURL: string = 'https://recipe-book-41dd4-default-rtdb.europe-west1.firebasedatabase.app/secretKey=r3cip3B00k!/';
-  shoppingListJSON: string = 'shoppingList.json';
   startEditing = new Subject<string>();
   ingredientsChanged = new Subject<Ingredient[]>();
   ingredients: Ingredient[] = [];

@@ -29,13 +29,6 @@
                 </mat-form-field>
             </div>
             <div class="row mb-4">
-                <!-- <mat-form-field appearance="fill" class="col-md-8">
-                    <mat-label for="imagePath">Image path</mat-label>
-                    <input matInput 
-                        type="text" 
-                        id="imagePath" 
-                        formControlName="imagePath"/>
-                </mat-form-field> -->
                 <div class="col-md-8" *ngIf="!this.editMode">
                     <app-drop-zone (fileDropped)="onFileDropped($event)"></app-drop-zone>
                 </div>
@@ -75,7 +68,7 @@
                     <button 
                         class="btn btn-success mr-2" 
                         type="submit" aria-mat-label="..." 
-                        [disabled]="!recipeForm.valid">Save
+                        [disabled]="isSubmitBtnDisabled">Save
                     </button>
                     <div 
                         class="btn btn-danger " 
