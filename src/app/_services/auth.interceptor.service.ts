@@ -14,12 +14,16 @@ export class AuthInterceptorService implements HttpInterceptor {
             exhaustMap((user: User) => {
                 // Check if the request is to Firebase Storage
                 if (req.url.includes('firebasestorage.googleapis.com')) {
-                    // If yes, bypass the interceptor and proceed with the request
-                    return next.handle(req);
+                    // For Firebase Storage, use the Authorization header
+                    const modifiedReq = req.clone({
+                        headers: req.headers.set('Authorization', `Bearer ${user.token}`)
+                    });
+                    return next.handle(modifiedReq);
                 }
                 if (!user) {
                     return next.handle(req);
                 }
+                // For other requests, use the auth query parameter
                 const modifiedReq = req.clone({
                     params: new HttpParams().set('auth', user.token)
                 });
