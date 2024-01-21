@@ -16,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ShoppingListService } from './_services/shopping-list.service';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { RecipeService } from './_services/recipe.service';
-import { PdfService } from './_services/pdf.service'
+import { PrintService } from './_services/print.service'
 import { RecipesStartComponent } from './recipes/recipes-start/recipes-start.component';
 import { OcrReaderComponent } from './ocr-reader/ocr-reader.component';
 import { AboutComponent } from './about/about.component';
@@ -93,7 +93,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   providers: [
     ShoppingListService,
     RecipeService,
-    PdfService,
+    PrintService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     { provide: APP_BASE_HREF, useValue: '/' }
   ],
