@@ -179,7 +179,6 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
     if (this.editMode) {
       this.updateRecipe(this.recipe.id, newRecipe);
     } else {
-      newRecipe.ingredients.forEach(ingredient => ingredient.id = uuidv4());
       this.storeRecipe(newRecipe);
     }
 
@@ -216,8 +215,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
           this.recipeService.setRecipes(recipes);
         });
       },
-      error: (error) => {
-        this.alertService.infoMessage(false, 'Error storing the recipe to the database. Error details: ' + error.message);
+      error: () => {
+        this.alertService.infoMessage(false, 'Error storing the recipe to the database.');
       }
     });
   }

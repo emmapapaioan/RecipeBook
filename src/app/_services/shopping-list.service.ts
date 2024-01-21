@@ -15,10 +15,6 @@ export class ShoppingListService {
   
   constructor(private dataStorageService: DataStorageService, private alertService: AlertService) {}
 
-  getIngredientById(id: string): Ingredient {
-    return this.ingredients.find(ingredient => ingredient.id === id);
-  }
-
   getIngredientByName(name: string) {
     return this.ingredients.find(ingredient => {
       return ingredient.name.toLowerCase() === name.toLowerCase();
@@ -43,7 +39,7 @@ export class ShoppingListService {
     return this.dataStorageService.addIngredient(ingredient).pipe(
       tap(() => this.fetchAndBroadcastIngredients()),
       catchError((error) => {
-        this.alertService.infoMessage(false, `Failed to add Ingredient ${ingredient.name}. Error: ${error.message}`);
+        this.alertService.infoMessage(false, `Failed to add Ingredient ${ingredient.name}. Please try again.`);
         return throwError(() => new Error(error));
       })
     );
@@ -53,7 +49,7 @@ export class ShoppingListService {
     return this.dataStorageService.updateIngredient(ingredient).pipe(
       tap(() => this.fetchAndBroadcastIngredients()),
       catchError((error) => {
-        this.alertService.infoMessage(false, `Failed to update Ingredient ${ingredient.name}. Error: ${error.message}`);
+        this.alertService.infoMessage(false, `Failed to update Ingredient ${ingredient.name}. Please try again.`);
         return throwError(() => new Error(error));
       })
     );

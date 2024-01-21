@@ -35,10 +35,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   }
 
   initializeSubscription() {
-    this.subscription = this.shoppingListService.startEditing.subscribe((id: string) => {
-      this.editedItemId = id;
+    this.subscription = this.shoppingListService.startEditing.subscribe((name: string) => {
       this.editMode = true;
-      this.editedItem = this.shoppingListService.getIngredientById(id);
+      this.editedItem = this.shoppingListService.getIngredientByName(name);
       this.shoppingListForm.setValue({ name: this.editedItem.name, amount: this.editedItem.amount });
     });
   }
@@ -50,7 +49,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
 
     if (name && amount) {
       if (!existingIngredient) {
-        this.handleIngredientAdd({ name: name, amount: amount, id: uuidv4() });
+        this.handleIngredientAdd({ name: name, amount: amount });
       } else {
         existingIngredient.amount += amount;
         this.handleIngredientUpdate(existingIngredient);
@@ -96,8 +95,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
       next: () => {
         this.fetchAndBroadcastIngredients();
       },
-      error: (error) => {
-        this.alertService.infoMessage(false, `Failed to add Ingredient ${ingredient.name}. Error: ${error.message}`);
+      error: () => {
+        this.alertService.infoMessage(false, `Failed to add Ingredient ${ingredient.name}.`);
       }
     });
   }
@@ -107,8 +106,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
       next: () => { 
         this.fetchAndBroadcastIngredients(); 
       },
-      error: (error) => {
-        this.alertService.infoMessage(false, `Failed to update ingredient ${ingredient.name}. Error: ${error.message}`);
+      error: () => {
+        this.alertService.infoMessage(false, `Failed to update ingredient ${ingredient.name}.`);
       }
     });
   }
@@ -118,8 +117,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
       next: () => { 
         this.fetchAndBroadcastIngredients(); 
       },
-      error: (error) => { 
-        this.alertService.infoMessage(false, `Failed to delete ingredient. Error: ${error.message}`); 
+      error: () => { 
+        this.alertService.infoMessage(false, `Failed to delete ingredient.`); 
       }
     });
   }
@@ -129,8 +128,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
       next: (res: Ingredient[]) => {
         this.shoppingListService.setIngredients(res);
       },
-      error: (error) => {
-        this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reload the page. ' + error.message);
+      error: () => {
+        this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reload the page. ');
       }
     });
   }
