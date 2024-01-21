@@ -50,11 +50,11 @@ export class AlertService {
 
   onLogoutMessage() {
     Swal.fire({
-      text: 'Are you sure you want to log out? We\'\ll miss you!',
-      imageUrl: '/assets/icons/sad-emoji.png',
-      imageWidth: 100,
-      imageHeight: 100,
-      imageAlt: 'Sad Emoji',
+      text: 'Leaving so soon? We\'\ll miss you!',
+      imageUrl: '/assets/icons/heart.png',
+      imageWidth: 200,
+      imageHeight: 200,
+      imageAlt: 'Heart Emoji',
       showCancelButton: true,
       confirmButtonText: 'Yes, logout',
       cancelButtonText: 'Cancel',
