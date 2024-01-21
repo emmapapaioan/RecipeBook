@@ -11,10 +11,11 @@ import { ShoppingListService } from '../../_services/shopping-list.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { AlertService } from 'src/app/_services/alert.service';
-import { PdfService } from 'src/app/_services/pdf.service';
+import { PrintService } from 'src/app/_services/print.service';
 import { HelveticaFont } from 'src/app/shared/fonts.model';
 import { PdfOptions } from 'src/app/shared/pdfOptions.model';
 import { AuthorizationService } from 'src/app/_services/authorization.service';
+import { FirebaseStorageService } from 'src/app/_services/firebase-storage.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,7 +24,6 @@ import { AuthorizationService } from 'src/app/_services/authorization.service';
 })
 export class RecipeDetailComponent implements OnInit, OnDestroy {
   @Output() addToShoppingListEvent = new EventEmitter<Ingredient[]>();
-  @ViewChild('recipeImage') recipeImage: ElementRef;
   recipe: Recipe;
   id: string;
   recipesEmpty: boolean = false;
@@ -42,8 +42,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private alertService: AlertService,
     private shoppingListService: ShoppingListService,
-    private pdfService: PdfService,
-    private authService: AuthorizationService
+    private printService: PrintService,
+    private authService: AuthorizationService,
+    private firebaseStorageService: FirebaseStorageService
   ) { }
 
   ngOnInit(): void {
@@ -79,7 +80,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       error: () => this.alertService.infoMessage(false, 'Failed updating the Shopping List. Please try again.')
     });
   }
-  
+
   onEditRecipe() {
     this.recipeService.setRecipeEditMode(true);
     const matDialogConfig: MatDialogConfig = {
@@ -92,19 +93,25 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   printRecipe() {
     this.isPrinting = true;
     const pdfOptions: PdfOptions = {
-      leftMargin : 15, 
-      imageWidth : 100, 
-      imageHeight : 100, 
-      marginTop : 10, 
-      maxWidth : 180, 
-      fontSize : 14, 
-      fontName : HelveticaFont.fontName, 
-      fontStyle : HelveticaFont.fontStyles[0], 
-      titlesFontStyle : HelveticaFont.fontStyles[1],
+      leftMargin: 15,
+      imageWidth: 100,
+      imageHeight: 100,
+      marginTop: 10,
+      maxWidth: 180,
+      fontSize: 14,
+      fontName: HelveticaFont.fontName,
+      fontStyle: HelveticaFont.fontStyles[0],
+      titlesFontStyle: HelveticaFont.fontStyles[1],
       imageHtml: '#ingredients'
     };
-    this.pdfService.generateRecipePdf(this.recipe, pdfOptions).then(() => {
+    
+    this.firebaseStorageService.getImageAsBlob(this.recipe.imagePath).then(imgBlob => {
+      this.printService.generateRecipePdf(this.recipe, pdfOptions, imgBlob).then(() => {
         this.isPrinting = false;
+      });
+    }).catch(error => {
+      console.error('Error retrieving image: ', error);
+      this.isPrinting = false;
     });
   }
 
@@ -121,8 +128,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         next: () => {
           this.handleSuccessfullRecipeDelete();
         },
-        error: (error) => {
-          this.alertService.infoMessage(false, `Failed to delete recipe ${this.recipe.name} was not successfull. Error details: ${error.message}`);
+        error: () => {
+          this.alertService.infoMessage(false, `Failed to delete recipe ${this.recipe.name} was not successfull.`);
         }
       });
     }
@@ -145,8 +152,8 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
         this.recipeService.setRecipes(res);
         this.recipe = this.recipeService.getRecipe(this.id);
       },
-      error: (error) => {
-        this.alertService.infoMessage(false, 'Failed to load recipe. Please reload the page. ' + error.message);
+      error: () => {
+        this.alertService.infoMessage(false, 'Failed to load recipe. Please reload the page.');
       }
     });
   }
