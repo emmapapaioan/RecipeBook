@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Recipe } from '../shared/recipe.model';
-import { BehaviorSubject, Observable, map, of, switchMap, take, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, switchMap, take, throwError } from 'rxjs';
 import { Ingredient } from '../shared/ingredient.model';
 import { User } from '../shared/user.model';
 import { AuthorizationService } from './authorization.service';
@@ -70,15 +70,35 @@ export class DataStorageService {
     return this.getUserSpecificUrl(`recipes/${recipe.id}.json`).pipe(
       switchMap(url => {
         if (url) {
-          return this.http.delete(url);
+          // First, delete the recipe from the database
+          return this.http.delete(url).pipe(
+            switchMap(() => {
+              // Upon successful deletion, proceed to delete the image
+              if (recipe.imagePath) {
+                return this.deleteImage(recipe.imagePath);
+              }
+              return of(null); // If no image URL, skip image deletion
+            }),
+            catchError(error => {
+              console.error('Failed to delete recipe or image', error);
+              return throwError(() => new Error('Failed to delete recipe or image'));
+            })
+          );
         } else {
-          return throwError(() => new Error('No user ID found')); // or handle as needed
+          return throwError(() => new Error('No user ID found'));
         }
       })
     );
   }
-  
 
+  private deleteImage(imageUrl: string): Observable<any> {
+    // Extract the file path from the imageUrl
+    const filePath = imageUrl.split('/o/')[1].split('?')[0];
+    // Construct the correct delete URL
+    const deleteUrl = `https://firebasestorage.googleapis.com/v0/b/recipe-book-41dd4.appspot.com/o/${filePath}`;
+    return this.http.delete(deleteUrl);
+  }
+  
   updateRecipe(id: string, recipe: Recipe) {
     return this.getUserSpecificUrl(`recipes/${id}.json`).pipe(
       switchMap(url => {
@@ -90,9 +110,10 @@ export class DataStorageService {
       })
     );
   }
-  
+
   addIngredient(ingredient: Ingredient) {
-    return this.getUserSpecificUrl(`shoppingList/${ingredient.id}.json`).pipe(
+    const encodedName = encodeURIComponent(ingredient.name);
+    return this.getUserSpecificUrl(`shoppingList/${encodedName}.json`).pipe(
       switchMap(url => {
         if (url) {
           return this.http.put(url, ingredient);
@@ -102,9 +123,10 @@ export class DataStorageService {
       })
     );
   }
-  
+
   updateIngredient(ingredient: Ingredient) {
-    return this.getUserSpecificUrl(`shoppingList/${ingredient.id}.json`).pipe(
+    const encodedName = encodeURIComponent(ingredient.name);
+    return this.getUserSpecificUrl(`shoppingList/${encodedName}.json`).pipe(
       switchMap(url => {
         if (url) {
           return this.http.put(url, ingredient);
@@ -116,7 +138,8 @@ export class DataStorageService {
   }
   
   deleteIngredient(ingredient: Ingredient) {
-    return this.getUserSpecificUrl(`shoppingList/${ingredient.id}.json`).pipe(
+    const encodedName = encodeURIComponent(ingredient.name);
+    return this.getUserSpecificUrl(`shoppingList/${encodedName}.json`).pipe(
       switchMap(url => {
         if (url) {
           return this.http.delete(url);
