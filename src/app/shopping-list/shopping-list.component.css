@@ -17,3 +17,9 @@ a:hover {
     font-weight: 500;
     color: white;
 }
+
+@media print {
+    #shopping-list a {
+      text-decoration: none !important;
+    }
+  }
