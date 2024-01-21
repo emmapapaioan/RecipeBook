@@ -14,7 +14,7 @@ import { AuthorizationService } from '../_services/authorization.service';
 
 export class ShoppingListComponent implements OnInit {
   ingredients: Ingredient[];
-  selectedIngredientId: string;
+  selectedIngredientName: string;
   private shoppingListSub: Subscription;
   private userSub: Subscription;
   isAuthenticated: boolean = false;
@@ -41,8 +41,8 @@ export class ShoppingListComponent implements OnInit {
         this.ingredients = this.shoppingListService.getIngredients();
         this.isLoading = false;
       },
-      error: (error) => {
-        this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reload the page. ' + error.message);
+      error: () => {
+        this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reload the page.');
         this.isLoading = false;
       }
     });
@@ -60,13 +60,27 @@ export class ShoppingListComponent implements OnInit {
     });
   }
 
-  onEditIngredient(id: string) {
-    this.selectedIngredientId = id;
-    this.shoppingListService.startEditing.next(id);
+  onEditIngredient(name: string) {
+    this.selectedIngredientName = name;
+    this.shoppingListService.startEditing.next(name);
   }
 
   ngOnDestroy(): void {
     this.userSub && this.userSub.unsubscribe();
     this.shoppingListSub && this.shoppingListSub.unsubscribe();
+  }
+
+  onPrint() {
+    const editDiv: HTMLElement = document.querySelector('.shopping-edit');
+    const btn: HTMLElement = document.querySelector('.btn-info');
+    const shoppingList: HTMLElement = document.querySelector('#shopping-list');
+    editDiv.style.display = 'none';
+    btn.style.display = 'none';
+    shoppingList.style.textDecoration = 'none';
+    window.print();
+    editDiv.style.display = 'flex';
+    editDiv.style.justifyContent = 'center';
+    btn.style.display = 'block';
+    window.close();
   }
 }

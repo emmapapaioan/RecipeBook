@@ -1,27 +1,36 @@
 <div class="main-content pb-5">
     <div class="container py-5 text-white">
-        <div class="row">
+        <div class="row justify-content-center shopping-edit">
             <div class="col-6">
                 <app-shopping-edit *ngIf="isAuthenticated"></app-shopping-edit>
             </div>
         </div>
-        <div class="row justify-content-start" *ngIf="ingredients">
+        <div class="row justify-content-center" *ngIf="ingredients">
             <div class="col-6">
-                <h3>Shopping List</h3>
-                <div class="list-group">
-                    <a 
-                        *ngFor="let ingredient of ingredients"
-                        class="list-group-item list-group-item-action list-group-item-light" 
-                        [class.selected-ingredient]="selectedIngredientId === ingredient.id"
-                        (click)="onEditIngredient(ingredient.id)">
-                        {{ingredient.name}} ({{ingredient.amount}})</a>
+                <div class="d-flex align-items-center justify-content-between pb-2">
+                    <h3>Shopping List</h3>
+                    <button 
+                        class="btn btn-info" 
+                        type="button"
+                        (click)="onPrint()">
+                        Print
+                    </button>
+                </div>
+                <div class="list-group" id="shopping-list">
+                    <a *ngFor="let ingredient of ingredients" 
+                        class="list-group-item list-group-item-action list-group-item-light"
+                        [class.selected-ingredient]="selectedIngredientName === ingredient.name"
+                        (click)="onEditIngredient(ingredient.name)">
+                        {{ingredient.name}} ({{ingredient.amount}})
+                    </a>
                 </div>
             </div>
-        </div>
+        </div>        
         <div *ngIf="isLoading" class="text-center">
             <app-spinner [type]="'ellipsis'"></app-spinner>
         </div>
-        <div class="row justify-content-start" *ngIf="!ingredients.length && !isLoading && isAuthenticated">
+        <div class="row justify-content-start"
+            *ngIf="(!ingredients || !ingredients.length) && !isLoading && isAuthenticated">
             <div class="col-12">
                 <h6>It seems that Shopping List is empty. Let's add some ingredients!</h6>
             </div>
@@ -31,7 +40,8 @@
                 <app-example-shopping-list></app-example-shopping-list>
             </div>
             <div class="mt-3 col-6">
-                Still not  a member? <a routerLink="/auth" class="anchor-tag"><em>Sign up</em></a> to manage your own shopping list!
+                Still not a member? <a routerLink="/auth" class="anchor-tag"><em>Sign up</em></a> to manage your own
+                shopping list!
             </div>
         </div>
     </div>
