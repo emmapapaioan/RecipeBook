@@ -1,6 +1,6 @@
 # RecipeBook
 
-https://github.com/emmapapaioan/ShoppingProject/assets/108992250/813f201e-81da-47ac-9969-87dbc515b80e
+https://github.com/emmapapaioan/RecipeBook/assets/108992250/b67a7dd3-eb7c-4605-a9c3-190edb017f47
 
 RecipeBook is a web application developed using Angular framework. It allows users to store, view, edit, print, or delete recipes from a remote database. The project also provides OCR (Optical Character Recognition) functionality where users can upload an image with text (a recipe image, for example) and retrieve the text from the image.
 
