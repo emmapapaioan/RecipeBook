@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Ingredient } from '../shared/ingredient.model';
+import { Ingredient } from '../_shared/ingredient.model';
 import { ShoppingListService } from '../_services/shopping-list.service';
 import { AlertService } from '../_services/alert.service';
 import { DataStorageService } from '../_services/data-storage.service';
@@ -21,7 +21,7 @@ export class ShoppingListComponent implements OnInit {
   isLoading: boolean = false;
 
   constructor(
-    private shoppingListService: ShoppingListService, 
+    private shoppingListService: ShoppingListService,
     private dataStorageService: DataStorageService,
     private alertService: AlertService,
     private authService: AuthorizationService

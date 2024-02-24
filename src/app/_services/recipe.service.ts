@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../_shared/recipe.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class RecipeService {
     }
     return recipe;
   }
-  
+
 
   getRecipesLength() {
     return this.recipes.length;

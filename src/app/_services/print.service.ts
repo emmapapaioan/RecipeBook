@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import jsPDF from 'jspdf';
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../_shared/recipe.model';
 import autotable, { FontStyle } from 'jspdf-autotable';
-import { PdfOptions } from '../shared/pdfOptions.model';
+import { PdfOptions } from '../_shared/pdfOptions.model';
 import { FirebaseStorageService } from './firebase-storage.service';
 import html2canvas from 'html2canvas';
 

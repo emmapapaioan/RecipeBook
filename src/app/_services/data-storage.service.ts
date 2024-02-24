@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../_shared/recipe.model';
 import { BehaviorSubject, Observable, catchError, map, of, switchMap, take, throwError } from 'rxjs';
-import { Ingredient } from '../shared/ingredient.model';
-import { User } from '../shared/user.model';
+import { Ingredient } from '../_shared/ingredient.model';
+import { User } from '../_shared/user.model';
 import { AuthorizationService } from './authorization.service';
 
 @Injectable({

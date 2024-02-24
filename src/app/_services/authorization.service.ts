@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { AuthRequestData, AuthResponseData } from "../shared/authData.model";
+import { AuthRequestData, AuthResponseData } from "../_shared/authData.model";
 import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
-import { User } from "../shared/user.model";
+import { User } from "../_shared/user.model";
 
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {

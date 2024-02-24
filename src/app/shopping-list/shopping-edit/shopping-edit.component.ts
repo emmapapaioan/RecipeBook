@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Ingredient } from 'src/app/shared/ingredient.model';
+import { Ingredient } from 'src/app/_shared/ingredient.model';
 import { ShoppingListService } from '../../_services/shopping-list.service';
 import { DataStorageService } from 'src/app/_services/data-storage.service';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,11 +20,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
   editedItem: Ingredient;
 
   constructor(
-    private shoppingListService: ShoppingListService, 
+    private shoppingListService: ShoppingListService,
     private dataStorageService: DataStorageService,
     private alertService: AlertService
   ) {}
-  
+
   ngOnInit() {
     this.initializeSubscription();
     this.editMode = false;
@@ -103,8 +103,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
 
   handleIngredientUpdate(ingredient: Ingredient) {
     this.dataStorageService.updateIngredient(ingredient).subscribe({
-      next: () => { 
-        this.fetchAndBroadcastIngredients(); 
+      next: () => {
+        this.fetchAndBroadcastIngredients();
       },
       error: () => {
         this.alertService.infoMessage(false, `Failed to update ingredient ${ingredient.name}.`);
@@ -114,11 +114,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
 
   handleIngredientDelete(ingredient: Ingredient) {
     this.dataStorageService.deleteIngredient(ingredient).subscribe({
-      next: () => { 
-        this.fetchAndBroadcastIngredients(); 
+      next: () => {
+        this.fetchAndBroadcastIngredients();
       },
-      error: () => { 
-        this.alertService.infoMessage(false, `Failed to delete ingredient.`); 
+      error: () => {
+        this.alertService.infoMessage(false, `Failed to delete ingredient.`);
       }
     });
   }

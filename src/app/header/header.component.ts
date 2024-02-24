@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Recipe } from '../shared/recipe.model';
+import { Recipe } from '../_shared/recipe.model';
 import { Subscription } from 'rxjs';
 import { AuthorizationService } from '../_services/authorization.service';
 import { AlertService } from '../_services/alert.service';
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   public isScrolled = false;
   private userSub: Subscription;
   isAuthenticated: boolean = false;
-  
+
   constructor(private authService: AuthorizationService, private alertService: AlertService) { }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
   ngOnDestroy() {
     this.userSub && this.userSub.unsubscribe();
   }
-  
+
   @HostListener('window:scroll')
   scrollEvent() {
     window.pageYOffset >=80 ? (this.isScrolled = true) : (this.isScrolled = false);

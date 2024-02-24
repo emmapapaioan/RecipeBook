@@ -35,7 +35,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { APP_BASE_HREF } from '@angular/common';
-import { SafeUrlPipe } from './pipes/safe-url.pipe';
+import { SafeUrlPipe } from './_pipes/safe-url.pipe';
 import { AuthComponent } from './auth/auth.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { AuthInterceptorService } from './_services/auth.interceptor.service';

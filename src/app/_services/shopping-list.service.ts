@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Ingredient } from 'src/app/shared/ingredient.model';
+import { Ingredient } from 'src/app/_shared/ingredient.model';
 import { Observable, Subject, catchError, forkJoin, tap, throwError } from 'rxjs';
 import { DataStorageService } from './data-storage.service';
 import { AlertService } from './alert.service';
@@ -12,7 +12,7 @@ export class ShoppingListService {
   startEditing = new Subject<string>();
   ingredientsChanged = new Subject<Ingredient[]>();
   ingredients: Ingredient[] = [];
-  
+
   constructor(private dataStorageService: DataStorageService, private alertService: AlertService) {}
 
   getIngredientByName(name: string) {
@@ -20,7 +20,7 @@ export class ShoppingListService {
       return ingredient.name.toLowerCase() === name.toLowerCase();
     });
   }
-  
+
   getIngredients() {
     return this.ingredients.slice();
   }
