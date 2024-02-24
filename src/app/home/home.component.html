@@ -1,12 +1,14 @@
 <header class="masthead">
-    <div class="container">
-        <div class="text-center pt-5">
-            <h1 class="masthead-subheading text-white pt-5">Welcome To The Recipe Book!</h1>
-            <h2 class="masthead-heading text-uppercase text-white">It's Nice To Meet You!</h2>
-            <a routerLink="/recipes" class="btn btn-danger btn-xl text-uppercase text-white">Show me some recipes!</a>
-            <div *ngIf="!isAuthenticated" class="mt-3 text-white">
-                Still not  a member? <a routerLink="/auth" class="text-white anchor-tag"><em>Sign up</em></a> for more magic!
-            </div>
+  <div class="container">
+    <div class="row justify-content-md-center text-center">
+      <div class="pt-5">
+        <h1 class="masthead-subheading text-white pt-5">Welcome To The Recipe Book!</h1>
+        <h2 class="masthead-heading text-uppercase text-white">It's Nice To Meet You!</h2>
+        <a routerLink="/recipes" class="btn btn-danger btn-xl text-uppercase text-white">Show me some recipes!</a>
+        <div *ngIf="!isAuthenticated" class="mt-3 text-white">
+          Still not a member? <a routerLink="/auth" class="text-white anchor-tag"><em>Sign up</em></a> for more magic!
         </div>
+      </div>
     </div>
+  </div>
 </header>

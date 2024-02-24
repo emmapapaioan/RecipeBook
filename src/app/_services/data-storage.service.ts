@@ -16,7 +16,7 @@ export class DataStorageService {
   shoppingListJSON: string = 'shoppingList.json';
   private ingredients: BehaviorSubject<Ingredient[]> = new BehaviorSubject<Ingredient[]>([]);
   user = new BehaviorSubject<User>(null);
-  
+
   constructor(private http: HttpClient, private authService: AuthorizationService) {}
 
   private getUserSpecificUrl(endpoint: string): Observable<string> {
@@ -31,7 +31,7 @@ export class DataStorageService {
       })
     );
   }
-  
+
   storeRecipe(newRecipe: Recipe) {
     return this.getUserSpecificUrl(`recipes/${newRecipe.id}.json`).pipe(
       switchMap(url => {
@@ -43,7 +43,7 @@ export class DataStorageService {
       })
     );
   }
-  
+
   fetchRecipes(): Observable<Recipe[]> {
     return this.getUserSpecificUrl(this.recipesJSON).pipe(
       switchMap(url => {
@@ -98,7 +98,7 @@ export class DataStorageService {
     const deleteUrl = `https://firebasestorage.googleapis.com/v0/b/recipe-book-41dd4.appspot.com/o/${filePath}`;
     return this.http.delete(deleteUrl);
   }
-  
+
   updateRecipe(id: string, recipe: Recipe) {
     return this.getUserSpecificUrl(`recipes/${id}.json`).pipe(
       switchMap(url => {
@@ -136,7 +136,7 @@ export class DataStorageService {
       })
     );
   }
-  
+
   deleteIngredient(ingredient: Ingredient) {
     const encodedName = encodeURIComponent(ingredient.name);
     return this.getUserSpecificUrl(`shoppingList/${encodedName}.json`).pipe(
@@ -149,7 +149,7 @@ export class DataStorageService {
       })
     );
   }
-  
+
   fetchShoppingList() {
     return this.getUserSpecificUrl(this.shoppingListJSON).pipe(
       switchMap(url => {
