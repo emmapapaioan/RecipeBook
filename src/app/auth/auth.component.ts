@@ -13,17 +13,18 @@ import { Router } from '@angular/router';
 export class AuthComponent {
   isLoginMode: boolean = false;
   isLoading: boolean = false;
-  errorMessage: string = null;
+  errorMsg: string = null;
+  succesSignUpMsg: string = null;
 
   constructor(private authService: AuthorizationService, private router: Router) {}
 
   onSwitchMode() {
-    this.cleanErrorMsg();
+    this.cleanErrorAndSuccessMsg();
     this.isLoginMode = !this.isLoginMode;
   }
 
   onSubmit(form: NgForm) {
-    this.cleanErrorMsg();
+    this.cleanErrorAndSuccessMsg();
     if (!form.valid) {
       return;
     }
@@ -35,29 +36,30 @@ export class AuthComponent {
   }
 
   signup(email: string, password: string) {
-    this.cleanErrorMsg();
+    this.cleanErrorAndSuccessMsg();
     this.handleSubscribe(this.authService.signup(email, password), 'signup');
   }
 
   login(email: string, password: string) {
-    this.cleanErrorMsg();
+    this.cleanErrorAndSuccessMsg();
     this.handleSubscribe(this.authService.login(email, password), 'login');
   }
 
   handleSubscribe(authObservable: Observable<AuthResponseData>, mode: string) {
     authObservable.subscribe({
       next: (res) => {
-        this.handleCurrentMode(mode, res.registered);
+        this.handleCurrentMode(mode);
         this.isLoading = false;
+        this.succesSignUpMsg = "Success! You're now signed up. Please login to access the site."
       },
       error: (error) => {
-        this.errorMessage = error.message;
+        this.errorMsg = error.message;
         this.isLoading = false;
       }
     });
   }
 
-  handleCurrentMode(state: string, isRegistered: boolean) {
+  handleCurrentMode(state: string) {
     if (state === 'signup') {
       this.isLoginMode = true;
     } else if (state === 'login') {
@@ -67,10 +69,11 @@ export class AuthComponent {
   }
 
   dismissAlert() {
-    this.cleanErrorMsg();
+    this.cleanErrorAndSuccessMsg();
   }
 
-  cleanErrorMsg() {
-    this.errorMessage = null;
+  cleanErrorAndSuccessMsg() {
+    this.errorMsg = null;
+    this.succesSignUpMsg = null;
   }
 }
