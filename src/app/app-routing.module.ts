@@ -7,13 +7,14 @@ import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
 import { AuthComponent } from './auth/auth.component';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent},
   { path: 'ocr-image', component: OcrReaderComponent},
   { path: 'about', component: AboutComponent},
-  { path: 'recipes/:id', component: RecipeDetailComponent},
+  { path: 'recipes/:id', canActivate: [AuthGuard], component: RecipeDetailComponent},
   { path: 'recipes', component: RecipeListComponent },
   { path: 'shopping-list', component: ShoppingListComponent},
   { path: 'auth', component: AuthComponent}
