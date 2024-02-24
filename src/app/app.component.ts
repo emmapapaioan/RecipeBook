@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AuthorizationService } from './_services/authorization.service';
 
 @Component({
   selector: 'app-root',
@@ -6,9 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
-  title = 'shopping-project';
-  loadedFeature = 'recipe';
-  selectedNewRecipe = false;
-  
+export class AppComponent implements OnInit{
+  constructor(private authService: AuthorizationService) {}
+
+  ngOnInit(): void {
+    this.authService.autoLogin();
+  }
 }

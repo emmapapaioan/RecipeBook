@@ -39,19 +39,41 @@ export class AuthorizationService {
     }
 
     login(email: string, password: string) {
-        const request = this.getRequest(email, password);
-        return this.http.post<AuthResponseData>(this.loginEndpoint, request)
-            .pipe(
-                catchError(this.handleError),
-                tap(res => {
-                    this.handleAuthentication(
-                        res.email,
-                        res.localId,
-                        res.idToken,
-                        +res.expiresIn
-                    );
-                })
-            );
+      const request = this.getRequest(email, password);
+      return this.http.post<AuthResponseData>(this.loginEndpoint, request)
+          .pipe(
+              catchError(this.handleError),
+              tap(res => {
+                  this.handleAuthentication(
+                      res.email,
+                      res.localId,
+                      res.idToken,
+                      +res.expiresIn
+                  );
+              })
+          );
+    }
+
+    // In case of refreshing the site, handle user to be auto logged in again
+    autoLogin() {
+      const userData: {
+        email: string;
+        id: string;
+        _token: string;
+        _tokenExpirationDate: string;
+      } = JSON.parse(localStorage.getItem('userData'));
+      if (!userData) {
+        return;
+      }
+
+      const loadedUser = new User(
+        userData.email,
+        userData.id,
+        userData._token,
+        new Date(userData._tokenExpirationDate)
+      );
+
+      loadedUser.token && this.user.next(loadedUser);
     }
 
     logout() {
@@ -85,5 +107,6 @@ export class AuthorizationService {
             expirationDate
         );
         this.user.next(user);
+        localStorage.setItem('userData', JSON.stringify(user));
     }
 }
