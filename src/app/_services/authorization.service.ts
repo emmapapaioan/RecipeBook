@@ -18,7 +18,8 @@ export class AuthorizationService {
       'TOO_MANY_ATTEMPTS_TRY_LATER': 'We have blocked all requests from this device due to unusual activity. Try again later.',
       'EMAIL_NOT_FOUND': 'There is no user record corresponding to this identifier. The user may have been deleted.',
       'INVALID_PASSWORD': 'The password is invalid or the user does not have a password.',
-      'USER_DISABLED': 'The user account has been disabled by an administrator.'
+      'USER_DISABLED': 'The user account has been disabled by an administrator.',
+      'INVALID_LOGIN_CREDENTIALS': 'E-mail or password is invalid. Please try again.'
   };
 
   constructor(private http: HttpClient) { }
