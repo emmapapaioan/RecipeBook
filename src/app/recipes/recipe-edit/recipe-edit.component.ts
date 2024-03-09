@@ -27,6 +27,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   recipeForm: FormGroup;
   newIngredients: Ingredient[] = [];
   file: File;
+  isLoading: boolean = false;
 
   constructor(
     public recipeService: RecipeService,
@@ -143,6 +144,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.isLoading = true;
     let url;
     if (this.editMode) {
       url = this.recipe.imagePath;
@@ -199,9 +201,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.alertService.infoMessage(true, `Recipe ${recipe.name} was successfully updated.`);
         this.dataStorageService.fetchRecipes().subscribe(recipes => {
           this.recipeService.setRecipes(recipes);
+          this.isLoading = false;
         });
       },
       error: (error) => {
+        this.isLoading = false;
         this.alertService.infoMessage(false, `Recipe ${recipe.name} was not updated. Error: ${error.message}`);
       }
     });
@@ -213,9 +217,11 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
         this.alertService.infoMessage(true, 'Recipe ' + recipe.name + ' was successfully stored in the database.');
         this.dataStorageService.fetchRecipes().subscribe(recipes => {
           this.recipeService.setRecipes(recipes);
+          this.isLoading = false;
         });
       },
       error: () => {
+        this.isLoading = false;
         this.alertService.infoMessage(false, 'Error storing the recipe to the database.');
       }
     });
@@ -227,9 +233,7 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
 
   get isSubmitBtnDisabled() {
     return this.addMode && (!this.recipeForm.valid || !this.file) ||
-           this.editMode && !this.recipeForm.valid;
+           this.editMode && !this.recipeForm.valid ||
+           this.isLoading;
   }
 }
-
-
-

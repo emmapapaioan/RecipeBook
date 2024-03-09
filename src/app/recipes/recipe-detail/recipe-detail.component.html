@@ -29,18 +29,12 @@
                     </table>
                 </div>
                 <div class="btn-print">
-                    <button 
+                    <button
                         *ngIf="isAuthenticated"
-                        class="btn btn-primary d-flex justify-content-end align-items-center" 
+                        class="btn btn-primary d-flex justify-content-end align-items-center"
                         [matMenuTriggerFor]="myMenu">
                         Manage recipe
-                        <mat-spinner
-                            *ngIf="isPrinting" 
-                            color="accent" 
-                            aria-label="Printing" 
-                            diameter="20" 
-                            class="ml-1">
-                        </mat-spinner>
+                        <app-spinner *ngIf="isLoading" [type]="'circle'" class="ml-2"></app-spinner>
                     </button>
                     <mat-menu #myMenu="matMenu" class="btn-print-menu">
                         <button mat-menu-item (click)="onAddToShoppingList()">Add to Shopping List</button>
@@ -57,4 +51,4 @@
         <div class="d-flex flex-column col-1"></div>
     </div>
 </div>
-</div> 
+</div>

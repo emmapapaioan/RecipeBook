@@ -4,7 +4,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Ingredient } from 'src/app/_shared/ingredient.model';
 import { Recipe } from '../../_shared/recipe.model';
 import { RecipeService } from '../../_services/recipe.service';
-import { Subscription } from 'rxjs';
+import { Subscription, finalize } from 'rxjs';
 
 import { DataStorageService } from '../../_services/data-storage.service';
 import { ShoppingListService } from '../../_services/shopping-list.service';
@@ -30,9 +30,9 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   private paramsSub: Subscription;
   private recipesChangedSub: Subscription;
   displayedColumns: string[] = ['name', 'quantity'];
-  isPrinting: boolean = false;
   private userSub: Subscription;
   isAuthenticated: boolean = false;
+  isLoading: boolean = false;
 
   constructor(
     private recipeService: RecipeService,
@@ -74,8 +74,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   onAddToShoppingList() {
+    this.isLoading = true;
     this.recipeService.setRecipeEditMode(false);
-    this.shoppingListService.addToShoppingList(this.recipe.ingredients).subscribe({
+    this.shoppingListService.addToShoppingList(this.recipe.ingredients)
+    .pipe(finalize(() => this.isLoading = false))
+    .subscribe({
       next: () => this.alertService.infoMessage(true, 'Shopping List was successfully updated!'),
       error: () => this.alertService.infoMessage(false, 'Failed updating the Shopping List. Please try again.')
     });
@@ -91,7 +94,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   }
 
   printRecipe() {
-    this.isPrinting = true;
+    this.isLoading = true;
     const pdfOptions: PdfOptions = {
       leftMargin: 15,
       imageWidth: 100,
@@ -107,11 +110,11 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
 
     this.firebaseStorageService.getImageAsBlob(this.recipe.imagePath).then(imgBlob => {
       this.printService.generateRecipePdf(this.recipe, pdfOptions, imgBlob).then(() => {
-        this.isPrinting = false;
+        this.isLoading = false;
       });
     }).catch(error => {
       console.error('Error retrieving image: ', error);
-      this.isPrinting = false;
+      this.isLoading = false;
     });
   }
 
@@ -123,12 +126,14 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
       'Delete'
     );
     if (result.isConfirmed) {
+      this.isLoading = true;
       this.recipeService.setRecipeEditMode(false);
       this.dataStorageService.deleteRecipe(this.recipe).subscribe({
         next: () => {
           this.handleSuccessfullRecipeDelete();
         },
         error: () => {
+          this.isLoading = false;
           this.alertService.infoMessage(false, `Failed to delete recipe ${this.recipe.name} was not successfull.`);
         }
       });
@@ -138,6 +143,7 @@ export class RecipeDetailComponent implements OnInit, OnDestroy {
   handleSuccessfullRecipeDelete() {
     this.alertService.infoMessage(true, 'Recipe ' + this.recipe.name + ' was successfully deleted.');
     this.recipeService.recipesChanged.subscribe((recipes: Recipe[]) => {
+      this.isLoading = false;
       this.recipe = this.recipeService.getRecipe(this.id);
       if (!this.recipe) {
         this.router.navigate(['/recipes']);
