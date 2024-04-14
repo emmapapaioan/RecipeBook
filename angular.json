@@ -11,7 +11,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "dist/shopping-project",
             "index": "src/index.html",
@@ -27,13 +27,21 @@
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css",
-              "src/theme.scss" 
+              "src/theme.scss"
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+            ],
+            "customWebpackConfig": {
+              "path": "./webpack.config.js"
+            },
+            "allowedCommonJsDependencies": [
+              "sweetalert2",
+              "jspdf-autotable",
+              "tesseract.js"
             ]
           },
           "configurations": {
@@ -95,7 +103,7 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/theme.scss" 
+              "src/theme.scss"
             ],
             "scripts": []
           }
