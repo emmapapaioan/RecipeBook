@@ -1,10 +1,9 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { Ingredient } from 'src/app/_shared/ingredient.model';
+import { Subject, Subscription, takeUntil } from 'rxjs';
+import { Ingredient } from 'src/app/_models/ingredient.model';
 import { ShoppingListService } from '../../_services/shopping-list.service';
 import { DataStorageService } from 'src/app/_services/data-storage.service';
-import { v4 as uuidv4 } from 'uuid';
 import { AlertService } from 'src/app/_services/alert.service';
 
 @Component({
@@ -14,7 +13,7 @@ import { AlertService } from 'src/app/_services/alert.service';
 })
 export class ShoppingEditComponent implements OnInit, OnDestroy{
   @ViewChild('form', { static: true }) shoppingListForm: NgForm;
-  subscription: Subscription;
+  private destroySub$ = new Subject<void>();
   editMode = false;
   editedItemId: string;
   editedItem: Ingredient;
@@ -30,12 +29,8 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
     this.editMode = false;
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   initializeSubscription() {
-    this.subscription = this.shoppingListService.startEditing.subscribe((name: string) => {
+    this.shoppingListService.startEditing.pipe(takeUntil(this.destroySub$)).subscribe((name: string) => {
       this.editMode = true;
       this.editedItem = this.shoppingListService.getIngredientByName(name);
       this.shoppingListForm.setValue({ name: this.editedItem.name, amount: this.editedItem.amount });
@@ -132,5 +127,10 @@ export class ShoppingEditComponent implements OnInit, OnDestroy{
         this.alertService.infoMessage(false, 'Failed to load Shopping List. Please reload the page. ');
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroySub$.next();
+    this.destroySub$.complete();
   }
 }
