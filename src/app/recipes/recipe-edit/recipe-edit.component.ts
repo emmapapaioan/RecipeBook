@@ -1,9 +1,9 @@
 import { Component, ElementRef, Inject, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { Recipe } from '../../_shared/recipe.model';
+import { Recipe } from '../../_models/recipe.model';
 import { RecipeService } from '../../_services/recipe.service';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Ingredient } from 'src/app/_shared/ingredient.model';
+import { Ingredient } from 'src/app/_models/ingredient.model';
 import { DataStorageService } from '../../_services/data-storage.service';
 import { v4 as uuidv4 } from 'uuid';
 import { AlertService } from 'src/app/_services/alert.service';

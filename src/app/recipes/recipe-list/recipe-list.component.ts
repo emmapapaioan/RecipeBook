@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Recipe } from '../../_shared/recipe.model';
+import { Recipe } from '../../_models/recipe.model';
 import { RecipeService } from '../../_services/recipe.service';
 import { DataStorageService } from '../../_services/data-storage.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';

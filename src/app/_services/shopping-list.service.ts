@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Ingredient } from 'src/app/_shared/ingredient.model';
+import { Ingredient } from 'src/app/_models/ingredient.model';
 import { Observable, Subject, catchError, forkJoin, tap, throwError } from 'rxjs';
 import { DataStorageService } from './data-storage.service';
 import { AlertService } from './alert.service';

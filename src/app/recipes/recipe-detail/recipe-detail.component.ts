@@ -1,8 +1,8 @@
-import { Component, ElementRef, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { Ingredient } from 'src/app/_shared/ingredient.model';
-import { Recipe } from '../../_shared/recipe.model';
+import { Ingredient } from 'src/app/_models/ingredient.model';
+import { Recipe } from '../../_models/recipe.model';
 import { RecipeService } from '../../_services/recipe.service';
 import { Subscription, finalize } from 'rxjs';
 
@@ -12,8 +12,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { RecipeEditComponent } from '../recipe-edit/recipe-edit.component';
 import { AlertService } from 'src/app/_services/alert.service';
 import { PrintService } from 'src/app/_services/print.service';
-import { HelveticaFont } from 'src/app/_shared/fonts.model';
-import { PdfOptions } from 'src/app/_shared/pdfOptions.model';
+import { HelveticaFont } from 'src/app/_models/fonts.model';
+import { PdfOptions } from 'src/app/_models/pdfOptions.model';
 import { AuthorizationService } from 'src/app/_services/authorization.service';
 import { FirebaseStorageService } from 'src/app/_services/firebase-storage.service';
 

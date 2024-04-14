@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import Swal, { SweetAlertIcon, SweetAlertResult } from 'sweetalert2';
+import { Injectable } from '@angular/core';
 import { AuthorizationService } from './authorization.service';
 import { Router } from '@angular/router';
 
@@ -15,9 +15,9 @@ export class AlertService {
   }
 
   async approveMessage(
-    icon: SweetAlertIcon, 
-    title: string, text: string, 
-    confirmButtonText?: string, 
+    icon: SweetAlertIcon,
+    title: string, text: string,
+    confirmButtonText?: string,
     cancelButtonText?: string): Promise<SweetAlertResult> {
     return Swal.fire({
       icon: icon,
@@ -61,7 +61,7 @@ export class AlertService {
       confirmButtonColor: '#28a745',
       cancelButtonColor: '#dc3545',
       customClass: {
-        image: 'custom-image-class' 
+        image: 'custom-image-class'
       }
     }).then((result) => {
       if (result.isConfirmed) {

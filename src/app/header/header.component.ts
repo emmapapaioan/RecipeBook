@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Recipe } from '../_shared/recipe.model';
+import { Recipe } from '../_models/recipe.model';
 import { Subscription } from 'rxjs';
 import { AuthorizationService } from '../_services/authorization.service';
 import { AlertService } from '../_services/alert.service';
