@@ -11,6 +11,7 @@
 npm-debug.log
 yarn-error.log
 /server-side/node_modules
+/package-lock.json
 
 # IDEs and editors
 .idea/
@@ -41,4 +42,3 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
-
