@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 import { OcrReaderComponent } from './ocr-reader/ocr-reader.component';
 import { HomeComponent } from './home/home.component';
@@ -19,6 +19,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, {
+    preloadingStrategy: PreloadAllModules,
     onSameUrlNavigation: 'reload'
   })],
   exports: [RouterModule]
