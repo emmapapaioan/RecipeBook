@@ -7,12 +7,14 @@ import { DropZoneComponent } from './drop-zone/drop-zone.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { CommonModule } from '@angular/common';
 import { DragAndDropDirective } from '../_directives/drag-and-drop.directive';
+import { AlertBoxComponent } from './alert-box/alert-box.component';
 
 @NgModule({
   declarations: [
     DropZoneComponent,
     SpinnerComponent,
-    DragAndDropDirective
+    DragAndDropDirective,
+    AlertBoxComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { DragAndDropDirective } from '../_directives/drag-and-drop.directive';
   ],
   exports: [
     DropZoneComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    AlertBoxComponent
   ]
 })
 

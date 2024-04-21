@@ -7,8 +7,10 @@ import { AboutComponent } from './about/about.component';
 import { AuthComponent } from './auth/auth.component';
 
 const routes: Routes = [
-  
+
   { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: 'recipes', loadChildren: () => import('./recipes/recipes.module').then(m => m.RecipesModule) },
+  { path: 'shopping-list', loadChildren: () => import('./shopping-list/shopping-list.module').then(m => m.ShoppingListModule) },
   { path: 'home', component: HomeComponent},
   { path: 'ocr-image', component: OcrReaderComponent},
   { path: 'about', component: AboutComponent},

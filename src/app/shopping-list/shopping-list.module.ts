@@ -22,7 +22,6 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
     SharedModule,
     ShoppingListRoutingModule
   ]

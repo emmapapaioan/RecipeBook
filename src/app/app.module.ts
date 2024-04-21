@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
 import { APP_BASE_HREF, CommonModule } from '@angular/common';
 
 import { HeaderComponent } from './header/header.component';
@@ -28,11 +29,8 @@ import { HomeComponent } from './home/home.component';
 import { SafeUrlPipe } from './_pipes/safe-url.pipe';
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './_services/auth.interceptor.service';
-import { DragAndDropDirective } from './_directives/drag-and-drop.directive';
 import { SharedModule } from './_shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
-import { RecipesModule } from './recipes/recipes.module';
-import { ShoppingListModule } from './shopping-list/shopping-list.module';
 
 @NgModule({
   declarations: [
@@ -48,6 +46,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
@@ -62,9 +61,8 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatTabsModule,
     DragDropModule,
-    RecipesModule,
-    ShoppingListModule,
     SharedModule
   ],
   providers: [
