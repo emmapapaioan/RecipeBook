@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onLogout() {
-    this.alertService.onLogoutMessage();
+    this.alertService.onLogoutMessage(false);
   }
 
   ngOnDestroy() {

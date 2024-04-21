@@ -48,12 +48,13 @@ export class AlertService {
     });
   }
 
-  onLogoutMessage() {
+  onLogoutMessage(hasImage?: boolean) {
     Swal.fire({
       text: 'Leaving so soon? We\'\ll miss you!',
-      imageUrl: '/assets/icons/heart.png',
+      imageUrl: hasImage ? '/assets/icons/heart.png' : null,
       imageWidth: 200,
       imageHeight: 200,
+      icon: hasImage ? null : 'info',
       imageAlt: 'Heart Emoji',
       showCancelButton: true,
       confirmButtonText: 'Yes, logout',
