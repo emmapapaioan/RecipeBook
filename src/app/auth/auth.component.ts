@@ -15,11 +15,25 @@ export class AuthComponent {
   isLoading: boolean = false;
   errorMsg: string = null;
   succesSignUpMsg: string = null;
+  selectedTabIndex: number = 0;
+
+  tabs = [
+    {
+      isLoginMode: false,
+      name: 'Sign up',
+      index: 0
+    },
+    {
+      isLoginMode: true,
+      name: 'Login',
+      index: 1
+    }
+  ];
 
   constructor(private authService: AuthorizationService, private router: Router) {}
 
-  onSwitchMode() {
-    this.cleanErrorAndSuccessMsg();
+  onChangeTab() {
+    (this.isLoginMode && this.succesSignUpMsg) ? null : this.cleanErrorAndSuccessMsg();
     this.isLoginMode = !this.isLoginMode;
   }
 
@@ -47,10 +61,9 @@ export class AuthComponent {
 
   handleSubscribe(authObservable: Observable<AuthResponseData>, mode: string) {
     authObservable.subscribe({
-      next: (res) => {
+      next: () => {
         this.handleCurrentMode(mode);
         this.isLoading = false;
-        this.succesSignUpMsg = "Success! You're now signed up. Please login to access the site."
       },
       error: (error) => {
         this.errorMsg = error.message;
@@ -62,14 +75,12 @@ export class AuthComponent {
   handleCurrentMode(state: string) {
     if (state === 'signup') {
       this.isLoginMode = true;
+      this.selectedTabIndex = 1;
+      this.succesSignUpMsg = "Success! You're now signed up. Please login to access the site."
     } else if (state === 'login') {
       this.isLoginMode = false;
       this.router.navigate(['/recipes']);
     }
-  }
-
-  dismissAlert() {
-    this.cleanErrorAndSuccessMsg();
   }
 
   cleanErrorAndSuccessMsg() {
