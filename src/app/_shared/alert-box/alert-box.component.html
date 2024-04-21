@@ -1,0 +1,7 @@
+<div *ngIf="errorMsg || succesSignUpMsg" class="alert alert-dismissible fade show"
+  [ngClass]="{'alert-danger': errorMsg, 'alert-success': succesSignUpMsg}">
+  <p class="text-break mb-0">{{ errorMsg ? errorMsg : succesSignUpMsg }}</p>
+  <button type="button" class="close" (click)="dismissAlert()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
