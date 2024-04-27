@@ -3,11 +3,12 @@ import { Injectable } from "@angular/core";
 import { AuthRequestData, AuthResponseData } from "../_models/authData.model";
 import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
 import { User } from "../_models/user.model";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: 'root' })
 export class AuthorizationService {
   user = new BehaviorSubject<User>(null);
-  apiKey: string = `AIzaSyCEpvKA9xVT1-Lvx4f_SBAtx5BbXy6Fn_E`;
+  apiKey: string = environment.fireBaseAPIKey;
   signupEndpoint: string = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${this.apiKey}`;
   loginEndpoint: string = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${this.apiKey}`;
   private tokenExpirationTimer: any;
