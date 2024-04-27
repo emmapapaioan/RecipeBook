@@ -7,7 +7,8 @@
     },
     {
       "origin": ["https://recipe-book-41dd4.web.app"],
-      "method": ["GET"],
+      "method": ["GET", "POST"],
+      "responseHeader": ["Content-Type", "Authorization"],
       "maxAgeSeconds": 3600
     }
   ]
