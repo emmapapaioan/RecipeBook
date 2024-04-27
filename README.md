@@ -14,7 +14,7 @@ To get started with the project, you need to have Node.js and Angular CLI instal
 ```git clone https://github.com/emmapapaioan/ShoppingProject.git```
 
 Once you have cloned the repository, navigate to the project directory and install the dependencies using the following command:
-```npm install```. If the result is not successfull, try ```npm install --legacy-peer-deps``` or ```npm install --force```. These commands will attempt to install the dependencies, with the last two options providing alternative ways to handle issues with peer dependencies or other conflicts.
+```npm install```.
 
 You can then start the development server and launch the application in your browser by running the following command:
 ```ng serve```
