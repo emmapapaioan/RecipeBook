@@ -41,7 +41,9 @@
             "allowedCommonJsDependencies": [
               "sweetalert2",
               "jspdf-autotable",
-              "tesseract.js"
+              "tesseract.js",
+              "raf",
+              "core-js"
             ]
           },
           "configurations": {
