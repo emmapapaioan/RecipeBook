@@ -6,7 +6,8 @@ const Tesseract = require('tesseract.js');
 const app = express();
 
 app.use(cors({
-  origin: '*'
+  origin: ['https://recipe-book-41dd4.web.app'], 
+  optionsSuccessStatus: 200 // For legacy browser support
 }));
 
 // Root route to confirm the server is running
