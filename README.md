@@ -4,22 +4,20 @@ https://github.com/emmapapaioan/RecipeBook/assets/108992250/b67a7dd3-eb7c-4605-a
 
 RecipeBook is a web application developed using Angular framework. It allows users to store, view, edit, print, or delete recipes from a remote database. The project also provides OCR (Optical Character Recognition) functionality where users can upload an image with text (a recipe image, for example) and retrieve the text from the image.
 
-## Deployment 
+## View Production Site
 
-This project is deployed using Firebase Hosting. You can access the live version of the application by clicking the link: 
+This project is deployed using Firebase Hosting. You can access the live version of the application by clicking the link:
 [View Production Site](https://recipe-book-41dd4.web.app/).
-
-To deploy your own version of the application, follow these steps:
-1. Build the project using Angular CLI:
-   ```bash
-   ng build
-3. Deploy the built project to Firebase Hosting:
-    ```bash
-    firebase deploy
 
 ## Technologies
 
 The project is developed using Angular, a TypeScript-based open-source web application framework. It also uses other technologies such as HTML, CSS, Bootstrap, and TypeScript.
+
+## Server-Side and OCR Functionality
+The project includes server-side functionality essential for the OCR feature, particularly when the uploaded file is from an internet URL and a CORS policy exists. To use the server, navigate to the server-side directory and start it with the following command:
+```bash
+node app.js
+```
 
 ## Local Development Setup
 
@@ -40,11 +38,32 @@ ng serve
 
 The application should be available at http://localhost:4200/ or at whatever port is available.
 
-## Server-Side and OCR Functionality
-The project includes server-side functionality essential for the OCR feature, particularly when the uploaded file is from an internet URL and a CORS policy exists. To use the server, navigate to the server-side directory and start it with the following command:
-```bash
-node app.js
-```
+## Deployment
+
+To deploy your own version of the application, you'll need to set up your own Firebase project. Follow these steps:
+
+1. **Setup Firebase Project**:
+   - Create a Firebase project in the [Firebase Console](https://console.firebase.google.com/).
+   - Obtain your project ID and update the Firebase configuration in your project's environment settings.
+
+2. **Build the Project**:
+   - Ensure you have Angular CLI installed. Then, build your project with:
+     ```bash
+     ng build
+     ```
+
+3. **Deploy to Firebase Hosting**:
+   - Install Firebase CLI by running `npm install -g firebase-tools`.
+   - Authenticate the Firebase CLI with your Google account by running `firebase login`.
+   - Initialize Firebase in your project directory (if not already done):
+     ```bash
+     firebase init
+     ```
+   - Deploy the built project to Firebase Hosting:
+     ```bash
+     firebase deploy --project your-firebase-project-id
+     ```
+     
 
 ## Acknowledgments
 This project is being built as I follow along with the Udemy course "The Complete Guide to Angular 2" by Maximilian Schwarzmüller. It serves as a practical application to enhance my skills in Angular development.
