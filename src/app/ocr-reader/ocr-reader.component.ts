@@ -40,7 +40,7 @@ export class OcrReaderComponent implements OnInit {
   }
 
   checkServerStatus() {
-    return this.http.get('https://fierce-mountain-99172.herokuapp.com/');
+    return this.http.get('https://fierce-mountain-99172.herokuapp.com');
   }
 
   async performOCRServerSide(imageUrl: string) {
