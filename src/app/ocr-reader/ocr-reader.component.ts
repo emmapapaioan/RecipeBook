@@ -13,7 +13,7 @@ export class OcrReaderComponent implements OnInit {
   imageUrl: string = '';
   extractedText: string = '';
   isServerUp: boolean;
-  
+
   constructor(private http: HttpClient, private alertService: AlertService) { }
 
   ngOnInit() {
@@ -40,7 +40,7 @@ export class OcrReaderComponent implements OnInit {
   }
 
   checkServerStatus() {
-    return this.http.get(`http://localhost:3000/ocr?imageUrl=${this.imageUrl}`);
+    return this.http.get('https://fierce-mountain-99172.herokuapp.com/');
   }
 
   async performOCRServerSide(imageUrl: string) {
@@ -48,7 +48,7 @@ export class OcrReaderComponent implements OnInit {
       this.alertService.infoMessage(false, 'Insert an image url.');
       return;
     }
-    this.http.get<any>(`http://localhost:3000/ocr?imageUrl=${imageUrl}`).subscribe({
+    this.http.get<any>(`https://fierce-mountain-99172.herokuapp.com/ocr?imageUrl=${encodeURIComponent(imageUrl)}`).subscribe({
       next: (res) => {
         this.extractedText = res.text;
       },
@@ -60,7 +60,7 @@ export class OcrReaderComponent implements OnInit {
       }
     });
   }
-  
+
 
   async performOCR(imageUrl: string) {
     if (!imageUrl) {
