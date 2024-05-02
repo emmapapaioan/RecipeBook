@@ -11,9 +11,13 @@ app.use(cors({
 }));
 
 // Root route to confirm the server is running
-// app.get('/', (req, res) => {
-//   res.send('Server is running');
-// });
+app.get('/', (req, res) => {
+  res.send('Server is running');
+});
+
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 app.get('/ocr', async (req, res) => {
     const imageUrl = req.query.imageUrl;
