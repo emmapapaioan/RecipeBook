@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
   res.send('Server is running');
 });
 
+// Root route to confirm the server is running 
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
