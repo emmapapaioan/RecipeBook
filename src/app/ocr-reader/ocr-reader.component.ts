@@ -13,17 +13,27 @@ export class OcrReaderComponent implements OnInit {
   imageUrl: string = '';
   extractedText: string = '';
   isServerUp: boolean;
+  initialImage: string = 'https://images.squarespace-cdn.com/content/v1/5a870022e45a7c0c0c9ea20e/1587642606272-7FLQ93BAH89DAWEDSEXT/Screen+Shot+2020-04-23+at+7.49.46+AM.png?format=750w';
+  isImageLoading: boolean = false;
 
   constructor(private http: HttpClient, private alertService: AlertService) { }
 
   ngOnInit() {
-    this.loadImage('https://images.squarespace-cdn.com/content/v1/5a870022e45a7c0c0c9ea20e/1587642606272-7FLQ93BAH89DAWEDSEXT/Screen+Shot+2020-04-23+at+7.49.46+AM.png?format=750w');
+    this.loadImage(this.initialImage);
     this.extractText();
   }
 
   loadImage(imageUrlInput: string) {
-    this.imageUrl = imageUrlInput;
+    this.imageUrl = ''; // Clear the previous image URL
+    this.isImageLoading = true;
     this.extractedText = '';
+
+    let img = new Image();
+    img.onload = () => {
+      this.imageUrl = imageUrlInput; // Set new image URL only after it has loaded
+      this.isImageLoading = false;
+    };
+    img.src = imageUrlInput;
   }
 
   extractText() {
