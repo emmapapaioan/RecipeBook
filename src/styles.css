@@ -8,9 +8,9 @@ html, body {
     height: 100%;
 }
 
-body { 
-    margin: 0; 
-    font-family: Roboto, "Helvetica Neue", sans-serif; 
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .modal-backdrop {
@@ -34,14 +34,110 @@ body {
 }
 
 .mat-mdc-form-field-textarea-control {
-   overflow: hidden!important; 
-} 
+   overflow: hidden!important;
+}
 
 .custom-image-class {
-    margin-bottom: 0!important; 
+    margin-bottom: 0!important;
 }
 
 .swal2-popup {
     color: #fff!important;
     background-color: #2E2E2E!important;
 }
+
+div:where(.swal2-container) button:where(.swal2-styled).swal2-default-outline:focus {
+  box-shadow: 0 0 0 3px rgba(64, 64, 64, 0.5) !important;
+}
+
+div:where(.swal2-container).swal2-center>.swal2-popup {
+  padding: 50px;
+}
+
+.btn-danger {
+  height: min-content;
+  align-items: center;
+  background-color: #7B1F24 !important;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-danger:hover {
+  background-color: #591719 !important;
+}
+
+.btn-success {
+  height: min-content;
+  align-items: center;
+  background-color: #424242 !important;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-success:hover {
+  background-color: #2B2B2B !important;
+}
+
+.btn-info {
+  height: min-content;
+  align-items: center;
+  background-color: #636363 !important;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-info:hover {
+  background-color: #515151 !important;
+}
+
+.btn-primary {
+  height: min-content;
+  align-items: center;
+  background-color: #591719 !important;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #401113 !important;
+}
+
+.btn:disabled, .btn:disabled:hover {
+  opacity: 0.45;
+  cursor: default;
+}
+
+input:focus {
+  border-color: #591719 !important;
+  box-shadow: 0 0 0 .2rem rgba(91, 23, 25, .25) !important;
+}
+
+.swal2-icon.swal2-success {
+  border-color: #591719;
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+  border: 4px solid #591719;
+}
+
+.swal2-icon.swal2-success .swal2-success-line-tip,
+.swal2-icon.swal2-success .swal2-success-line-long {
+  background-color: #591719; 
+}
+

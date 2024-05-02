@@ -2,12 +2,16 @@
     min-height: 10vh;
 }
 
-.mdc-dialog__title { 
+.mdc-dialog__title {
     padding-left: 0;
 }
 
+.remove-icon {
+  color: #9E9E9E; 
+}
+
 .add-btn {
-    color: #28a745;
+    color: #B71C1C;
 }
 
 .modal-header {

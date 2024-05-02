@@ -10,7 +10,7 @@
                 <span class="float-right mr-3">
                     <button
                         *ngIf="isAuthenticated && recipes.length"
-                        class="btn btn-success newRecpBtn"
+                        class="btn btn-danger new-recipe-button"
                         (click)="onSelectNewRecipe()">
                         New Recipe
                     </button>
@@ -35,7 +35,7 @@
             <h6 class="text-white bg-dark p-2">It seems you don't have any recipes saved yet. Start adding your favorite ones now!</h6>
             <button
                 *ngIf="isAuthenticated && !recipes.length"
-                class="btn btn-success newRecpBtn mt-4"
+                class="btn btn-danger new-recipe-button mt-4"
                 (click)="onSelectNewRecipe()">
                 New Recipe
             </button>

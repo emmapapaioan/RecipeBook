@@ -2,11 +2,6 @@
     color: rgb(165, 123, 136);
 }
 
-.newRecpBtn {
-    height: min-content;
-    align-items: center;
-}
-
 .page-section {
     background-image: url('src\assets\images\pexels-tirachard-kumtanom-450055.jpg');
     background-size: cover;

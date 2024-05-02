@@ -31,7 +31,7 @@
                 <div class="btn-print">
                     <button
                         *ngIf="isAuthenticated"
-                        class="btn btn-primary d-flex justify-content-end align-items-center"
+                        class="btn btn-danger d-flex justify-content-end align-items-center"
                         [matMenuTriggerFor]="myMenu">
                         Manage recipe
                         <app-spinner *ngIf="isLoading" [type]="'circle'" class="ml-2"></app-spinner>
