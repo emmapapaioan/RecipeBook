@@ -20,7 +20,16 @@ input.form-control {
 }
 
 :host ::ng-deep .mdc-tab--active {
-  color: #BDBDBD;
-  background-color: rgba(117, 117, 117, 0.65) !important;
+  background-color: #591719;
   border-radius: 4px;
 }
+
+:host ::ng-deep .mat-mdc-tab .mdc-tab__text-label, .mat-mdc-tab-link .mdc-tab__text-label {
+  color: #FFFFFF !important;
+}
+
+:host ::ng-deep .mat-mdc-tab:not(.mat-mdc-tab-disabled) .mdc-tab-indicator__content--underline {
+  border-color: #FFFFFF !important;
+}
+
+
