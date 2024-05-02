@@ -14,10 +14,18 @@ This project is deployed using Firebase Hosting. You can access the live version
 The project is developed using Angular, a TypeScript-based open-source web application framework. It also uses other technologies such as HTML, CSS, Bootstrap, and TypeScript.
 
 ## Server-Side and OCR Functionality
-The project includes server-side functionality essential for the OCR feature, particularly when the uploaded file is from an internet URL and a CORS policy exists. To use the server, navigate to the server-side directory and start it with the following command:
+
+The project includes a Heroku-deployed server that handles OCR (Optical Character Recognition) functionality. This setup is primarily designed to process images fetched from URLs that may be subject to CORS restrictions.
+
+### Automatic Usage
+The application is configured to automatically use the server for OCR tasks. Users do not need to take any manual action to interact with the server; the application handles all interactions seamlessly in the background. This ensures a smooth user experience, particularly when processing images from the internet that require server-side handling due to CORS policies.
+
+### Independent Usage
+For those interested in using the OCR functionality directly or for custom implementations, the server can be accessed independently. Here is the endpoint you can use to interact with the OCR service:
 ```bash
-node app.js
+https://fierce-mountain-99172-8d2017e4ad7b.herokuapp.com/ocr?imageUrl={YOUR_IMAGE_URL}
 ```
+Replace `{YOUR_IMAGE_URL}` with the actual URL of the image you wish to process. The server will process the image and return the extracted text as a JSON response. This can be useful for testing or integrating the OCR service into other projects.
 
 ## Local Development Setup
 
@@ -66,7 +74,8 @@ To deploy your own version of the application, you'll need to set up your own Fi
      
 
 ## Acknowledgments
-This project is being built as I follow along with the Udemy course "The Complete Guide to Angular 2" by Maximilian Schwarzmüller. It serves as a practical application to enhance my skills in Angular development.
 
-You can find the course [here](https://www.udemy.com/course/the-complete-guide-to-angular-2/).
+The initial concept of this project was inspired by the Udemy course "The Complete Guide to Angular 2" by Maximilian Schwarzmüller, which helped lay the foundational skills in Angular development.
+While the course provided the initial spark and valuable Angular knowledge, this project has since evolved into a more comprehensive application, incorporating advanced features and server-side components that were developed independently.
+For those interested in Angular fundamentals, the course can be found [here](https://www.udemy.com/course/the-complete-guide-to-angular-2/).
 
