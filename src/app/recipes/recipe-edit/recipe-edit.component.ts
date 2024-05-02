@@ -28,6 +28,8 @@ export class RecipeEditComponent implements OnInit, OnDestroy {
   newIngredients: Ingredient[] = [];
   file: File;
   isLoading: boolean = false;
+  cannotSaveMsg: string = 'Please add all required data before saving your recipe.';
+  saveIsLoadingMsg: string = 'Please wait until your recipe is fully saved.';
 
   constructor(
     public recipeService: RecipeService,

@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { RecipesComponent } from '../recipes/recipes.component';
 import { RecipeListComponent } from '../recipes/recipe-list/recipe-list.component';
@@ -43,6 +44,7 @@ import { SharedModule } from '../_shared/shared.module';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatTooltipModule,
     // Routing
     RecipesRoutingModule,
   ]
