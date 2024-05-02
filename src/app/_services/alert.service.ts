@@ -26,8 +26,8 @@ export class AlertService {
       confirmButtonText: confirmButtonText ? confirmButtonText : 'Confirm',
       cancelButtonText: cancelButtonText ? cancelButtonText : 'Cancel',
       showCancelButton: true,
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#dc3545',
+      confirmButtonColor: '#7B1F24',
+      cancelButtonColor: '#636363',
     });
   }
 
@@ -36,7 +36,7 @@ export class AlertService {
       icon: 'success',
       title: 'Success',
       text: text,
-      confirmButtonColor: '#28a745'
+      confirmButtonColor: '#7B1F24'
     });
   }
 
@@ -54,15 +54,16 @@ export class AlertService {
       imageUrl: hasImage ? '/assets/icons/heart.png' : null,
       imageWidth: 200,
       imageHeight: 200,
-      icon: hasImage ? null : 'info',
       imageAlt: 'Heart Emoji',
       showCancelButton: true,
       confirmButtonText: 'Yes, logout',
       cancelButtonText: 'Cancel',
-      confirmButtonColor: '#28a745',
-      cancelButtonColor: '#dc3545',
+      confirmButtonColor: '#7B1F24',
+      cancelButtonColor: '#636363',
       customClass: {
-        image: 'custom-image-class'
+        image: 'custom-image-class',
+        confirmButton: 'custom-confirm-button-class',
+        cancelButton: 'custom-cancel-button-class'
       }
     }).then((result) => {
       if (result.isConfirmed) {
