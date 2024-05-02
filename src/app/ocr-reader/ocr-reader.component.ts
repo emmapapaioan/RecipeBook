@@ -40,7 +40,7 @@ export class OcrReaderComponent implements OnInit {
   }
 
   checkServerStatus() {
-    return this.http.get('https://fierce-mountain-99172.herokuapp.com');
+    return this.http.get('https://fierce-mountain-99172-8d2017e4ad7b.herokuapp.com/health');
   }
 
   async performOCRServerSide(imageUrl: string) {
@@ -48,7 +48,7 @@ export class OcrReaderComponent implements OnInit {
       this.alertService.infoMessage(false, 'Insert an image url.');
       return;
     }
-    this.http.get<any>(`https://fierce-mountain-99172.herokuapp.com/ocr?imageUrl=${encodeURIComponent(imageUrl)}`).subscribe({
+    this.http.get<any>(`https://fierce-mountain-99172-8d2017e4ad7b.herokuapp.com/ocr?imageUrl=${encodeURIComponent(imageUrl)}`).subscribe({
       next: (res) => {
         this.extractedText = res.text;
       },
