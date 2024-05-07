@@ -31,7 +31,7 @@
                 <app-recipe-item [recipe]="recipeItem" [id]="recipeItem.id"></app-recipe-item>
             </div>
         </div>
-        <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="!recipes.length && isAuthenticated">
+        <div class="d-flex flex-column justify-content-center align-items-center" *ngIf="!recipes.length && isAuthenticated && !isLoading">
             <h6 class="text-white bg-dark p-2">It seems you don't have any recipes saved yet. Start adding your favorite ones now!</h6>
             <button
                 *ngIf="isAuthenticated && !recipes.length"

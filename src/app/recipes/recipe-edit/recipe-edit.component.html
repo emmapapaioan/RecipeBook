@@ -65,19 +65,19 @@
                     class="btn-toolbar mb-2"
                     role="toolbar"
                     aria-mat-label="Toolbar with button groups">
-                    <button
+                    <div
                         class="btn btn-info mr-2"
+                        type="button" aria-mat-label="..."
+                        (click)="onCancel()">Cancel
+                    </div>
+                    <button
+                        class="btn btn-danger"
                         type="submit" aria-mat-label="..."
                         [disabled]="isSubmitBtnDisabled"
                         [matTooltip]="isSubmitBtnDisabled ? cannotSaveMsg : null"
                         [matTooltip]="isLoading ? cannotSaveMsg : null">Save
                         <app-spinner *ngIf="isLoading" [type]="'circle'" class="ml-2"></app-spinner>
                     </button>
-                    <div
-                        class="btn btn-danger "
-                        type="button" aria-mat-label="..."
-                        (click)="onCancel()">Cancel
-                    </div>
                 </div>
             </div>
         </form>

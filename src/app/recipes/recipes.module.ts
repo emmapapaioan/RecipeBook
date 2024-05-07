@@ -20,6 +20,7 @@ import { RecipeEditComponent } from '../recipes/recipe-edit/recipe-edit.componen
 import { ExampleRecipesComponent } from '../recipes/example-recipes/example-recipes.component';
 import { RecipesRoutingModule } from './recipes-routing.module';
 import { SharedModule } from '../_shared/shared.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { SharedModule } from '../_shared/shared.module';
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
+    DragDropModule,
     // Angular Material Modules
     MatButtonModule,
     MatDialogModule,
