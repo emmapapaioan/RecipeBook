@@ -30,6 +30,7 @@ export class DropZoneComponent {
   removeFile() {
     this.file = null;
     this.imagePreviewUrl = '';
+    this.fileDropped.emit(null);
   }
 
   generateImagePreview(file: File) {
