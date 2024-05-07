@@ -4,6 +4,8 @@ import { AuthorizationService } from '../_services/authorization.service';
 import { Observable } from 'rxjs';
 import { AuthResponseData } from '../_models/authData.model';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { EmailResetComponent } from './email-reset/email-reset.component';
 
 @Component({
   selector: 'app-auth',
@@ -30,7 +32,7 @@ export class AuthComponent {
     }
   ];
 
-  constructor(private authService: AuthorizationService, private router: Router) {}
+  constructor(private authService: AuthorizationService, private router: Router, public dialog: MatDialog) {}
 
   onChangeTab() {
     (this.isLoginMode && this.succesSignUpMsg) ? null : this.cleanErrorAndSuccessMsg();
@@ -86,5 +88,15 @@ export class AuthComponent {
   cleanErrorAndSuccessMsg() {
     this.errorMsg = null;
     this.succesSignUpMsg = null;
+  }
+
+  onResetPassword() {
+    const dialogRef = this.dialog.open(EmailResetComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+    });
   }
 }

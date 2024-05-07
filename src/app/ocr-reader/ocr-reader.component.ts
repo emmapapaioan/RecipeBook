@@ -24,12 +24,11 @@ export class OcrReaderComponent implements OnInit {
   }
 
   loadImage(imageUrlInput: string) {
-    this.imageUrl = ''; // Clear the previous image URL
-    this.isImageLoading = true;
-    this.extractedText = '';
-
     let img = new Image();
     img.onload = () => {
+      this.imageUrl = ''; // Clear the previous image URL
+      this.isImageLoading = true;
+      this.extractedText = '';
       this.imageUrl = imageUrlInput; // Set new image URL only after it has loaded
       this.isImageLoading = false;
     };

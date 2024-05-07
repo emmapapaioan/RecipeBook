@@ -1,0 +1,7 @@
+.email-input:focus {
+  box-shadow: none !important;
+}
+
+.email-form-field {
+  width: 100%;
+}

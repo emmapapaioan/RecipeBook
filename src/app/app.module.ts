@@ -31,6 +31,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './_services/auth.interceptor.service';
 import { SharedModule } from './_shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { EmailResetComponent } from './auth/email-reset/email-reset.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { BrowserModule } from '@angular/platform-browser';
     HomeComponent,
     SafeUrlPipe,
     AuthComponent,
+    EmailResetComponent,
   ],
   imports: [
     BrowserModule,

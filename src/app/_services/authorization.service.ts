@@ -116,4 +116,18 @@ export class AuthorizationService {
     this.autoLogout(expiresIn * 1000);
     localStorage.setItem('userData', JSON.stringify(user));
   }
+
+  sendPasswordResetEmail(email: string) {
+    const resetPasswordEndpoint = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${this.apiKey}`;
+    return this.http.post(resetPasswordEndpoint, {
+      requestType: 'PASSWORD_RESET',
+      email: email
+    }).pipe(
+      catchError(this.handleError),
+      tap(() => {
+        // Optionally handle any post-response action here
+      })
+    );
+  }
+
 }

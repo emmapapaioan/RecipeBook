@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Reset Password</h2>
+
+<ng-container *ngIf="!isLoading">
+  <ng-container *ngIf="!message">
+    <mat-dialog-content>
+      <p>Enter your email address to reset your password.</p>
+      <mat-form-field class="email-form-field">
+        <input class="email-input" matInput placeholder="Email" [(ngModel)]="email">
+      </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mb-3 mr-3">
+      <button class="btn btn-info" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-danger ml-2" (click)="onSendReset()">Send Reset Link</button>
+    </mat-dialog-actions>
+  </ng-container>
+
+  <ng-container *ngIf="message">
+    <mat-dialog-content>
+      <p class="text-white">{{ message }}</p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end" class="mb-3 mr-3">
+      <button class="btn btn-info" (click)="onCancel()">Close</button>
+    </mat-dialog-actions>
+  </ng-container>
+</ng-container>
+
+<mat-dialog-content *ngIf="isLoading">
+  <div class="overflow-hidden text-center mt-3">
+    <app-spinner [type]="'ellipsis'"></app-spinner>
+  </div>
+</mat-dialog-content>
