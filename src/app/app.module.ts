@@ -32,6 +32,7 @@ import { AuthInterceptorService } from './_services/auth.interceptor.service';
 import { SharedModule } from './_shared/shared.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { EmailResetComponent } from './auth/email-reset/email-reset.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { EmailResetComponent } from './auth/email-reset/email-reset.component';
     MatInputModule,
     MatIconModule,
     MatTabsModule,
+    MatTooltipModule,
     DragDropModule,
     SharedModule
   ],
