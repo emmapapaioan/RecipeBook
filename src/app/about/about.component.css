@@ -6,50 +6,40 @@
     height: 100vh;
 }
 
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-top: 16px;
-}
-
-.card-container .card:not(.highlight-card) {
-    cursor: pointer;
-}
-
-.card-container .card:not(.highlight-card):hover {
-    transform: translateY(-3px);
-    box-shadow: 0 4px 17px rgba(0, 0, 0, 0.35);
-}
-
-.card-container .card:not(.highlight-card):hover .material-icons path {
-    fill: rgb(105, 103, 103);
-}
-
-.circle-link {
-    height: 40px;
-    width: 40px;
-    border-radius: 40px;
-    margin: 8px;
-    background-color: white;
-    border: 1px solid #eeeeee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: 1s ease-out;
-}
-
-.circle-link:hover {
-    transform: translateY(-0.25rem);
-    box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
-}
-
 a {
     color: dodgerblue;
 }
 
 a:hover {
     color: deepskyblue;
+}
+
+.emma-image {
+  filter: grayscale(100%);
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.linkedin-image, .github-image {
+  max-height: 100px;
+  min-height: 100px;
+}
+
+.link-image img {
+  transition: transform 0.3s;
+}
+
+.link-image img:hover {
+  transform: scale(1.1);
+}
+
+.text-white {
+  color: white;
+  text-shadow: 1px 1px 2px black;
+}
+
+.justified-text {
+  text-align: justify;
+  text-justify: inter-word;
 }
