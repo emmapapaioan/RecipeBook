@@ -138,6 +138,9 @@ input:focus {
 
 .swal2-icon.swal2-success .swal2-success-line-tip,
 .swal2-icon.swal2-success .swal2-success-line-long {
-  background-color: #591719; 
+  background-color: #591719;
 }
 
+.semibold {
+  font-weight: 450;
+}

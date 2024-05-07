@@ -15,6 +15,7 @@ export class OcrReaderComponent implements OnInit {
   isServerUp: boolean;
   initialImage: string = 'https://images.squarespace-cdn.com/content/v1/5a870022e45a7c0c0c9ea20e/1587642606272-7FLQ93BAH89DAWEDSEXT/Screen+Shot+2020-04-23+at+7.49.46+AM.png?format=750w';
   isImageLoading: boolean = false;
+  infoMessage: string = 'Enter the direct URL of an online image you want to load. Make sure the image link is accessible.';
 
   constructor(private http: HttpClient, private alertService: AlertService) { }
 
@@ -24,12 +25,15 @@ export class OcrReaderComponent implements OnInit {
   }
 
   loadImage(imageUrlInput: string) {
+    this.isImageLoading = true;
+    this.extractedText = '';
     let img = new Image();
     img.onload = () => {
-      this.imageUrl = ''; // Clear the previous image URL
-      this.isImageLoading = true;
-      this.extractedText = '';
       this.imageUrl = imageUrlInput; // Set new image URL only after it has loaded
+      this.isImageLoading = false;
+    };
+    img.onerror = () => {
+      this.alertService.infoMessage(false, 'Failed to load image. Please try again.');
       this.isImageLoading = false;
     };
     img.src = imageUrlInput;

@@ -11,3 +11,16 @@
   background-size: cover;
   background-position: center;
 }
+
+.image-url {
+  white-space: nowrap;
+}
+
+.image-input {
+  min-width: 0;
+  max-width: 80%;
+}
+
+.load-image-btn {
+  flex-shrink: 0;
+}
